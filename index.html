@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Começar Certo | Planeje antes de investir</title>
+<style>
+:root{
+  --ink:#18231f;
+  --muted:#68736e;
+  --bg:#f6f7f3;
+  --card:#ffffff;
+  --line:#dde3df;
+  --accent:#246b57;
+  --accent-dark:#174b3c;
+  --accent-soft:#e7f1ec;
+  --gold:#c99a45;
+  --danger:#a95345;
+  --shadow:0 12px 35px rgba(24,35,31,.08);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.5;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.topbar{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 5vw;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.92);
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(10px);
+}
+.logo{
+  font-weight:800;
+  letter-spacing:-.04em;
+  font-size:21px;
+}
+.logo span{color:var(--accent)}
+.top-status{font-size:13px;color:var(--muted)}
+.container{width:min(1080px,92%);margin:0 auto}
+.hero{
+  min-height:calc(100vh - 70px);
+  display:grid;
+  place-items:center;
+  padding:70px 0;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:50px;
+  align-items:center;
+}
+.eyebrow{
+  color:var(--accent);
+  font-weight:800;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+h1{
+  font-size:clamp(42px,6vw,72px);
+  line-height:.98;
+  letter-spacing:-.055em;
+  margin:15px 0 24px;
+  max-width:700px;
+}
+.hero p{
+  font-size:20px;
+  color:var(--muted);
+  max-width:620px;
+}
+.cta{
+  margin-top:30px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:var(--accent);
+  color:#fff;
+  border:0;
+  border-radius:12px;
+  padding:15px 23px;
+  font-weight:800;
+  box-shadow:0 8px 20px rgba(36,107,87,.2);
+}
+.cta:hover{background:var(--accent-dark)}
+.hero-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+.hero-card h3{margin:0 0 18px;font-size:18px}
+.mini-list{display:grid;gap:12px}
+.mini-item{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:12px;
+  background:#fafbf9;
+  border-radius:12px;
+}
+.check{
+  width:23px;height:23px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--accent-soft);color:var(--accent);
+  font-size:13px;font-weight:900;flex:none;
+}
+.app{display:none;padding:35px 0 70px}
+.app.active{display:block}
+.progress-wrap{margin-bottom:28px}
+.progress-top{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:9px}
+.progress{height:7px;background:#e5e9e6;border-radius:99px;overflow:hidden}
+.progress-bar{height:100%;background:var(--accent);width:14.28%;transition:.3s}
+.layout{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:28px;
+}
+.steps{
+  position:sticky;top:95px;align-self:start;
+  background:#fff;border:1px solid var(--line);
+  border-radius:18px;padding:13px;
+}
+.step{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 10px;border-radius:11px;
+  color:var(--muted);font-size:13px;
+}
+.step .num{
+  width:27px;height:27px;border-radius:50%;
+  display:grid;place-items:center;background:#edf0ed;
+  font-size:12px;font-weight:800;flex:none;
+}
+.step.active{background:var(--accent-soft);color:var(--accent);font-weight:800}
+.step.active .num{background:var(--accent);color:white}
+.step.done .num{background:var(--accent);color:white}
+.panel{
+  background:#fff;border:1px solid var(--line);
+  border-radius:22px;padding:35px;
+  box-shadow:0 8px 25px rgba(24,35,31,.04);
+}
+.panel h2{font-size:31px;letter-spacing:-.035em;margin:0 0 8px}
+.panel .intro{color:var(--muted);margin:0 0 28px}
+.question{margin:25px 0}
+.question label.title{display:block;font-weight:800;margin-bottom:10px}
+.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.option{
+  border:1px solid var(--line);background:#fff;
+  padding:13px 15px;border-radius:12px;text-align:left;
+  color:var(--ink);transition:.15s;
+}
+.option:hover{border-color:#aac5ba}
+.option.selected{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
+input[type=text],input[type=number],textarea,select{
+  width:100%;border:1px solid var(--line);border-radius:12px;
+  padding:13px 14px;outline:none;background:#fff;color:var(--ink);
+}
+textarea{min-height:105px;resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(36,107,87,.08)}
+.currency{position:relative}
+.currency span{position:absolute;left:14px;top:13px;color:var(--muted);font-size:14px}
+.currency input{padding-left:43px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.nav{
+  display:flex;justify-content:space-between;gap:12px;
+  margin-top:32px;padding-top:22px;border-top:1px solid var(--line)
+}
+.btn{
+  border:1px solid var(--line);background:white;color:var(--ink);
+  border-radius:11px;padding:12px 18px;font-weight:700;
+}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-dark)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.result{
+  margin-top:22px;padding:18px;border-radius:15px;
+  background:var(--accent-soft);border:1px solid #cfe0d8;
+}
+.result h3{margin:0 0 8px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.metric{padding:17px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.metric .label{font-size:12px;color:var(--muted)}
+.metric .value{font-size:23px;font-weight:850;margin-top:3px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.compare-card{border:1px solid var(--line);border-radius:16px;padding:20px}
+.compare-card h3{margin:0 0 12px}
+.compare-card ul{padding-left:18px;color:var(--muted)}
+.notice{padding:13px 15px;border-radius:12px;background:#fbf7ed;border:1px solid #eadab7;color:#6e572b;font-size:13px}
+.checklist{display:grid;gap:9px}
+.task{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:12px;border:1px solid var(--line);border-radius:11px;
+}
+.task input{margin-top:4px;accent-color:var(--accent)}
+.plan-block{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:15px}
+.plan-block h3{margin:0 0 8px}
+.final-summary{display:grid;gap:16px}
+.summary-card{border:1px solid var(--line);border-radius:15px;padding:18px}
+.summary-card h3{margin:0 0 10px}
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.small{font-size:13px;color:var(--muted)}
+.badge{
+  display:inline-block;padding:5px 9px;border-radius:99px;
+  background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:800
+}
+.footer-note{margin-top:30px;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:800px){
+  .hero-grid,.layout{grid-template-columns:1fr}
+  .hero{padding:45px 0}
+  .hero-card{margin-top:5px}
+  .steps{display:none}
+  .panel{padding:23px}
+  .options,.grid2,.compare,.summary-grid{grid-template-columns:1fr}
+  .metrics{grid-template-columns:1fr}
+  h1{font-size:48px}
+  .top-status{display:none}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">começar<span>certo</span></div>
+  <div class="top-status" id="topStatus">Protótipo gratuito</div>
+</header>
+
+<section class="hero" id="landing">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Planejamento para quem vai empreender</div>
+      <h1>Antes de investir, organize seu negócio.</h1>
+      <p>Uma ferramenta guiada para transformar uma ideia em um plano de negócio, com números, marketing, checklist e próximos passos.</p>
+      <button class="cta" onclick="startApp()">Começar meu planejamento <span>→</span></button>
+      <div class="small" style="margin-top:14px">Leva cerca de 15 a 20 minutos. Suas respostas ficam neste navegador nesta versão.</div>
+    </div>
+    <div class="hero-card">
+      <h3>Você vai sair com</h3>
+      <div class="mini-list">
+        <div class="mini-item"><div class="check">✓</div><div><b>Seu ponto de partida</b><br><span class="small">Uma visão organizada da ideia.</span></div></div>
+        <div class="mini-item"><div class="check">✓</div><div><b>Modelo de negócio</b><br><span class="small">Franquia x marca própria.</span></div></div>
+        <div class="mini-item"><div class="check">✓</div><div><b>Conta financeira</b><br><span class="small">Ponto de equilíbrio e metas.</span></div></div>
+        <div class="mini-item"><div class="check">✓</div><div><b>Plano de marketing</b><br><span class="small">Ações para os primeiros 30 dias.</span></div></div>
+        <div class="mini-item"><div class="check">✓</div><div><b>Plano de 90 dias</b><br><span class="small">Prioridades para começar.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="app" id="app">
+  <div class="container">
+    <div class="progress-wrap">
+      <div class="progress-top"><span id="progressLabel">Etapa 1 de 7</span><span id="progressPercent">14%</span></div>
+      <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+    <div class="layout">
+      <aside class="steps" id="steps"></aside>
+      <section class="panel" id="panel"></section>
+    </div>
+    <div class="footer-note">Protótipo Começar Certo. As estimativas financeiras são simulações com base nos dados informados e não substituem análise profissional.</div>
+  </div>
+</main>
+
+<script>
+const state = {
+  step: 0,
+  businessType: "",
+  idea: "",
+  experience: "",
+  reason: "",
+  investmentRange: "",
+  startTime: "",
+  model: "",
+  priorities: {},
+  customer: "",
+  locationType: "",
+  city: "",
+  region: "",
+  priceRange: "",
+  competitors: "",
+  differential: "",
+  offer: "",
+  investment: 0,
+  structure: 0,
+  workingCapital: 0,
+  fixedCosts: 0,
+  proLabore: 0,
+  ticket: 0,
+  variableCost: 0,
+  sales: 0,
+  channels: [],
+  digitalAssets: [],
+  tasks: {}
+};
+
+const steps = [
+  "Minha ideia","Meu modelo","Meu mercado","Minha conta","Meu marketing","Minha abertura","Meus 90 dias"
+];
+
+function money(v){
+  return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+}
+function pct(v){
+  return (Number(v)||0).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+"%";
+}
+function startApp(){
+  document.getElementById("landing").style.display="none";
+  document.getElementById("app").classList.add("active");
+  renderSteps();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function renderSteps(){
+  const el=document.getElementById("steps");
+  el.innerHTML=steps.map((s,i)=>`
+    <div class="step ${i===state.step?'active':''} ${i<state.step?'done':''}">
+      <div class="num">${i<state.step?'✓':i+1}</div><div>${s}</div>
+    </div>`).join("");
+}
+function option(text,key,value){
+  return `<button class="option ${state[key]===value?'selected':''}" onclick="setVal('${key}',${JSON.stringify(value)})">${text}</button>`;
+}
+function multi(text,key){
+  const selected=state[key].includes(text);
+  return `<button class="option ${selected?'selected':''}" onclick="toggleMulti('${key}',${JSON.stringify(text)})">${text}</button>`;
+}
+function setVal(key,value){state[key]=value;render();}
+function toggleMulti(key,value){
+  const a=state[key];
+  if(a.includes(value)) state[key]=a.filter(x=>x!==value); else a.push(value);
+  render();
+}
+function field(key,placeholder="",type="text"){
+  return `<input type="${type}" value="${state[key]||''}" placeholder="${placeholder}" oninput="state.${key}=this.value">`;
+}
+function moneyField(key){
+  return `<div class="currency"><span>R$</span><input type="number" min="0" step="0.01" value="${state[key]||''}" placeholder="0" oninput="state.${key}=parseFloat(this.value)||0; updateFinance()"></div>`;
+}
+function question(title,body){return `<div class="question"><label class="title">${title}</label>${body}</div>`}
+function nav(back=true){
+  return `<div class="nav">
+    <button class="btn" ${state.step===0?'disabled':''} onclick="prevStep()">← Voltar</button>
+    <button class="btn primary" onclick="nextStep()">${state.step===6?'Ver meu plano':'Continuar →'}</button>
+  </div>`;
+}
+function render(){
+  renderSteps();
+  const total=steps.length;
+  document.getElementById("progressLabel").textContent=`Etapa ${state.step+1} de ${total}`;
+  const percent=Math.round(((state.step+1)/total)*100);
+  document.getElementById("progressPercent").textContent=percent+"%";
+  document.getElementById("progressBar").style.width=percent+"%";
+  const panel=document.getElementById("panel");
+  panel.innerHTML=[renderIdea,renderModel,renderMarket,renderFinance,renderMarketing,renderOpening,render90][state.step]();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function renderIdea(){
+  return `<h2>Minha ideia</h2><p class="intro">Vamos começar pelo básico. Não precisa ter tudo decidido.</p>
+  ${question("O que você pretende abrir?",`<div class="options">
+    ${["Loja física","Loja online","Alimentação","Clínica ou consultório","Beleza e estética","Escritório ou serviço profissional","Educação","Negócio digital","Indústria ou fabricação","Outro"].map(x=>option(x,"businessType",x)).join("")}</div>`)}
+  ${question("Em poucas palavras, o que você pretende vender?",`<textarea placeholder="Ex.: Quero abrir uma clínica de estética especializada em tratamentos faciais." oninput="state.idea=this.value">${state.idea}</textarea>`)}
+  ${question("Você já tem experiência nesse mercado?",`<div class="options">
+    ${["Trabalho atualmente nesse segmento","Já trabalhei","Tenho algum conhecimento","Não tenho experiência"].map(x=>option(x,"experience",x)).join("")}</div>`)}
+  ${question("Por que você quer abrir esse negócio?",`<div class="options">
+    ${["Quero trabalhar por conta própria","Quero aumentar minha renda","Quero mudar de carreira","Identifiquei uma oportunidade","Quero transformar uma habilidade em negócio","Quero investir meu dinheiro","Outro"].map(x=>option(x,"reason",x)).join("")}</div>`)}
+  ${question("Quanto você pretende investir inicialmente?",`<div class="options">
+    ${["Até R$ 10 mil","R$ 10 mil a R$ 30 mil","R$ 30 mil a R$ 50 mil","R$ 50 mil a R$ 100 mil","R$ 100 mil a R$ 250 mil","Mais de R$ 250 mil","Ainda não sei"].map(x=>option(x,"investmentRange",x)).join("")}</div>`)}
+  ${question("Quando gostaria de começar?",`<div class="options">
+    ${["Nas próximas 4 semanas","Em 1 a 3 meses","Em 3 a 6 meses","Em mais de 6 meses","Ainda não sei"].map(x=>option(x,"startTime",x)).join("")}</div>`)}
+  ${nav()}`;
+}
+function renderModel(){
+  const factors=["Ter autonomia","Contar com suporte","Começar mais rapidamente","Ter liberdade para definir preços","Ter uma marca conhecida","Ter processos prontos","Desenvolver minha própria marca","Poder adaptar o negócio livremente"];
+  return `<h2>Meu modelo</h2><p class="intro">Se você ainda não decidiu entre franquia e marca própria, esta etapa organiza os fatores que devem entrar na decisão.</p>
+  ${question("Você já decidiu como quer começar?",`<div class="options">${["Marca própria","Franquia","Ainda não decidi"].map(x=>option(x,"model",x)).join("")}</div>`)}
+  ${question("O que é mais importante para você?",`<div style="display:grid;gap:9px">${factors.map(f=>`
+    <div style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:15px;border:1px solid var(--line);padding:11px 13px;border-radius:11px">
+      <span>${f}</span>
+      <select onchange="state.priorities[${JSON.stringify(f)}]=this.value">
+        <option value="">Escolha</option><option ${state.priorities[f]==='Pouco importante'?'selected':''}>Pouco importante</option>
+        <option ${state.priorities[f]==='Importante'?'selected':''}>Importante</option><option ${state.priorities[f]==='Muito importante'?'selected':''}>Muito importante</option>
+      </select>
+    </div>`).join("")}</div>`)}
+  <div class="compare" style="margin-top:28px">
+    <div class="compare-card"><span class="badge">Franquia</span><h3>Estrutura e suporte</h3><ul><li>Modelo e processos já estruturados.</li><li>Marca e padrões definidos pelo franqueador.</li><li>Pode envolver taxas e royalties.</li></ul></div>
+    <div class="compare-card"><span class="badge">Marca própria</span><h3>Autonomia e construção</h3><ul><li>Maior liberdade para adaptar o negócio.</li><li>Você constrói a marca e os processos.</li><li>Exige mais decisões na fase inicial.</li></ul></div>
+  </div>
+  <div class="notice" style="margin-top:16px">A ferramenta não escolhe por você. Ela organiza os fatores que precisam ser comparados antes de investir.</div>
+  ${nav()}`;
+}
+function renderMarket(){
+  return `<h2>Meu mercado</h2><p class="intro">Agora vamos colocar o negócio no contexto real em que ele vai competir.</p>
+  ${question("Quem é seu cliente?",`<textarea placeholder="Descreva quem provavelmente comprará de você." oninput="state.customer=this.value">${state.customer}</textarea>`)}
+  ${question("Onde você pretende atender?",`<div class="options">${["Minha cidade","Minha região","Todo o Brasil","Exterior","Online, sem localização específica"].map(x=>option(x,"locationType",x)).join("")}</div>`)}
+  ${(state.locationType==="Minha cidade"||state.locationType==="Minha região")?`
+    <div class="grid2">
+      ${question("Cidade",field("city","Ex.: São José do Rio Preto"))}
+      ${question("Região ou bairro",field("region","Ex.: Zona Sul"))}
+    </div>`:""}
+  ${question("Quanto seu cliente deve pagar em média?",`<div class="options">${["Até R$ 50","R$ 50 a R$ 100","R$ 100 a R$ 250","R$ 250 a R$ 500","R$ 500 a R$ 1.000","Acima de R$ 1.000","Ainda não sei"].map(x=>option(x,"priceRange",x)).join("")}</div>`)}
+  ${question("Você conhece seus concorrentes?",`<div class="options">${["Sim","Alguns","Não"].map(x=>option(x,"competitorsLevel",x)).join("")}</div>`)}
+  ${question("Digite até 5 concorrentes que você conhece",`<textarea placeholder="Nome ou descrição dos concorrentes" oninput="state.competitors=this.value">${state.competitors}</textarea>`)}
+  ${question("O que você pretende oferecer?",`<textarea placeholder="Produtos, serviços, experiência, diferenciais da oferta..." oninput="state.offer=this.value">${state.offer}</textarea>`)}
+  ${question("Por que alguém escolheria seu negócio em vez dos concorrentes?",`<textarea placeholder="Se ainda não souber, escreva simplesmente 'ainda não sei'." oninput="state.differential=this.value">${state.differential}</textarea>`)}
+  ${nav()}`;
+}
+function financeMetrics(){
+  const margin=state.ticket-state.variableCost;
+  const fixed=state.fixedCosts+state.proLabore;
+  const breakeven=margin>0?fixed/margin:0;
+  const revenue=state.ticket*state.sales;
+  const gross=margin*state.sales;
+  return {margin,fixed,breakeven,revenue,gross};
+}
+function updateFinance(){}
+function renderFinance(){
+  const m=financeMetrics();
+  const has=state.ticket>0 && state.variableCost>=0 && (state.fixedCosts+state.proLabore)>0;
+  return `<h2>Minha conta</h2><p class="intro">Uma simulação simples para entender quanto o negócio precisa vender para cobrir os custos.</p>
+  <div class="grid2">
+    ${question("Investimento inicial",moneyField("investment"))}
+    ${question("Valor reservado para estrutura",moneyField("structure"))}
+    ${question("Capital de giro reservado",moneyField("workingCapital"))}
+    ${question("Custos fixos mensais",moneyField("fixedCosts"))}
+    ${question("Pró-labore desejado",moneyField("proLabore"))}
+    ${question("Preço médio por venda",moneyField("ticket"))}
+    ${question("Custo variável por venda",moneyField("variableCost"))}
+    ${question("Vendas estimadas por mês",`<input type="number" min="0" value="${state.sales||''}" placeholder="Ex.: 100" oninput="state.sales=parseFloat(this.value)||0">`)}
+  </div>
+  ${has?`<div class="result"><h3>Simulação atual</h3>
+    <div class="metrics">
+      <div class="metric"><div class="label">Margem por venda</div><div class="value">${money(m.margin)}</div></div>
+      <div class="metric"><div class="label">Ponto de equilíbrio</div><div class="value">${m.breakeven.toFixed(0)} vendas</div></div>
+      <div class="metric"><div class="label">Faturamento no volume informado</div><div class="value">${money(m.revenue)}</div></div>
+    </div>
+    <p class="small" style="margin-bottom:0">Ponto de equilíbrio estimado com base nos custos fixos + pró-labore divididos pela margem por venda.</p>
+  </div>`:
+  `<div class="notice">Preencha pelo menos custos fixos, pró-labore, preço médio e custo variável para visualizar a simulação.</div>`}
+  <div class="notice" style="margin-top:15px">Os números são uma simulação. Impostos, taxas, sazonalidade, inadimplência e outras despesas podem alterar o resultado real.</div>
+  ${nav()}`;
+}
+function renderMarketing(){
+  const channels=["Instagram","Google","WhatsApp","TikTok","Indicação","Parcerias","Eventos","Marketing local","Panfletagem","Outdoor","Marketplace"];
+  const assets=["Instagram","Site","Google Business Profile","WhatsApp Business","Identidade visual","Lista de contatos","Nenhum deles"];
+  return `<h2>Meu marketing</h2><p class="intro">Vamos definir como você pretende encontrar os primeiros clientes.</p>
+  ${question("Quais canais pretende usar?",`<div class="options">${channels.map(x=>multi(x,"channels")).join("")}</div>`)}
+  ${question("Você já tem algum destes ativos?",`<div class="options">${assets.map(x=>multi(x,"digitalAssets")).join("")}</div>`)}
+  <div class="plan-block"><h3>Plano inicial de 30 dias</h3>
+    <div class="small">A primeira versão usa regras simples. Na versão com IA, o plano será adaptado ao seu negócio e às suas respostas.</div>
+    <div class="metrics">
+      <div class="metric"><div class="label">Conteúdo</div><div class="value">12 ideias</div></div>
+      <div class="metric"><div class="label">Aquisição</div><div class="value">4 ações</div></div>
+      <div class="metric"><div class="label">Acompanhamento</div><div class="value">4 indicadores</div></div>
+    </div>
+  </div>
+  <div class="plan-block">
+    <h3>Primeiras ações</h3>
+    <ul>
+      <li>Definir uma oferta inicial clara.</li>
+      <li>Organizar Google e WhatsApp.</li>
+      <li>Publicar conteúdos que expliquem o problema e a solução.</li>
+      <li>Criar uma ação de lançamento ou captação.</li>
+      <li>Medir contatos, vendas, ticket e custo de aquisição.</li>
+    </ul>
+  </div>
+  ${nav()}`;
+}
+function taskList(){
+  const groups={
+    "Negócio":["Definir modelo de negócio","Definir oferta principal","Definir preços","Validar mercado"],
+    "Financeiro":["Definir investimento","Calcular capital de giro","Mapear custos","Calcular ponto de equilíbrio"],
+    "Estrutura":["Definir local ou operação","Pesquisar fornecedores","Definir equipamentos/estoque"],
+    "Administrativo":["Verificar CNPJ e enquadramento","Verificar contabilidade","Verificar licenças aplicáveis","Separar conta bancária"],
+    "Marketing":["Definir nome","Definir identidade visual","Configurar Google","Configurar Instagram","Configurar WhatsApp"],
+    "Vendas":["Definir processo de atendimento","Definir formas de pagamento","Definir meta inicial","Preparar oferta de lançamento"]
+  };
+  let html="";
+  Object.entries(groups).forEach(([g,items])=>{
+    html+=`<div class="plan-block"><h3>${g}</h3><div class="checklist">${items.map((t,i)=>{
+      const key=g+"-"+i;
+      return `<label class="task"><input type="checkbox" ${state.tasks[key]?'checked':''} onchange="state.tasks['${key}']=this.checked"><span>${t}</span></label>`;
+    }).join("")}</div></div>`;
+  });
+  return html;
+}
+function renderOpening(){
+  return `<h2>Minha abertura</h2><p class="intro">Uma checklist inicial para não deixar decisões importantes espalhadas.</p>
+  ${taskList()}
+  <div class="notice" style="margin-top:16px">Itens legais e regulatórios dependem do tipo de atividade e do município. Use esta lista como organização inicial e confirme as exigências aplicáveis antes de abrir.</div>
+  ${nav()}`;
+}
+function render90(){
+  const tasks=[
+    ["Dias 1-30","Definir modelo, oferta, público, preço e estrutura financeira."],
+    ["Dias 31-60","Preparar canais, fornecedores, comunicação e campanha de lançamento."],
+    ["Dias 61-90","Medir vendas, ajustar oferta, melhorar aquisição e acompanhar indicadores."]
+  ];
+  const completed=Object.values(state.tasks).filter(Boolean).length;
+  return `<h2>Meus 90 dias</h2><p class="intro">Agora transformamos o planejamento em uma sequência simples de execução.</p>
+  ${tasks.map(([t,d])=>`<div class="plan-block"><span class="badge">${t}</span><h3 style="margin-top:10px">${d}</h3>
+    <ul>
+      ${t==="Dias 1-30"?'<li>Validar a oferta com potenciais clientes.</li><li>Fechar principais decisões de estrutura.</li><li>Organizar os canais de atendimento.</li>':''}
+      ${t==="Dias 31-60"?'<li>Colocar o negócio em operação.</li><li>Rodar a primeira campanha.</li><li>Começar a medir contatos e vendas.</li>':''}
+      ${t==="Dias 61-90"?'<li>Identificar os canais que trazem clientes.</li><li>Revisar preço, oferta e comunicação.</li><li>Definir as prioridades do próximo trimestre.</li>':''}
+    </ul>
+  </div>`).join("")}
+  <div class="result"><h3>Seu progresso</h3><p>${completed} itens da checklist foram marcados como concluídos.</p><button class="btn primary" onclick="showFinal()">Ver meu plano completo →</button></div>
+  ${nav()}`;
+}
+function nextStep(){
+  if(state.step<6){state.step++;render();}else showFinal();
+}
+function prevStep(){if(state.step>0){state.step--;render();}}
+function showFinal(){
+  const m=financeMetrics();
+  const completed=Object.values(state.tasks).filter(Boolean).length;
+  const location=[state.city,state.region].filter(Boolean).join(" - ");
+  document.getElementById("panel").innerHTML=`
+    <h2>Seu plano está pronto</h2>
+    <p class="intro">Esta é a primeira versão do seu planejamento. Use o resumo para identificar o que já está claro e o que ainda precisa ser validado.</p>
+    <div class="final-summary">
+      <div class="summary-card">
+        <span class="badge">Seu negócio</span>
+        <h3>${state.businessType||"Não informado"}</h3>
+        <p>${state.idea||"Você ainda não descreveu sua ideia."}</p>
+        <div class="summary-grid">
+          <div><span class="small">Experiência</span><br><b>${state.experience||"Não informado"}</b></div>
+          <div><span class="small">Investimento previsto</span><br><b>${state.investmentRange||"Não informado"}</b></div>
+          <div><span class="small">Prazo</span><br><b>${state.startTime||"Não informado"}</b></div>
+          <div><span class="small">Local</span><br><b>${location||state.locationType||"Não informado"}</b></div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <span class="badge">Modelo</span>
+        <h3>${state.model||"Ainda não decidido"}</h3>
+        <p>Compare as prioridades, custos, autonomia e suporte antes de assumir um compromisso financeiro.</p>
+      </div>
+      <div class="summary-card">
+        <span class="badge">Financeiro</span>
+        <div class="metrics">
+          <div class="metric"><div class="label">Investimento informado</div><div class="value">${money(state.investment)}</div></div>
+          <div class="metric"><div class="label">Ponto de equilíbrio</div><div class="value">${m.breakeven?m.breakeven.toFixed(0)+" vendas":"Preencher dados"}</div></div>
+          <div class="metric"><div class="label">Faturamento estimado</div><div class="value">${m.revenue?money(m.revenue):"Preencher dados"}</div></div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <span class="badge">Marketing</span>
+        <h3>${state.channels.length?state.channels.join(" · "):"Canais ainda não definidos"}</h3>
+        <p>Priorize poucos canais no começo, crie uma oferta clara e acompanhe contatos, vendas, ticket e custo de aquisição.</p>
+      </div>
+      <div class="summary-card">
+        <span class="badge">Abertura</span>
+        <h3>${completed} itens concluídos</h3>
+        <p>Continue usando a checklist como painel de preparação.</p>
+      </div>
+      <div class="summary-card">
+        <span class="badge">Próximos 90 dias</span>
+        <h3>Estruturar → preparar → vender e ajustar</h3>
+        <p>Seu próximo passo deve ser resolver primeiro as lacunas que podem mudar a decisão de investir.</p>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="state.step=6;render()">← Voltar ao plano</button>
+      <button class="btn primary" onclick="window.print()">Gerar / imprimir meu plano</button>
+    </div>`;
+  document.getElementById("progressLabel").textContent="Plano final";
+  document.getElementById("progressPercent").textContent="100%";
+  document.getElementById("progressBar").style.width="100%";
+  renderSteps();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>
