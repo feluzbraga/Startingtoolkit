@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starting Toolkit | My Market</title>
+<style>
+:root{--navy:#19283d;--purple:#6c63ff;--soft:#f0efff;--bg:#f6f7fb;--muted:#667085;--line:#e4e7ec;--green:#23966b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--navy);line-height:1.5}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:1080px;margin:auto;padding:24px 18px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.brand{font-weight:800;letter-spacing:2px;font-size:14px;color:inherit;text-decoration:none}
+.top-right{display:flex;align-items:center;gap:12px}
+.lang{border:1px solid var(--line);background:white;border-radius:10px;padding:9px}
+.home{font-size:13px;color:var(--purple);text-decoration:none}
+.hero{background:var(--navy);color:white;border-radius:22px;padding:28px 30px;margin-bottom:18px}
+.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;opacity:.8}
+.hero h1{font-size:30px;margin:8px 0}
+.hero p{max-width:740px;margin:0;opacity:.88;font-size:15px}
+.progress{margin-top:22px}
+.progress-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px}
+.bar{height:8px;background:#ffffff30;border-radius:20px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#b8e986;transition:width .2s}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:25px;margin-bottom:17px}
+.section-title{font-size:20px;margin:0 0 6px}
+.section-help{color:var(--muted);font-size:14px;margin:0 0 20px}
+.q{margin:22px 0}
+.q>label,.mini{display:block;font-weight:700;margin-bottom:8px}
+.help{font-size:13px;color:var(--muted);margin:-2px 0 10px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.opt{border:1px solid var(--line);background:white;border-radius:12px;padding:12px;text-align:left;color:var(--navy);min-height:44px}
+.opt:hover{border-color:#aaa5ff}
+.opt.selected{border-color:var(--purple);background:var(--soft);font-weight:700;color:#5148d9;box-shadow:0 0 0 1px var(--purple)}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;background:white;color:var(--navy);outline:none}
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #6c63ff18}
+.subgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.note{background:#f0f3f8;border:1px solid #dce4ee;border-radius:12px;padding:13px;color:#475467;font-size:13px;margin-top:12px}
+.competitor{border:1px solid var(--line);border-radius:14px;padding:17px;margin:13px 0}
+.competitor h3{font-size:15px;margin:0 0 13px}
+.competitor-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:10px}
+.competitor label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}
+.position-wrap{overflow:hidden;border:1px solid var(--line);border-radius:15px;padding:16px;margin-top:15px}
+.map{height:310px;position:relative;margin:25px 32px 35px 45px;border-left:2px solid #98a2b3;border-bottom:2px solid #98a2b3;background:linear-gradient(to right,transparent 49.8%,#e8eaf0 50%,transparent 50.2%),linear-gradient(to bottom,transparent 49.8%,#e8eaf0 50%,transparent 50.2%)}
+.map:before{content:"";position:absolute;left:0;right:0;top:0;border-top:1px dashed #e8eaf0}
+.map:after{content:"";position:absolute;top:0;bottom:0;left:50%;border-left:1px dashed #e8eaf0}
+.axis-y{position:absolute;left:-47px;top:50%;transform:translateY(-50%) rotate(-90deg);font-size:11px;color:var(--muted);white-space:nowrap}
+.axis-x{position:absolute;bottom:-27px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted);white-space:nowrap}
+.map-label{position:absolute;font-size:10px;color:var(--muted)}
+.map-label.top{top:-20px;left:0}
+.map-label.bottom{bottom:-20px;left:0}
+.map-label.left{left:0;bottom:-39px}
+.map-label.right{right:0;bottom:-39px}
+.dot{position:absolute;transform:translate(-50%,-50%);width:17px;height:17px;border-radius:50%;border:2px solid white;background:#8b93a5;box-shadow:0 1px 5px #0003}
+.dot.you{background:var(--green);width:21px;height:21px}
+.map-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;background:#8b93a5}
+.legend-dot.you{background:var(--green)}
+.actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+.btn{border:0;border-radius:11px;padding:13px 18px;font-weight:700}
+.primary{background:var(--purple);color:white}
+.secondary{background:white;color:var(--navy);border:1px solid var(--line)}
+.save{font-size:12px;color:var(--muted);margin-top:10px;min-height:18px}
+.summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.summary-item{border:1px solid var(--line);border-radius:13px;padding:14px;overflow-wrap:anywhere}
+.summary-item small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.summary-item div{font-size:14px;white-space:pre-wrap}
+.hidden{display:none!important}
+@media(max-width:700px){
+.app{padding:15px 12px 40px}.hero{padding:23px 19px}.hero h1{font-size:25px}
+.card{padding:19px}.opts,.subgrid,.summary-grid{grid-template-columns:1fr}
+.competitor-grid{grid-template-columns:1fr}
+.actions{flex-direction:column}.btn{width:100%}
+.map{height:260px;margin-left:42px;margin-right:18px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="top">
+<a class="brand" href="../index.html">STARTING TOOLKIT</a>
+<div class="top-right">
+<a class="home" href="../index.html" id="homeLink">Início</a>
+<select id="language" class="lang" aria-label="Language">
+<option value="pt">PT</option><option value="en">EN</option><option value="es">ES</option>
+</select>
+</div>
+</header>
+
+<section class="hero">
+<div class="eyebrow" id="eyebrow"></div>
+<h1 id="title"></h1>
+<p id="lead"></p>
+<div class="progress">
+<div class="progress-top"><span id="progressLabel"></span><strong id="progressPct">0%</strong></div>
+<div class="bar"><i id="bar"></i></div>
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="regionTitle"></h2>
+<p class="section-help" id="regionHelp"></p>
+<div class="q">
+<label id="regionQ"></label>
+<div class="opts" id="regionOpts"></div>
+<input id="regionDetail" style="margin-top:10px">
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="needsTitle"></h2>
+<p class="section-help" id="needsHelp"></p>
+<div class="opts" id="needsOpts"></div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="typesTitle"></h2>
+<p class="section-help" id="typesHelp"></p>
+<div class="opts" id="typesOpts"></div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="competitionTitle"></h2>
+<p class="section-help" id="competitionHelp"></p>
+<div class="q">
+<label id="strengthsQ"></label>
+<div class="opts" id="strengthsOpts"></div>
+</div>
+<div class="q">
+<label id="weaknessesQ"></label>
+<div class="opts" id="weaknessesOpts"></div>
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="competitorsTitle"></h2>
+<p class="section-help" id="competitorsHelp"></p>
+<div id="competitorCards"></div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="demandTitle"></h2>
+<p class="section-help" id="demandHelp"></p>
+<div class="q">
+<label id="sourcesQ"></label>
+<div class="opts" id="sourcesOpts"></div>
+</div>
+<div class="q">
+<label id="signalsQ"></label>
+<div class="opts" id="signalsOpts"></div>
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="opportunityTitle"></h2>
+<p class="section-help" id="opportunityHelp"></p>
+<div class="q">
+<label id="opportunitiesQ"></label>
+<div class="opts" id="opportunitiesOpts"></div>
+</div>
+<div class="q">
+<label id="differentiatorsQ"></label>
+<div class="opts" id="differentiatorsOpts"></div>
+</div>
+<div class="q">
+<label id="validationQ"></label>
+<div class="opts" id="validationOpts"></div>
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="positionTitle"></h2>
+<p class="section-help" id="positionHelp"></p>
+<div id="positionFields"></div>
+<div class="position-wrap">
+<strong id="mapTitle"></strong>
+<div class="map" id="map">
+<span class="axis-y" id="axisY"></span>
+<span class="axis-x" id="axisX"></span>
+<span class="map-label top" id="mapTop"></span>
+<span class="map-label bottom" id="mapBottom"></span>
+<span class="map-label left" id="mapLeft"></span>
+<span class="map-label right" id="mapRight"></span>
+</div>
+<div class="map-legend">
+<span><i class="legend-dot"></i><span id="competitorLegend"></span></span>
+<span><i class="legend-dot you"></i><span id="youLegend"></span></span>
+</div>
+<div class="note" id="mapNote"></div>
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="summaryTitle"></h2>
+<p class="section-help" id="summaryHelp"></p>
+<div class="summary-grid" id="summaryGrid"></div>
+<div class="actions">
+<button class="btn secondary" id="saveBtn" type="button"></button>
+<button class="btn primary" id="summaryBtn" type="button"></button>
+</div>
+<div class="save" id="saveStatus" aria-live="polite"></div>
+</section>
+
+<section class="card hidden" id="result">
+<h2 class="section-title" id="resultTitle"></h2>
+<p class="section-help" id="resultHelp"></p>
+<div class="summary-grid" id="resultGrid"></div>
+<div class="actions">
+<button class="btn secondary" id="editBtn" type="button"></button>
+<button class="btn primary" id="continueBtn" type="button"></button>
+</div>
+</section>
+
+</div>
+
+<script>
+const KEY="startingToolkitMarketV4";
+const LANG="startingToolkitLanguage";
+const $=id=>document.getElementById(id);
+
+const state={
+lang:"pt",
+region:"",
+regionDetail:"",
+needs:[],
+competitorTypes:[],
+strengths:[],
+weaknesses:[],
+competitors:[
+{name:"",price:"",quality:""},
+{name:"",price:"",quality:""},
+{name:"",price:"",quality:""}
+],
+sources:[],
+signals:[],
+opportunities:[],
+differentiators:[],
+validation:[],
+position:{
+price:"",quality:"",service:"",specialization:"",convenience:"",experience:""
+}
+};
+
+const D={
+pt:{
+eyebrow:"ETAPA 03 · SEU MERCADO",
+title:"Conheça o mercado onde pretende atuar.",
+lead:"Entenda o público, observe a concorrência e identifique oportunidades antes de definir como seu negócio vai competir.",
+progress:"Progresso do módulo",
+home:"Início",
+regionTitle:"Onde está o mercado que você pretende atender?",
+regionHelp:"Pense na área geográfica onde estão seus potenciais clientes, não apenas no local onde você mora.",
+regionQ:"Qual será a abrangência principal do negócio?",
+regions:["Meu bairro","Minha cidade","Minha região","Várias cidades","Todo o estado","Todo o país","Mercado internacional","Principalmente online","Ainda não sei"],
+regionDetail:"Quais cidades, regiões ou países pretende atender? (opcional)",
+needsTitle:"Quais necessidades seu negócio pretende atender?",
+needsHelp:"Selecione as necessidades ou desejos que motivam seus potenciais clientes a procurar uma solução.",
+needs:["Economizar tempo","Economizar dinheiro","Ter mais qualidade","Resolver um problema específico","Ter mais praticidade ou conveniência","Melhorar saúde e bem-estar","Aprender ou se desenvolver","Ter acesso a produtos ou serviços especializados","Melhorar aparência ou autoestima","Ter uma experiência ou lazer","Aumentar resultados do próprio negócio","Outro tipo de necessidade"],
+typesTitle:"Que tipos de concorrentes existem nesse mercado?",
+typesHelp:"Considere concorrentes diretos e também outras soluções que disputam a atenção e o dinheiro do mesmo cliente.",
+types:["Concorrentes diretos","Concorrentes indiretos","Grandes marcas ou redes","Pequenos negócios locais","Negócios exclusivamente online","Profissionais independentes","Marketplaces e plataformas"],
+competitionTitle:"Como seus concorrentes competem?",
+competitionHelp:"Identifique características que aparecem com frequência entre as alternativas disponíveis para seu cliente.",
+strengthsQ:"Quais são os pontos fortes mais comuns dos concorrentes?",
+strengths:["Preço competitivo","Qualidade","Marca e reputação","Atendimento","Localização","Conveniência","Variedade","Especialização","Rapidez","Experiência","Presença digital","Estrutura física"],
+weaknessesQ:"Onde você percebe vulnerabilidades ou falhas?",
+weaknesses:["Preços elevados","Atendimento insatisfatório","Pouca diferenciação","Localização pouco conveniente","Presença digital fraca","Variedade limitada","Experiência do cliente ruim","Prazo de entrega elevado","Pouca especialização","Reputação ou avaliações negativas"],
+competitorsTitle:"Compare até três concorrentes",
+competitorsHelp:"Escolha concorrentes relevantes. Você pode preencher apenas um ou dois. Use sua percepção ou informações pesquisadas.",
+competitor:"Concorrente",
+competitorName:"Nome ou marca",
+price:"Nível de preço",
+quality:"Nível de qualidade percebida",
+priceOptions:["Baixo","Médio","Alto"],
+qualityOptions:["Baixa","Média","Alta"],
+demandTitle:"Existem sinais de demanda?",
+demandHelp:"Procure evidências de que as pessoas realmente procuram, compram ou demonstram interesse por soluções como a sua.",
+sourcesQ:"Onde você pretende pesquisar o mercado?",
+sources:["Google e mecanismos de busca","Google Maps","Instagram e TikTok","Marketplaces","Avaliações e comentários de clientes","Conversas com potenciais clientes","Pré-venda ou lista de interessados","Página de teste ou landing page","Teste de anúncio ou oferta"],
+signalsQ:"Quais sinais de demanda você já identificou?",
+signals:["Muitas buscas pelo produto ou serviço","Muitas avaliações de clientes","Pedidos de orçamento frequentes","Comentários e perguntas nas redes","Compras recorrentes","Concorrentes em crescimento","Lista de espera ou agenda cheia","Interesse em um teste ou oferta","Ainda não identifiquei sinais"],
+opportunityTitle:"Onde pode estar sua oportunidade?",
+opportunityHelp:"Uma oportunidade aparece quando existe uma necessidade relevante que as alternativas atuais não atendem bem.",
+opportunitiesQ:"Que oportunidades você percebe?",
+opportunities:["Público pouco atendido","Necessidade não resolvida","Faixa de preço pouco explorada","Melhor qualidade","Atendimento superior","Especialização","Mais conveniência","Melhor experiência","Localização mais adequada","Canal digital","Outro"],
+differentiatorsQ:"Em quais atributos você gostaria de se diferenciar?",
+differentiators:["Preço","Qualidade","Atendimento","Especialização","Experiência","Conveniência","Rapidez","Variedade","Personalização","Tecnologia","Relacionamento"],
+validationQ:"Como pretende validar essa oportunidade?",
+validation:["Entrevistar potenciais clientes","Testar pré-vendas","Criar uma landing page","Testar um anúncio","Criar um MVP ou projeto-piloto","Testar preços","Conseguir os primeiros clientes interessados","Pesquisar mais antes de decidir"],
+positionTitle:"Como você pretende se posicionar?",
+positionHelp:"Indique o nível que pretende oferecer em cada atributo. Se ainda não souber, selecione Não definido.",
+dimensions:["Preço","Qualidade","Atendimento","Especialização","Conveniência","Experiência"],
+levels:["Baixo","Médio","Alto","Não definido"],
+mapTitle:"Mapa de posicionamento dos concorrentes",
+axisY:"QUALIDADE PERCEBIDA",
+axisX:"PREÇO",
+mapTop:"Qualidade alta",
+mapBottom:"Qualidade baixa",
+mapLeft:"Preço baixo",
+mapRight:"Preço alto",
+competitorLegend:"Concorrentes",
+youLegend:"Seu negócio",
+mapNote:"O mapa considera preço e qualidade percebida. Os pontos são posicionados com base nas opções selecionadas. Use-o como referência visual, não como avaliação objetiva do mercado.",
+summaryTitle:"Resumo da análise de mercado",
+summaryHelp:"Suas respostas serão utilizadas na análise SWOT e no plano final.",
+save:"Salvar respostas",
+summary:"Ver meu resumo",
+saved:"Respostas salvas neste navegador.",
+resultTitle:"Seu Market Snapshot",
+resultHelp:"Confira os principais elementos identificados na sua análise.",
+labels:["Região de atuação","Necessidades atendidas","Tipos de concorrentes","Pontos fortes da concorrência","Vulnerabilidades percebidas","Concorrentes analisados","Fontes de pesquisa","Sinais de demanda","Oportunidades","Diferenciais pretendidos","Formas de validação","Posicionamento pretendido"],
+edit:"Voltar e editar",
+continue:"Continuar para Minha análise SWOT",
+notSet:"Não definido",
+noData:"Ainda não informado"
+},
+en:{
+eyebrow:"STEP 03 · YOUR MARKET",
+title:"Understand the market you want to enter.",
+lead:"Understand your audience, assess competitors and identify opportunities before deciding how your business will compete.",
+progress:"Module progress",home:"Home",
+regionTitle:"Where is the market you intend to serve?",
+regionHelp:"Think about the geographic area where your potential customers are, not just where you live.",
+regionQ:"What will be your main market reach?",
+regions:["My neighborhood","My city","My region","Several cities","Across the state","Nationwide","International market","Mainly online","Not sure yet"],
+regionDetail:"Which cities, regions or countries do you intend to serve? (optional)",
+needsTitle:"What needs will your business address?",
+needsHelp:"Select the needs or desires that lead potential customers to look for a solution.",
+needs:["Save time","Save money","Get better quality","Solve a specific problem","Have more convenience","Improve health and wellness","Learn or develop skills","Access specialized products or services","Improve appearance or confidence","Enjoy an experience or leisure","Improve business results","Another type of need"],
+typesTitle:"What types of competitors exist in this market?",
+typesHelp:"Consider direct competitors and other solutions competing for the same customer's attention and money.",
+types:["Direct competitors","Indirect competitors","Large brands or chains","Small local businesses","Online-only businesses","Independent professionals","Marketplaces and platforms"],
+competitionTitle:"How do competitors compete?",
+competitionHelp:"Identify characteristics that frequently appear among the alternatives available to your customer.",
+strengthsQ:"What are the most common competitor strengths?",
+strengths:["Competitive pricing","Quality","Brand and reputation","Customer service","Location","Convenience","Variety","Specialization","Speed","Experience","Digital presence","Physical structure"],
+weaknessesQ:"Where do you notice weaknesses or gaps?",
+weaknesses:["High prices","Poor customer service","Little differentiation","Inconvenient location","Weak digital presence","Limited variety","Poor customer experience","Long delivery times","Lack of specialization","Negative reputation or reviews"],
+competitorsTitle:"Compare up to three competitors",
+competitorsHelp:"Choose relevant competitors. You can fill in just one or two. Use your perception or researched information.",
+competitor:"Competitor",competitorName:"Name or brand",
+price:"Price level",quality:"Perceived quality level",
+priceOptions:["Low","Medium","High"],qualityOptions:["Low","Medium","High"],
+demandTitle:"Are there signs of demand?",
+demandHelp:"Look for evidence that people actually search for, buy or show interest in solutions like yours.",
+sourcesQ:"Where do you plan to research the market?",
+sources:["Google and search engines","Google Maps","Instagram and TikTok","Marketplaces","Customer reviews and comments","Conversations with potential customers","Pre-sales or waiting list","Test page or landing page","Ad or offer test"],
+signalsQ:"What demand signals have you identified?",
+signals:["Many searches for the product or service","Many customer reviews","Frequent quote requests","Comments and questions on social media","Repeat purchases","Growing competitors","Waiting list or fully booked schedule","Interest in a test or offer","No signals identified yet"],
+opportunityTitle:"Where might your opportunity be?",
+opportunityHelp:"An opportunity exists when a relevant need is not being well served by current alternatives.",
+opportunitiesQ:"What opportunities do you see?",
+opportunities:["Underserved audience","Unmet need","Underexplored price range","Better quality","Better service","Specialization","More convenience","Better experience","Better location","Digital channel","Other"],
+differentiatorsQ:"Which attributes would you like to differentiate on?",
+differentiators:["Price","Quality","Service","Specialization","Experience","Convenience","Speed","Variety","Personalization","Technology","Relationships"],
+validationQ:"How do you intend to validate this opportunity?",
+validation:["Interview potential customers","Test pre-sales","Create a landing page","Test an ad","Build an MVP or pilot","Test pricing","Get the first interested customers","Research further before deciding"],
+positionTitle:"How do you intend to position your business?",
+positionHelp:"Select the level you intend to offer for each attribute. If you are unsure, select Not defined.",
+dimensions:["Price","Quality","Service","Specialization","Convenience","Experience"],
+levels:["Low","Medium","High","Not defined"],
+mapTitle:"Competitor positioning map",
+axisY:"PERCEIVED QUALITY",axisX:"PRICE",
+mapTop:"High quality",mapBottom:"Low quality",
+mapLeft:"Low price",mapRight:"High price",
+competitorLegend:"Competitors",youLegend:"Your business",
+mapNote:"The map uses price and perceived quality. Points are positioned according to your selections. Use it as a visual reference, not an objective market assessment.",
+summaryTitle:"Market analysis summary",
+summaryHelp:"Your answers will be used in the SWOT analysis and final plan.",
+save:"Save answers",summary:"View my summary",
+saved:"Answers saved in this browser.",
+resultTitle:"Your Market Snapshot",
+resultHelp:"Review the main elements identified in your analysis.",
+labels:["Market reach","Customer needs","Competitor types","Competitor strengths","Perceived weaknesses","Competitors analyzed","Research sources","Demand signals","Opportunities","Intended differentiators","Validation methods","Intended positioning"],
+edit:"Back and edit",continue:"Continue to My SWOT Analysis",
+notSet:"Not defined",noData:"Not provided"
+},
+es:{
+eyebrow:"ETAPA 03 · TU MERCADO",
+title:"Conoce el mercado en el que quieres operar.",
+lead:"Comprende al público, analiza la competencia e identifica oportunidades antes de decidir cómo competirá tu negocio.",
+progress:"Progreso del módulo",home:"Inicio",
+regionTitle:"¿Dónde está el mercado que quieres atender?",
+regionHelp:"Piensa en el área geográfica donde están tus clientes potenciales, no solamente donde vives.",
+regionQ:"¿Cuál será el alcance principal del negocio?",
+regions:["Mi barrio","Mi ciudad","Mi región","Varias ciudades","Todo el estado","Todo el país","Mercado internacional","Principalmente online","Aún no lo sé"],
+regionDetail:"¿Qué ciudades, regiones o países piensas atender? (opcional)",
+needsTitle:"¿Qué necesidades atenderá tu negocio?",
+needsHelp:"Selecciona las necesidades o deseos que llevan a los clientes potenciales a buscar una solución.",
+needs:["Ahorrar tiempo","Ahorrar dinero","Obtener más calidad","Resolver un problema específico","Tener más comodidad","Mejorar la salud y el bienestar","Aprender o desarrollarse","Acceder a productos o servicios especializados","Mejorar la apariencia o autoestima","Disfrutar de una experiencia o entretenimiento","Mejorar los resultados de un negocio","Otro tipo de necesidad"],
+typesTitle:"¿Qué tipos de competidores existen en este mercado?",
+typesHelp:"Considera competidores directos y otras soluciones que compiten por la atención y el dinero del mismo cliente.",
+types:["Competidores directos","Competidores indirectos","Grandes marcas o cadenas","Pequeños negocios locales","Negocios exclusivamente online","Profesionales independientes","Marketplaces y plataformas"],
+competitionTitle:"¿Cómo compiten tus competidores?",
+competitionHelp:"Identifica características frecuentes entre las alternativas disponibles para tus clientes.",
+strengthsQ:"¿Cuáles son los puntos fuertes más comunes de la competencia?",
+strengths:["Precio competitivo","Calidad","Marca y reputación","Atención","Ubicación","Comodidad","Variedad","Especialización","Rapidez","Experiencia","Presencia digital","Estructura física"],
+weaknessesQ:"¿Dónde percibes debilidades o fallos?",
+weaknesses:["Precios elevados","Atención insatisfactoria","Poca diferenciación","Ubicación poco conveniente","Presencia digital débil","Variedad limitada","Mala experiencia del cliente","Plazos de entrega elevados","Poca especialización","Reputación o reseñas negativas"],
+competitorsTitle:"Compara hasta tres competidores",
+competitorsHelp:"Elige competidores relevantes. Puedes completar solo uno o dos. Utiliza tu percepción o información investigada.",
+competitor:"Competidor",competitorName:"Nombre o marca",
+price:"Nivel de precio",quality:"Nivel de calidad percibida",
+priceOptions:["Bajo","Medio","Alto"],qualityOptions:["Baja","Media","Alta"],
+demandTitle:"¿Existen señales de demanda?",
+demandHelp:"Busca evidencias de que las personas realmente buscan, compran o muestran interés por soluciones como la tuya.",
+sourcesQ:"¿Dónde piensas investigar el mercado?",
+sources:["Google y buscadores","Google Maps","Instagram y TikTok","Marketplaces","Reseñas y comentarios de clientes","Conversaciones con clientes potenciales","Preventas o lista de interesados","Página de prueba o landing page","Prueba de anuncio u oferta"],
+signalsQ:"¿Qué señales de demanda has identificado?",
+signals:["Muchas búsquedas del producto o servicio","Muchas reseñas de clientes","Solicitudes frecuentes de presupuestos","Comentarios y preguntas en redes sociales","Compras recurrentes","Competidores en crecimiento","Lista de espera o agenda llena","Interés en una prueba u oferta","Aún no he identificado señales"],
+opportunityTitle:"¿Dónde puede estar tu oportunidad?",
+opportunityHelp:"Existe una oportunidad cuando una necesidad relevante no está bien atendida por las alternativas actuales.",
+opportunitiesQ:"¿Qué oportunidades percibes?",
+opportunities:["Público poco atendido","Necesidad no resuelta","Rango de precios poco explorado","Mejor calidad","Mejor atención","Especialización","Más comodidad","Mejor experiencia","Ubicación más adecuada","Canal digital","Otro"],
+differentiatorsQ:"¿En qué atributos te gustaría diferenciarte?",
+differentiators:["Precio","Calidad","Atención","Especialización","Experiencia","Comodidad","Rapidez","Variedad","Personalización","Tecnología","Relaciones"],
+validationQ:"¿Cómo piensas validar esta oportunidad?",
+validation:["Entrevistar a clientes potenciales","Probar preventas","Crear una landing page","Probar un anuncio","Crear un MVP o proyecto piloto","Probar precios","Conseguir los primeros clientes interesados","Investigar más antes de decidir"],
+positionTitle:"¿Cómo piensas posicionar tu negocio?",
+positionHelp:"Indica el nivel que quieres ofrecer en cada atributo. Si aún no lo sabes, selecciona No definido.",
+dimensions:["Precio","Calidad","Atención","Especialización","Comodidad","Experiencia"],
+levels:["Bajo","Medio","Alto","No definido"],
+mapTitle:"Mapa de posicionamiento de competidores",
+axisY:"CALIDAD PERCIBIDA",axisX:"PRECIO",
+mapTop:"Calidad alta",mapBottom:"Calidad baja",
+mapLeft:"Precio bajo",mapRight:"Precio alto",
+competitorLegend:"Competidores",youLegend:"Tu negocio",
+mapNote:"El mapa considera precio y calidad percibida. Los puntos se posicionan según las opciones seleccionadas. Úsalo como referencia visual, no como evaluación objetiva del mercado.",
+summaryTitle:"Resumen del análisis de mercado",
+summaryHelp:"Tus respuestas se utilizarán en el análisis SWOT y en el plan final.",
+save:"Guardar respuestas",summary:"Ver mi resumen",
+saved:"Respuestas guardadas en este navegador.",
+resultTitle:"Tu Market Snapshot",
+resultHelp:"Revisa los principales elementos identificados en tu análisis.",
+labels:["Alcance del mercado","Necesidades atendidas","Tipos de competidores","Puntos fuertes de la competencia","Debilidades percibidas","Competidores analizados","Fuentes de investigación","Señales de demanda","Oportunidades","Diferenciadores previstos","Métodos de validación","Posicionamiento previsto"],
+edit:"Volver y editar",continue:"Continuar a Mi análisis SWOT",
+notSet:"No definido",noData:"Aún no informado"
+}
+};
+
+function values(key){return Array.isArray(state[key])?state[key]:[]}
+function single(key){return state[key]===""?"":Number(state[key])}
+function selectedLabels(key,options){
+return values(key).map(i=>options[i]).filter(Boolean)
+}
+function renderOptions(id,options,key,multiple=true){
+const el=$(id);el.innerHTML="";
+options.forEach((option,index)=>{
+const b=document.createElement("button");
+b.type="button";b.className="opt";b.textContent=option;b.dataset.index=index;
+b.addEventListener("click",()=>{
+if(multiple){
+state[key]=values(key).includes(index)?values(key).filter(x=>x!==index):[...values(key),index];
+}else{state[key]=String(index)}
+renderOptions(id,options,key,multiple);
+updateProgress();save(false);
+});
+b.classList.toggle("selected",values(key).map(String).includes(String(index)));
+el.appendChild(b);
+});
+}
+function renderCompetitors(){
+const d=D[state.lang];const root=$("competitorCards");root.innerHTML="";
+state.competitors.forEach((item,index)=>{
+const card=document.createElement("div");card.className="competitor";
+const title=document.createElement("h3");title.textContent=d.competitor+" "+(index+1);
+const grid=document.createElement("div");grid.className="competitor-grid";
+const fields=[
+["name",d.competitorName,"text",""],
+["price",d.price,"select",d.priceOptions],
+["quality",d.quality,"select",d.qualityOptions]
+];
+fields.forEach(([key,label,type,options])=>{
+const wrap=document.createElement("div");
+const lab=document.createElement("label");lab.textContent=label;wrap.appendChild(lab);
+let field;
+if(type==="text"){
+field=document.createElement("input");field.type="text";field.value=item[key]||"";
+field.addEventListener("input",()=>{item[key]=field.value;save(false);updateProgress();});
+}else{
+field=document.createElement("select");
+const empty=document.createElement("option");empty.value="";empty.textContent=d.notSet;field.appendChild(empty);
+options.forEach((v,i)=>{const o=document.createElement("option");o.value=String(i);o.textContent=v;field.appendChild(o)});
+field.value=item[key]??"";
+field.addEventListener("change",()=>{item[key]=field.value;save(false);renderMap();updateProgress();});
+}
+wrap.appendChild(field);grid.appendChild(wrap);
+});
+card.append(title,grid);root.appendChild(card);
+});
+}
+function renderPosition(){
+const d=D[state.lang];const root=$("positionFields");root.innerHTML="";
+d.dimensions.forEach((dimension,index)=>{
+const wrap=document.createElement("div");wrap.className="q";
+const label=document.createElement("label");label.className="mini";label.textContent=dimension;
+const select=document.createElement("select");
+const empty=document.createElement("option");empty.value="";empty.textContent=d.notSet;select.appendChild(empty);
+d.levels.forEach((level,i)=>{const o=document.createElement("option");o.value=String(i);o.textContent=level;select.appendChild(o)});
+const key=["price","quality","service","specialization","convenience","experience"][index];
+select.value=state.position[key]??"";
+select.addEventListener("change",()=>{state.position[key]=select.value;save(false);renderMap();updateProgress();});
+wrap.append(label,select);root.appendChild(wrap);
+});
+}
+function renderMap(){
+const d=D[state.lang];const map=$("map");
+map.querySelectorAll(".dot").forEach(dot=>dot.remove());
+state.competitors.forEach((c,i)=>{
+if(c.price===""||c.quality==="")return;
+const dot=document.createElement("span");dot.className="dot";
+dot.title=c.name||d.competitor+" "+(i+1);
+dot.style.left=(Number(c.price)*50+25)+"%";
+dot.style.top=(100-(Number(c.quality)*50+25))+"%";
+map.appendChild(dot);
+});
+if(state.position.price!==""&&state.position.quality!==""&&Number(state.position.price)<3&&Number(state.position.quality)<3){
+const p=Number(state.position.price),q=Number(state.position.quality);
+if(p<3&&q<3){
+const dot=document.createElement("span");dot.className="dot you";dot.title=d.youLegend;
+dot.style.left=(p*50+25)+"%";
+dot.style.top=(100-(q*50+25))+"%";
+map.appendChild(dot);
+}
+}
+}
+function render(){
+const d=D[state.lang];document.documentElement.lang=state.lang==="pt"?"pt-BR":state.lang;
+const text={
+eyebrow:"eyebrow",title:"title",lead:"lead",progressLabel:"progress",homeLink:"home",
+regionTitle:"regionTitle",regionHelp:"regionHelp",regionQ:"regionQ",
+needsTitle:"needsTitle",needsHelp:"needsHelp",typesTitle:"typesTitle",typesHelp:"typesHelp",
+competitionTitle:"competitionTitle",competitionHelp:"competitionHelp",
+strengthsQ:"strengthsQ",weaknessesQ:"weaknessesQ",
+competitorsTitle:"competitorsTitle",competitorsHelp:"competitorsHelp",
+demandTitle:"demandTitle",demandHelp:"demandHelp",sourcesQ:"sourcesQ",signalsQ:"signalsQ",
+opportunityTitle:"opportunityTitle",opportunityHelp:"opportunityHelp",
+opportunitiesQ:"opportunitiesQ",differentiatorsQ:"differentiatorsQ",validationQ:"validationQ",
+positionTitle:"positionTitle",positionHelp:"positionHelp",mapTitle:"mapTitle",
+axisY:"axisY",axisX:"axisX",mapTop:"mapTop",mapBottom:"mapBottom",
+mapLeft:"mapLeft",mapRight:"mapRight",competitorLegend:"competitorLegend",
+youLegend:"youLegend",mapNote:"mapNote",summaryTitle:"summaryTitle",summaryHelp:"summaryHelp",
+saveBtn:"save",summaryBtn:"summary",resultTitle:"resultTitle",resultHelp:"resultHelp",
+editBtn:"edit",continueBtn:"continue"
+};
+Object.entries(text).forEach(([id,key])=>$(id).textContent=d[key]);
+$("regionDetail").placeholder=d.regionDetail;
+$("language").value=state.lang;
+renderOptions("regionOpts",d.regions,"region",false);
+renderOptions("needsOpts",d.needs,"needs");
+renderOptions("typesOpts",d.types,"competitorTypes");
+renderOptions("strengthsOpts",d.strengths,"strengths");
+renderOptions("weaknessesOpts",d.weaknesses,"weaknesses");
+renderOptions("sourcesOpts",d.sources,"sources");
+renderOptions("signalsOpts",d.signals,"signals");
+renderOptions("opportunitiesOpts",d.opportunities,"opportunities");
+renderOptions("differentiatorsOpts",d.differentiators,"differentiators");
+renderOptions("validationOpts",d.validation,"validation");
+renderCompetitors();renderPosition();renderMap();updateProgress();
+}
+function collect(){state.regionDetail=$("regionDetail").value}
+function save(show=true){
+collect();
+const d=D[state.lang];
+const data={
+...state,
+marketRegion:state.region===""?"":d.regions[Number(state.region)],
+marketNeeds:selectedLabels("needs",d.needs),
+competitorTypes:selectedLabels("competitorTypes",d.types),
+competitorStrengths:selectedLabels("strengths",d.strengths),
+competitorWeaknesses:selectedLabels("weaknesses",d.weaknesses),
+demandSources:selectedLabels("sources",d.sources),
+demandSignals:selectedLabels("signals",d.signals),
+marketOpportunities:selectedLabels("opportunities",d.opportunities),
+marketDifferentiators:selectedLabels("differentiators",d.differentiators),
+validationMethods:selectedLabels("validation",d.validation),
+updatedAt:new Date().toISOString()
+};
+localStorage.setItem(KEY,JSON.stringify(data));
+if(show)$("saveStatus").textContent=d.saved;
+}
+function load(){
+try{
+const data=JSON.parse(localStorage.getItem(KEY)||"null");
+if(data){
+Object.keys(state).forEach(k=>{if(data[k]!==undefined)state[k]=data[k]});
+if(!Array.isArray(state.competitors))state.competitors=state.competitors;
+["needs","competitorTypes","strengths","weaknesses","sources","signals","opportunities","differentiators","validation"].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[]});
+if(!state.position||typeof state.position!=="object")state.position={price:"",quality:"",service:"",specialization:"",convenience:"",experience:""};
+}
+}catch(e){}
+$("regionDetail").value=state.regionDetail||"";
+}
+function updateProgress(){
+collect();
+const checks=[
+state.region!=="",state.regionDetail,values("needs").length,values("competitorTypes").length,
+values("strengths").length,values("weaknesses").length,
+state.competitors.some(c=>c.name.trim()),
+values("sources").length,values("signals").length,
+values("opportunities").length,values("differentiators").length,
+values("validation").length,
+Object.values(state.position).some(v=>v!=="")
+];
+const pct=Math.round(checks.filter(Boolean).length/checks.length*100);
+$("progressPct").textContent=pct+"%";$("bar").style.width=pct+"%";
+}
+function summaryData(){
+const d=D[state.lang];
+const comp=state.competitors.filter(c=>c.name.trim()).map(c=>{
+const p=c.price===""?d.notSet:d.priceOptions[Number(c.price)];
+const q=c.quality===""?d.notSet:d.qualityOptions[Number(c.quality)];
+return c.name+" ("+d.price+": "+p+"; "+d.quality+": "+q+")";
+}).join("\n");
+const pos=d.dimensions.map((label,i)=>{
+const key=["price","quality","service","specialization","convenience","experience"][i];
+return label+": "+(state.position[key]===""?d.notSet:d.levels[Number(state.position[key])]);
+}).join("\n");
+return [
+state.region===""?d.noData:d.regions[Number(state.region)],
+state.regionDetail,
+selectedLabels("needs",d.needs).join(", "),
+selectedLabels("competitorTypes",d.types).join(", "),
+selectedLabels("strengths",d.strengths).join(", "),
+selectedLabels("weaknesses",d.weaknesses).join(", "),
+comp,
+selectedLabels("sources",d.sources).join(", "),
+selectedLabels("signals",d.signals).join(", "),
+selectedLabels("opportunities",d.opportunities).join(", "),
+selectedLabels("differentiators",d.differentiators).join(", "),
+selectedLabels("validation",d.validation).join(", "),
+pos
+];
+}
+function showSummary(){
+save(false);
+const d=D[state.lang];const values=summaryData();
+$("resultGrid").innerHTML=values.map((v,i)=>
+`<div class="summary-item"><small>${escapeHTML(d.labels[i])}</small><div>${escapeHTML(v||d.noData)}</div></div>`
+).join("");
+$("result").classList.remove("hidden");
+$("result").scrollIntoView({behavior:"smooth"});
+}
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+$("regionDetail").addEventListener("input",()=>{state.regionDetail=$("regionDetail").value;save(false);updateProgress()});
+$("language").addEventListener("change",()=>{
+state.lang=$("language").value;
+localStorage.setItem("startingToolkitLanguage",state.lang);
+localStorage.setItem("startingToolkitLang",state.lang);
+render();save(false);
+});
+$("saveBtn").addEventListener("click",()=>save(true));
+$("summaryBtn").addEventListener("click",showSummary);
+$("editBtn").addEventListener("click",()=>{$("result").classList.add("hidden");window.scrollTo({top:0,behavior:"smooth"})});
+$("continueBtn").addEventListener("click",()=>{save(false);window.location.href="my-swot.html"});
+state.lang=localStorage.getItem(LANG)||localStorage.getItem("startingToolkitLang")||"pt";
+load();render();
+</script>
+</body>
+</html>
