@@ -1,0 +1,538 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starting Toolkit | My Model</title>
+<style>
+:root{--navy:#19283d;--purple:#6c63ff;--soft:#f0efff;--bg:#f6f7fb;--muted:#667085;--line:#e4e7ec;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--navy);line-height:1.5}
+button,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:1080px;margin:auto;padding:24px 18px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.brand{font-weight:800;letter-spacing:2px;font-size:14px;color:inherit;text-decoration:none}
+.top-right{display:flex;align-items:center;gap:12px}
+.lang{border:1px solid var(--line);background:white;border-radius:10px;padding:9px}
+.home{font-size:13px;color:var(--purple);text-decoration:none}
+.hero{background:var(--navy);color:white;border-radius:22px;padding:28px 30px;margin-bottom:18px}
+.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;opacity:.8}
+.hero h1{font-size:30px;margin:8px 0}
+.hero p{max-width:740px;margin:0;opacity:.88;font-size:15px}
+.progress{margin-top:22px}
+.progress-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px}
+.bar{height:8px;background:#ffffff30;border-radius:20px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#b8e986;transition:width .2s}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:25px;margin-bottom:17px}
+.section-title{font-size:20px;margin:0 0 6px}
+.section-help{color:var(--muted);font-size:14px;margin:0 0 22px}
+.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.choice{border:1px solid var(--line);border-radius:15px;padding:18px;background:white;text-align:left;color:var(--navy);min-height:145px}
+.choice:hover{border-color:#aaa5ff}
+.choice.selected{border:2px solid var(--purple);background:var(--soft);padding:17px}
+.choice strong{display:block;font-size:16px;margin-bottom:7px}
+.choice span{display:block;font-size:13px;color:var(--muted)}
+.choice .check{display:block;color:var(--purple);font-size:12px;font-weight:700;margin-top:12px}
+.guide{border:1px solid var(--line);border-radius:14px;padding:17px;margin:12px 0;background:white}
+.guide h3{font-size:16px;margin:0 0 7px}
+.guide p{font-size:14px;color:var(--muted);margin:0 0 13px}
+.guide label{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;cursor:pointer}
+.guide input{width:17px;height:17px;accent-color:var(--purple);flex-shrink:0}
+.guide.done{background:#f7f8fc;border-color:#c8c4ff}
+.guide.done h3{color:var(--purple-dark,var(--purple))}
+.guide-count{font-size:12px;color:var(--muted);margin-top:12px}
+.reflection{margin-top:20px}
+.reflection label{display:block;font-weight:700;margin-bottom:8px}
+textarea{width:100%;min-height:100px;border:1px solid var(--line);border-radius:11px;padding:12px;resize:vertical;color:var(--navy)}
+textarea:focus{outline:2px solid #6c63ff30;border-color:var(--purple)}
+.note{background:#f0f3f8;border:1px solid #dce4ee;border-radius:12px;padding:13px;color:#475467;font-size:13px;margin-top:14px}
+.actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+.btn{border:0;border-radius:11px;padding:13px 18px;font-weight:700}
+.primary{background:var(--purple);color:white}
+.secondary{background:white;color:var(--navy);border:1px solid var(--line)}
+.save{font-size:12px;color:var(--muted);margin-top:10px;min-height:18px}
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.summary-item{border:1px solid var(--line);border-radius:13px;padding:14px}
+.summary-item small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.summary-item strong{font-size:15px}
+.hidden{display:none!important}
+@media(max-width:700px){.choice-grid{grid-template-columns:1fr}.app{padding:15px 12px 40px}.hero{padding:23px 19px}.hero h1{font-size:25px}.card{padding:19px}.actions{flex-direction:column}.btn{width:100%}.summary-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="top">
+<a class="brand" href="../index.html">STARTING TOOLKIT</a>
+<div class="top-right">
+<a class="home" href="../index.html" id="homeLink">Início</a>
+<select id="language" class="lang" aria-label="Language">
+<option value="pt">PT</option><option value="en">EN</option><option value="es">ES</option>
+</select>
+</div>
+</header>
+
+<section class="hero">
+<div class="eyebrow" id="eyebrow"></div>
+<h1 id="title"></h1>
+<p id="lead"></p>
+<div class="progress">
+<div class="progress-top">
+<span id="progressLabel"></span>
+<strong id="progressPct">0%</strong>
+</div>
+<div class="bar"><i id="bar"></i></div>
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="choiceTitle"></h2>
+<p class="section-help" id="choiceHelp"></p>
+<div class="choice-grid" id="choices"></div>
+<div class="note" id="choiceNote"></div>
+</section>
+
+<section class="card hidden" id="franchiseSection">
+<h2 class="section-title" id="franchiseTitle"></h2>
+<p class="section-help" id="franchiseIntro"></p>
+<div id="franchiseGuide"></div>
+<div class="guide-count" id="franchiseCount"></div>
+</section>
+
+<section class="card hidden" id="ownSection">
+<h2 class="section-title" id="ownTitle"></h2>
+<p class="section-help" id="ownIntro"></p>
+<div id="ownGuide"></div>
+<div class="guide-count" id="ownCount"></div>
+</section>
+
+<section class="card hidden" id="reflectionSection">
+<h2 class="section-title" id="reflectionTitle"></h2>
+<p class="section-help" id="reflectionHelp"></p>
+<div class="reflection">
+<label id="reflectionQuestion" for="reflection"></label>
+<textarea id="reflection"></textarea>
+</div>
+<div class="note" id="reflectionNote"></div>
+<div class="actions">
+<button class="btn secondary" id="saveBtn" type="button"></button>
+<button class="btn primary" id="summaryBtn" type="button"></button>
+</div>
+<div class="save" id="saveStatus" aria-live="polite"></div>
+</section>
+
+<section class="card hidden" id="summarySection">
+<h2 class="section-title" id="summaryTitle"></h2>
+<p class="section-help" id="summaryHelp"></p>
+<div class="summary-grid" id="summaryGrid"></div>
+<div class="actions">
+<button class="btn secondary" id="editBtn" type="button"></button>
+<button class="btn primary" id="continueBtn" type="button"></button>
+</div>
+</section>
+
+</div>
+
+<script>
+const STORAGE_KEY="startingToolkitModelV1";
+const LANG_KEY="startingToolkitLanguage";
+
+const state={
+lang:"pt",
+model:"",
+understoodFranchise:[],
+understoodOwn:[],
+reflection:""
+};
+
+const $=id=>document.getElementById(id);
+
+const D={
+pt:{
+eyebrow:"ETAPA 02 · SEU MODELO DE NEGÓCIO",
+title:"Que tipo de negócio faz sentido para você?",
+lead:"Agora vamos entender o modelo que pretende adotar. Antes de decidir, conheça os principais compromissos e responsabilidades de cada opção.",
+progress:"Progresso do módulo",
+home:"Início",
+choiceTitle:"Qual modelo você pretende seguir?",
+choiceHelp:"Escolha uma opção. Se ainda estiver avaliando, não há problema em deixar a decisão em aberto.",
+choices:[
+["Franquia","Você utiliza uma marca e um modelo de negócio já estruturados, seguindo as condições definidas pelo franqueador."],
+["Marca própria","Você desenvolve seu próprio negócio, constrói sua marca e define como a operação funcionará."],
+["Ainda não decidi","Quero entender melhor as duas alternativas antes de escolher."]
+],
+choiceNote:"A escolha do modelo influencia o investimento, a autonomia, as responsabilidades e a forma de operar o negócio.",
+franchiseTitle:"Antes de escolher uma franquia",
+franchiseIntro:"Uma franquia oferece um modelo já estruturado, mas envolve compromissos financeiros e operacionais. Conheça os pontos que merecem atenção.",
+franchise:[
+["Investimento total","A taxa de franquia não representa necessariamente todo o investimento para abrir a unidade. Considere reforma, equipamentos, mobiliário, estoque inicial, sistemas, licenças, marketing de abertura e capital de giro."],
+["Capital de giro","É o recurso necessário para manter a operação funcionando enquanto as receitas ainda não são suficientes para cobrir todos os compromissos. Avalie quanto será necessário para os primeiros meses."],
+["COF - Circular de Oferta de Franquia","É o documento que o franqueador deve entregar ao candidato com informações sobre a franquia, histórico, investimento, taxas, obrigações, processos e relação com a rede. No Brasil, a Lei 13.966/2019 estabelece regras para esse documento e determina prazo mínimo de 10 dias antes da assinatura do contrato ou pagamento de taxas."],
+["Franqueados atuais e antigos","Converse com pessoas que já operam ou operaram a franquia. Pergunte sobre suporte, rentabilidade, dificuldades, relacionamento com o franqueador e expectativas versus realidade."],
+["Royalties e fundo de marketing","Entenda todas as cobranças recorrentes, como são calculadas, sobre qual base incidem e o que está incluído. Verifique se existem outras taxas ou compras obrigatórias."],
+["Território e exclusividade","Confira se existe exclusividade territorial, como ela funciona e quais são os limites. Verifique também se o franqueador pode abrir outras unidades ou vender por canais digitais na sua região."],
+["Suporte e treinamento","Entenda o treinamento inicial, o acompanhamento da operação, os materiais disponíveis, a assistência de marketing e a frequência do suporte."],
+["Regras e autonomia","O franqueado precisa seguir padrões da rede. Avalie quais decisões poderá tomar e quais dependem de autorização, como preços, fornecedores, campanhas e processos."],
+["Rentabilidade e desempenho","Analise projeções com cautela. Entenda faturamento, custos, margem, ponto de equilíbrio, prazo de retorno e condições reais das unidades em funcionamento. Não considere estimativas como garantia de resultado."],
+["Compatibilidade com seu perfil","Avalie se você se identifica com as regras, a rotina, o nível de dedicação, a gestão de pessoas e o relacionamento com o franqueador."]
+],
+ownTitle:"Antes de construir uma marca própria",
+ownIntro:"Uma marca própria oferece maior liberdade de decisão, mas exige que você desenvolva e organize os principais elementos do negócio.",
+own:[
+["Construção da marca","Defina o nome, a identidade, a proposta e a percepção que deseja construir. Pesquise disponibilidade de nome e marca antes de investir na comunicação."],
+["Posicionamento","Determine para quem o negócio existe, qual necessidade atende e por que alguém escolheria sua empresa em vez de outra alternativa."],
+["Fornecedores","Identifique fornecedores confiáveis, compare qualidade, preços, prazos, condições de pagamento e dependência de poucos parceiros."],
+["Processos operacionais","Desenhe como o negócio funcionará no dia a dia: atendimento, vendas, entrega, produção, compras, controle e pós-venda."],
+["Formação de preços","Considere custos fixos, variáveis, impostos, taxas, margem desejada e preços praticados no mercado. Não defina o preço apenas observando concorrentes."],
+["Aquisição de clientes","Planeje como as pessoas conhecerão o negócio, demonstrarão interesse, comprarão e voltarão a comprar. Defina canais e recursos necessários."],
+["Diferenciação","Identifique o que fará seu negócio ser percebido como uma opção relevante. Pode ser especialização, atendimento, qualidade, conveniência, experiência ou outro atributo valorizado pelo cliente."],
+["Autonomia e responsabilidades","Você terá mais liberdade para decidir, mas também será responsável por construir processos, selecionar fornecedores, desenvolver a marca e resolver problemas da operação."],
+["Validação do negócio","Antes de investir em uma estrutura maior, teste a oferta, converse com potenciais clientes, avalie preços e procure evidências reais de demanda."],
+["Possibilidade de crescimento","Pense em como o negócio poderá crescer sem depender exclusivamente de você. Processos, equipe, tecnologia e canais de venda podem fazer parte dessa estrutura."]
+],
+reflectionTitle:"Sua reflexão sobre o modelo",
+reflectionHelp:"Use este espaço para registrar dúvidas, critérios importantes e o que precisa investigar antes de tomar sua decisão.",
+reflectionQuestion:"O que você considera mais importante nesta decisão?",
+reflectionPlaceholder:"Registre suas dúvidas, critérios e próximos pontos de investigação...",
+reflectionNote:"Marcar Entendi este ponto significa que você compreendeu a explicação. Não significa que já verificou ou concluiu essa etapa.",
+understood:"Entendi este ponto",
+choiceLabels:["Franquia","Marca própria","Ainda não decidi"],
+save:"Salvar respostas",
+summary:"Ver meu resumo",
+saved:"Respostas salvas neste navegador.",
+summaryTitle:"Resumo do seu modelo",
+summaryHelp:"Veja sua escolha, os pontos que já compreendeu e sua reflexão.",
+modelLabel:"Modelo escolhido",
+understoodLabel:"Pontos compreendidos",
+reflectionLabel:"Sua reflexão",
+notChosen:"Ainda não definido",
+none:"Nenhum ponto marcado ainda",
+edit:"Voltar e editar",
+continue:"Continuar para Meu mercado"
+},
+en:{
+eyebrow:"STEP 02 · YOUR BUSINESS MODEL",
+title:"Which business model makes sense for you?",
+lead:"Now let's look at the model you intend to adopt. Before deciding, understand the main commitments and responsibilities involved in each option.",
+progress:"Module progress",
+home:"Home",
+choiceTitle:"Which model are you considering?",
+choiceHelp:"Choose an option. If you are still evaluating, it is perfectly fine to leave the decision open.",
+choices:[
+["Franchise","You use an established brand and business model, following the conditions defined by the franchisor."],
+["Own brand","You build your own business, develop your brand and define how the operation will work."],
+["Not decided yet","I want to understand both alternatives better before choosing."]
+],
+choiceNote:"Your business model affects investment, autonomy, responsibilities and the way the business operates.",
+franchiseTitle:"Before choosing a franchise",
+franchiseIntro:"A franchise offers an established model, but involves financial and operational commitments. Understand the points that deserve attention.",
+franchise:[
+["Total investment","The franchise fee is not necessarily the full amount required to open a unit. Consider renovation, equipment, furniture, initial inventory, systems, licenses, launch marketing and working capital."],
+["Working capital","This is the money needed to keep the business operating while revenue is not yet enough to cover all expenses. Estimate the amount required for the first months."],
+["Franchise Disclosure Document","Understand the disclosure document provided by the franchisor. It should explain the franchise, its history, investment, fees, obligations, processes and relationship with the network. Requirements vary by country. In Brazil, this document is known as COF."],
+["Current and former franchisees","Talk to people who currently operate or previously operated the franchise. Ask about support, profitability, difficulties, the relationship with the franchisor and expectations versus reality."],
+["Royalties and marketing fund","Understand all recurring charges, how they are calculated, what they are based on and what they include. Check for additional fees and mandatory purchases."],
+["Territory and exclusivity","Check whether territorial exclusivity exists and how it works. Understand whether the franchisor can open other units or sell through digital channels in your area."],
+["Support and training","Understand initial training, operational follow-up, available materials, marketing assistance and how frequently support is provided."],
+["Rules and autonomy","Franchisees must follow network standards. Evaluate which decisions you can make and which require approval, such as pricing, suppliers, campaigns and processes."],
+["Profitability and performance","Review projections carefully. Understand revenue, costs, margins, break-even point, payback and the actual performance of operating units. Estimates are not guarantees."],
+["Compatibility with your profile","Consider whether you identify with the rules, routine, level of commitment, people management and relationship with the franchisor."]
+],
+ownTitle:"Before building your own brand",
+ownIntro:"An independent brand gives you more freedom, but you are responsible for developing and organizing the main elements of the business.",
+own:[
+["Brand development","Define the name, identity, proposition and perception you want to build. Check name and trademark availability before investing in communication."],
+["Positioning","Determine who the business serves, what need it addresses and why someone would choose your company over other alternatives."],
+["Suppliers","Identify reliable suppliers and compare quality, prices, delivery times, payment terms and dependence on a small number of partners."],
+["Operating processes","Map how the business will work day to day: customer service, sales, delivery, production, purchasing, controls and after-sales service."],
+["Pricing","Consider fixed and variable costs, taxes, fees, desired margin and market prices. Do not set prices based only on competitors."],
+["Customer acquisition","Plan how people will discover your business, show interest, buy and return. Define channels and the resources required."],
+["Differentiation","Identify what will make your business a relevant choice. It may be specialization, service, quality, convenience, experience or another valued attribute."],
+["Autonomy and responsibility","You will have more freedom to decide, but you will also be responsible for building processes, selecting suppliers, developing the brand and solving operational problems."],
+["Business validation","Before investing in a larger structure, test your offer, talk to potential customers, evaluate pricing and look for real evidence of demand."],
+["Growth potential","Consider how the business can grow without depending entirely on you. Processes, teams, technology and sales channels may be part of that structure."]
+],
+reflectionTitle:"Your thoughts on the model",
+reflectionHelp:"Use this space to record questions, important criteria and what you need to investigate before making a decision.",
+reflectionQuestion:"What matters most to you in this decision?",
+reflectionPlaceholder:"Write down your questions, criteria and next research steps...",
+reflectionNote:"Marking I understand this point means you understood the explanation. It does not mean you have verified or completed that step.",
+understood:"I understand this point",
+choiceLabels:["Franchise","Own brand","Not decided yet"],
+save:"Save answers",
+summary:"View my summary",
+saved:"Answers saved in this browser.",
+summaryTitle:"Your Business Model Summary",
+summaryHelp:"Review your choice, the points you understood and your reflection.",
+modelLabel:"Selected model",
+understoodLabel:"Points understood",
+reflectionLabel:"Your reflection",
+notChosen:"Not decided yet",
+none:"No points marked yet",
+edit:"Back and edit",
+continue:"Continue to My Market"
+},
+es:{
+eyebrow:"ETAPA 02 · TU MODELO DE NEGOCIO",
+title:"¿Qué modelo de negocio tiene sentido para ti?",
+lead:"Ahora vamos a conocer el modelo que piensas adoptar. Antes de decidir, comprende los principales compromisos y responsabilidades de cada opción.",
+progress:"Progreso del módulo",
+home:"Inicio",
+choiceTitle:"¿Qué modelo estás considerando?",
+choiceHelp:"Elige una opción. Si todavía estás evaluando, puedes dejar la decisión abierta.",
+choices:[
+["Franquicia","Utilizas una marca y un modelo de negocio ya estructurados, siguiendo las condiciones definidas por el franquiciador."],
+["Marca propia","Desarrollas tu propio negocio, construyes tu marca y defines cómo funcionará la operación."],
+["Aún no he decidido","Quiero comprender mejor las dos alternativas antes de elegir."]
+],
+choiceNote:"El modelo de negocio influye en la inversión, la autonomía, las responsabilidades y la forma de operar.",
+franchiseTitle:"Antes de elegir una franquicia",
+franchiseIntro:"Una franquicia ofrece un modelo estructurado, pero implica compromisos financieros y operativos. Conoce los puntos que merecen atención.",
+franchise:[
+["Inversión total","La cuota de franquicia no representa necesariamente toda la inversión para abrir una unidad. Considera reformas, equipos, mobiliario, inventario inicial, sistemas, licencias, marketing de apertura y capital de trabajo."],
+["Capital de trabajo","Es el dinero necesario para mantener la operación mientras los ingresos todavía no son suficientes para cubrir todos los gastos. Calcula cuánto necesitarás durante los primeros meses."],
+["Documento de información de franquicia","Comprende el documento que el franquiciador debe proporcionar con información sobre la franquicia, inversión, tasas, obligaciones, procesos y relación con la red. Los requisitos legales varían según el país. En Brasil, este documento se conoce como COF."],
+["Franquiciados actuales y antiguos","Habla con personas que operan u operaron la franquicia. Pregunta sobre soporte, rentabilidad, dificultades, relación con el franquiciador y expectativas frente a la realidad."],
+["Regalías y fondo de marketing","Comprende todos los cargos recurrentes, cómo se calculan, sobre qué base se aplican y qué incluyen. Comprueba si existen otras tasas o compras obligatorias."],
+["Territorio y exclusividad","Comprueba si existe exclusividad territorial y cómo funciona. Verifica si el franquiciador puede abrir otras unidades o vender por canales digitales en tu región."],
+["Soporte y formación","Comprende la formación inicial, el acompañamiento operativo, los materiales disponibles, la asistencia de marketing y la frecuencia del soporte."],
+["Reglas y autonomía","El franquiciado debe seguir los estándares de la red. Evalúa qué decisiones puedes tomar y cuáles requieren autorización, como precios, proveedores, campañas y procesos."],
+["Rentabilidad y resultados","Analiza las proyecciones con cautela. Comprende ingresos, costes, margen, punto de equilibrio y plazo de recuperación. Las estimaciones no garantizan resultados."],
+["Compatibilidad con tu perfil","Evalúa si te identificas con las reglas, la rutina, el nivel de dedicación, la gestión de personas y la relación con el franquiciador."]
+],
+ownTitle:"Antes de construir una marca propia",
+ownIntro:"Una marca propia ofrece mayor libertad de decisión, pero exige desarrollar y organizar los principales elementos del negocio.",
+own:[
+["Construcción de marca","Define el nombre, la identidad, la propuesta y la percepción que deseas construir. Investiga la disponibilidad del nombre y de la marca antes de invertir en comunicación."],
+["Posicionamiento","Determina a quién sirve el negocio, qué necesidad atiende y por qué alguien elegiría tu empresa frente a otras alternativas."],
+["Proveedores","Identifica proveedores fiables y compara calidad, precios, plazos, condiciones de pago y dependencia de pocos socios."],
+["Procesos operativos","Define cómo funcionará el negocio día a día: atención, ventas, entrega, producción, compras, control y posventa."],
+["Formación de precios","Considera costes fijos, variables, impuestos, tasas, margen deseado y precios del mercado. No definas el precio únicamente observando a la competencia."],
+["Captación de clientes","Planifica cómo las personas conocerán el negocio, mostrarán interés, comprarán y volverán. Define canales y recursos necesarios."],
+["Diferenciación","Identifica qué hará que tu negocio sea una opción relevante. Puede ser especialización, atención, calidad, comodidad, experiencia u otro atributo valorado."],
+["Autonomía y responsabilidades","Tendrás más libertad para decidir, pero también serás responsable de construir procesos, elegir proveedores, desarrollar la marca y resolver problemas operativos."],
+["Validación del negocio","Antes de invertir en una estructura mayor, prueba la oferta, habla con clientes potenciales, evalúa precios y busca evidencias reales de demanda."],
+["Posibilidad de crecimiento","Piensa cómo el negocio podrá crecer sin depender exclusivamente de ti. Los procesos, el equipo, la tecnología y los canales de venta pueden formar parte de esa estructura."]
+],
+reflectionTitle:"Tu reflexión sobre el modelo",
+reflectionHelp:"Utiliza este espacio para registrar dudas, criterios importantes y lo que necesitas investigar antes de tomar una decisión.",
+reflectionQuestion:"¿Qué consideras más importante en esta decisión?",
+reflectionPlaceholder:"Anota tus dudas, criterios y próximos puntos de investigación...",
+reflectionNote:"Marcar Entiendo este punto significa que has comprendido la explicación. No significa que ya hayas verificado o completado esa etapa.",
+understood:"Entiendo este punto",
+choiceLabels:["Franquicia","Marca propia","Aún no he decidido"],
+save:"Guardar respuestas",
+summary:"Ver mi resumen",
+saved:"Respuestas guardadas en este navegador.",
+summaryTitle:"Resumen de tu modelo",
+summaryHelp:"Revisa tu elección, los puntos comprendidos y tu reflexión.",
+modelLabel:"Modelo elegido",
+understoodLabel:"Puntos comprendidos",
+reflectionLabel:"Tu reflexión",
+notChosen:"Aún no definido",
+none:"Aún no has marcado ningún punto",
+edit:"Volver y editar",
+continue:"Continuar a Mi mercado"
+}
+};
+
+function renderChoice(){
+const d=D[state.lang];
+const container=$("choices");
+container.innerHTML="";
+d.choices.forEach((choice,index)=>{
+const button=document.createElement("button");
+button.type="button";
+button.className="choice";
+button.classList.toggle("selected",state.model===["franchise","own","undecided"][index]);
+button.innerHTML="<strong></strong><span></span><span class='check'></span>";
+button.querySelector("strong").textContent=choice[0];
+button.querySelector("span").textContent=choice[1];
+button.querySelector(".check").textContent=state.model===["franchise","own","undecided"][index]?"✓":"";
+button.addEventListener("click",()=>{
+state.model=["franchise","own","undecided"][index];
+render();
+save(false);
+});
+container.appendChild(button);
+});
+}
+
+function renderGuide(containerId,items,key){
+const d=D[state.lang];
+const container=$(containerId);
+container.innerHTML="";
+items.forEach((item,index)=>{
+const section=document.createElement("article");
+section.className="guide";
+section.classList.toggle("done",state[key].includes(index));
+const title=document.createElement("h3");
+title.textContent=(index+1)+". "+item[0];
+const description=document.createElement("p");
+description.textContent=item[1];
+const label=document.createElement("label");
+const checkbox=document.createElement("input");
+checkbox.type="checkbox";
+checkbox.checked=state[key].includes(index);
+const span=document.createElement("span");
+span.textContent=d.understood;
+checkbox.addEventListener("change",()=>{
+if(checkbox.checked){
+if(!state[key].includes(index))state[key].push(index);
+}else{
+state[key]=state[key].filter(x=>x!==index);
+}
+renderGuide(containerId,items,key);
+updateProgress();
+save(false);
+});
+label.append(checkbox,span);
+section.append(title,description,label);
+container.appendChild(section);
+});
+}
+
+function render(){
+const d=D[state.lang];
+document.documentElement.lang=state.lang==="pt"?"pt-BR":state.lang;
+const textMap={
+eyebrow:"eyebrow",title:"title",lead:"lead",
+progressLabel:"progress",homeLink:"home",
+choiceTitle:"choiceTitle",choiceHelp:"choiceHelp",
+choiceNote:"choiceNote",franchiseTitle:"franchiseTitle",
+franchiseIntro:"franchiseIntro",ownTitle:"ownTitle",
+ownIntro:"ownIntro",reflectionTitle:"reflectionTitle",
+reflectionHelp:"reflectionHelp",reflectionQuestion:"reflectionQuestion",
+reflectionNote:"reflectionNote",saveBtn:"save",
+summaryBtn:"summary",summaryTitle:"summaryTitle",
+summaryHelp:"summaryHelp",editBtn:"edit",continueBtn:"continue"
+};
+Object.entries(textMap).forEach(([id,key])=>$(id).textContent=d[key]);
+$("reflection").placeholder=d.reflectionPlaceholder;
+$("language").value=state.lang;
+renderChoice();
+renderGuide("franchiseGuide",d.franchise,"understoodFranchise");
+renderGuide("ownGuide",d.own,"understoodOwn");
+
+$("franchiseSection").classList.toggle("hidden",state.model!=="franchise");
+$("ownSection").classList.toggle("hidden",state.model!=="own");
+$("reflectionSection").classList.toggle("hidden",!state.model);
+$("reflection").value=state.reflection;
+
+const fc=state.understoodFranchise.length;
+const oc=state.understoodOwn.length;
+$("franchiseCount").textContent=fc+" / "+d.franchise.length;
+$("ownCount").textContent=oc+" / "+d.own.length;
+
+updateProgress();
+}
+
+function updateProgress(){
+let total=2;
+let completed=state.model?1:0;
+if(state.model==="franchise"){
+total+=D[state.lang].franchise.length+1;
+completed+=state.understoodFranchise.length;
+}
+if(state.model==="own"){
+total+=D[state.lang].own.length+1;
+completed+=state.understoodOwn.length;
+}
+if(state.model==="undecided")total+=1;
+if(state.reflection.trim())completed++;
+const pct=Math.round(completed/total*100);
+$("progressPct").textContent=pct+"%";
+$("bar").style.width=pct+"%";
+}
+
+function save(showMessage=true){
+state.reflection=$("reflection").value.trim();
+const d=D[state.lang];
+const modelLabel=state.model==="franchise"?d.choiceLabels[0]:state.model==="own"?d.choiceLabels[1]:state.model==="undecided"?d.choiceLabels[2]:"";
+const data={
+...state,
+model:state.model,
+type:state.model,
+choice:state.model,
+businessModel:state.model,
+modelLabel:modelLabel,
+understoodFranchise:state.understoodFranchise,
+understoodOwn:state.understoodOwn,
+reflection:state.reflection,
+updatedAt:new Date().toISOString()
+};
+localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+if(showMessage)$("saveStatus").textContent=d.saved;
+}
+
+function load(){
+try{
+const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
+if(data){
+Object.keys(state).forEach(key=>{
+if(data[key]!==undefined)state[key]=data[key];
+});
+if(!Array.isArray(state.understoodFranchise))state.understoodFranchise=[];
+if(!Array.isArray(state.understoodOwn))state.understoodOwn=[];
+}
+}catch(error){}
+}
+
+function showSummary(){
+save(false);
+const d=D[state.lang];
+const model=state.model==="franchise"?d.choiceLabels[0]:state.model==="own"?d.choiceLabels[1]:state.model==="undecided"?d.choiceLabels[2]:d.notChosen;
+const points=state.model==="franchise"?state.understoodFranchise:state.model==="own"?state.understoodOwn:[];
+const items=state.model==="franchise"?d.franchise:state.model==="own"?d.own:[];
+const understood=points.map(i=>items[i][0]).filter(Boolean);
+const values=[
+[d.modelLabel,model],
+[d.understoodLabel,understood.length?understood.join(", "):d.none],
+[d.reflectionLabel,state.reflection||"–"]
+];
+$("summaryGrid").innerHTML=values.map(item=>
+`<div class="summary-item"><small>${escapeHTML(item[0])}</small><strong>${escapeHTML(item[1])}</strong></div>`
+).join("");
+$("summarySection").classList.remove("hidden");
+$("summarySection").scrollIntoView({behavior:"smooth"});
+}
+
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+})[char]);
+}
+
+$("language").addEventListener("change",()=>{
+state.lang=$("language").value;
+localStorage.setItem("startingToolkitLanguage",state.lang);
+localStorage.setItem("startingToolkitLang",state.lang);
+render();
+save(false);
+});
+
+$("reflection").addEventListener("input",()=>{
+state.reflection=$("reflection").value;
+updateProgress();
+save(false);
+});
+
+$("saveBtn").addEventListener("click",()=>save(true));
+$("summaryBtn").addEventListener("click",showSummary);
+$("editBtn").addEventListener("click",()=>{
+$("summarySection").classList.add("hidden");
+window.scrollTo({top:0,behavior:"smooth"});
+});
+$("continueBtn").addEventListener("click",()=>{
+save(false);
+window.location.href="my-market.html";
+});
+
+state.lang=localStorage.getItem("startingToolkitLanguage")||localStorage.getItem("startingToolkitLang")||"pt";
+load();
+render();
+</script>
+</body>
+</html>
