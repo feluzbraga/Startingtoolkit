@@ -4,328 +4,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Starting Toolkit | Think. Plan. Start.</title>
-<meta name="description" content="A practical toolkit to help you evaluate, plan and start your business with greater clarity.">
+<title>Starting Toolkit | Pense. Planeje. Comece.</title>
+<meta name="description" content="Ferramentas práticas para avaliar sua ideia, planejar e começar seu negócio.">
 <style>
 :root {
-  --bg:#f6f7fb;
-  --white:#ffffff;
-  --ink:#19202c;
-  --muted:#667085;
-  --purple:#6c63ff;
-  --purple-dark:#5148d9;
-  --soft:#f0efff;
-  --line:#e4e7ec;
+  --bg:#f6f7fb;--white:#fff;--ink:#19202c;
+  --muted:#667085;--purple:#6c63ff;
+  --purple-dark:#5148d9;--soft:#f0efff;--line:#e4e7ec;
 }
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Arial,Helvetica,sans-serif;
-  line-height:1.55;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,calc(100% - 40px));margin:auto}
+header{padding:20px 0;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:800;letter-spacing:2px}
+.language{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:white;color:var(--ink)}
+.hero{padding:76px 0 65px;background:linear-gradient(135deg,#fff,#f0efff);border:1px solid var(--line);border-radius:24px;margin:12px 0 55px}
+.hero-content{max-width:760px;padding:0 50px}
+.eyebrow{display:inline-block;color:var(--purple-dark);background:var(--soft);border-radius:30px;padding:7px 13px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+h1{font-size:clamp(38px,6vw,64px);line-height:1.06;letter-spacing:-2px;margin:22px 0 18px}
+.hero p{color:var(--muted);font-size:19px;max-width:650px;margin:0 0 27px}
+.button{display:inline-block;background:var(--purple);color:white;border-radius:11px;padding:13px 21px;font-weight:700;transition:.2s}
+.button:hover{background:var(--purple-dark)}
+.section{margin:55px 0}
+.section-heading{max-width:700px;margin-bottom:25px}
+.section-heading h2{font-size:30px;letter-spacing:-.7px;margin:0 0 8px}
+.section-heading p{color:var(--muted);margin:0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{background:white;border:1px solid var(--line);border-radius:17px;padding:23px}
+.number{color:var(--purple);font-size:13px;font-weight:800;letter-spacing:1px}
+.step h3{margin:12px 0 6px}
+.step p{color:var(--muted);margin:0;font-size:14px}
+.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.module{background:white;border:1px solid var(--line);border-radius:16px;padding:21px;min-height:165px;display:flex;flex-direction:column}
+.module-number{color:var(--purple);font-size:12px;font-weight:800;letter-spacing:1px}
+.module h3{margin:9px 0 5px;font-size:17px}
+.module p{color:var(--muted);font-size:13px;margin:0}
+.module-status{margin-top:auto;padding-top:16px;color:#9a6a16;font-size:12px;font-weight:700}
+.module.available{cursor:pointer}
+.module.available:hover{border-color:var(--purple)}
+.final-card{background:var(--ink);color:white;border-radius:22px;padding:35px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.final-card p{color:#d0d5dd;max-width:620px}
+.final-card .button{background:white;color:var(--purple-dark);white-space:nowrap}
+.credibility{background:white;border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;align-items:center;gap:25px}
+.credibility-number{font-size:42px;font-weight:800;color:var(--purple);white-space:nowrap}
+.credibility p{color:var(--muted);margin:0}
+footer{border-top:1px solid var(--line);margin-top:65px;padding:28px 0;color:var(--muted);font-size:13px}
+footer .container{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:760px){
+.hero{padding:55px 0}.hero-content{padding:0 25px}
+.steps,.modules{grid-template-columns:1fr 1fr}
+.final-card{flex-direction:column;align-items:flex-start}
 }
-a { color:inherit; text-decoration:none; }
-button,select { font:inherit; }
-.container { width:min(1120px,calc(100% - 40px)); margin:auto; }
-header {
-  padding:20px 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.logo {
-  font-size:20px;
-  font-weight:800;
-  letter-spacing:2px;
-}
-.language {
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:10px 14px;
-  background:white;
-  color:var(--ink);
-}
-.hero {
-  padding:76px 0 65px;
-  background:linear-gradient(135deg,#fff 0%,#f0efff 100%);
-  border:1px solid var(--line);
-  border-radius:24px;
-  margin:12px 0 55px;
-}
-.hero-content { max-width:760px; padding:0 50px; }
-.eyebrow {
-  display:inline-block;
-  color:var(--purple-dark);
-  background:var(--soft);
-  border-radius:30px;
-  padding:7px 13px;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-h1 {
-  font-size:clamp(38px,6vw,64px);
-  line-height:1.06;
-  letter-spacing:-2px;
-  margin:22px 0 18px;
-}
-.hero p {
-  color:var(--muted);
-  font-size:19px;
-  max-width:650px;
-  margin:0 0 27px;
-}
-.button {
-  display:inline-block;
-  background:var(--purple);
-  color:white;
-  border-radius:11px;
-  padding:13px 21px;
-  font-weight:700;
-  transition:.2s;
-}
-.button:hover { background:var(--purple-dark); }
-.button-light {
-  background:white;
-  color:var(--purple-dark);
-  border:1px solid var(--line);
-}
-.section { margin:55px 0; }
-.section-heading { max-width:700px; margin-bottom:25px; }
-.section-heading h2 {
-  font-size:30px;
-  letter-spacing:-.7px;
-  margin:0 0 8px;
-}
-.section-heading p { color:var(--muted); margin:0; }
-.steps {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-.step {
-  background:var(--white);
-  border:1px solid var(--line);
-  border-radius:17px;
-  padding:23px;
-}
-.number {
-  color:var(--purple);
-  font-size:13px;
-  font-weight:800;
-  letter-spacing:1px;
-}
-.step h3 { margin:12px 0 6px; }
-.step p { color:var(--muted); margin:0; font-size:14px; }
-.modules {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-.module {
-  background:white;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:21px;
-  min-height:155px;
-  display:flex;
-  flex-direction:column;
-}
-.module-number {
-  color:var(--purple);
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:1px;
-}
-.module h3 { margin:9px 0 5px; font-size:17px; }
-.module p { color:var(--muted); font-size:13px; margin:0; }
-.module-status {
-  margin-top:auto;
-  padding-top:16px;
-  color:#9a6a16;
-  font-size:12px;
-  font-weight:700;
-}
-.module.available .module-status { color:#23845a; }
-.module.available:hover { border-color:var(--purple); }
-.final-card {
-  background:var(--ink);
-  color:white;
-  border-radius:22px;
-  padding:35px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:25px;
-}
-.final-card p { color:#d0d5dd; max-width:620px; }
-.final-card .button { background:white; color:var(--purple-dark); white-space:nowrap; }
-.credibility {
-  background:white;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:28px;
-  display:flex;
-  align-items:center;
-  gap:25px;
-}
-.credibility-number {
-  font-size:42px;
-  font-weight:800;
-  color:var(--purple);
-  white-space:nowrap;
-}
-.credibility p { color:var(--muted); margin:0; }
-footer {
-  border-top:1px solid var(--line);
-  margin-top:65px;
-  padding:28px 0;
-  color:var(--muted);
-  font-size:13px;
-}
-footer .container {
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  flex-wrap:wrap;
-}
-@media(max-width:760px) {
-  .hero { padding:55px 0; }
-  .hero-content { padding:0 25px; }
-  .steps,.modules { grid-template-columns:1fr 1fr; }
-  .final-card { flex-direction:column; align-items:flex-start; }
-}
-@media(max-width:500px) {
-  .container { width:calc(100% - 28px); }
-  .steps,.modules { grid-template-columns:1fr; }
-  .hero-content { padding:0 20px; }
-  .hero p { font-size:16px; }
-  .section-heading h2 { font-size:25px; }
-  .credibility { align-items:flex-start; flex-direction:column; gap:5px; }
+@media(max-width:500px){
+.container{width:calc(100% - 28px)}
+.steps,.modules{grid-template-columns:1fr}
+.hero-content{padding:0 20px}
+.hero p{font-size:16px}
+.section-heading h2{font-size:25px}
+.credibility{align-items:flex-start;flex-direction:column;gap:5px}
 }
 </style>
 </head>
 <body>
 
 <header class="container">
-  <a class="logo" href="index.html">STARTING TOOLKIT</a>
-  <select class="language" id="language" aria-label="Select language" onchange="changeLanguage(this.value)">
-    <option value="pt">PT</option>
-    <option value="en">EN</option>
-    <option value="es">ES</option>
-  </select>
+<a class="logo" href="index.html">STARTING TOOLKIT</a>
+<select class="language" id="language" aria-label="Selecionar idioma">
+<option value="pt">PT</option>
+<option value="en">EN</option>
+<option value="es">ES</option>
+</select>
 </header>
 
 <main class="container">
 
 <section class="hero">
-  <div class="hero-content">
-    <span class="eyebrow" id="eyebrow">YOUR BUSINESS STARTS HERE</span>
-    <h1 id="heroTitle">Think. Plan. Start.</h1>
-    <p id="heroText">Uma forma mais clara e prática de avaliar sua ideia, planejar seu negócio e decidir os próximos passos antes de investir.</p>
-    <a class="button" href="#modules" id="heroButton">Conheça as ferramentas</a>
-  </div>
+<div class="hero-content">
+<span class="eyebrow" id="eyebrow"></span>
+<h1 id="heroTitle"></h1>
+<p id="heroText"></p>
+<a class="button" href="#modules" id="heroButton"></a>
+</div>
 </section>
 
 <section class="section">
-  <div class="section-heading">
-    <h2 id="howTitle">Como funciona</h2>
-    <p id="howText">Você avança por etapas, responde perguntas orientadas e constrói seu próprio plano de negócio.</p>
-  </div>
-  <div class="steps">
-    <article class="step">
-      <span class="number">01</span>
-      <h3 id="step1Title">Entenda sua ideia</h3>
-      <p id="step1Text">Organize sua proposta, seu público e o tipo de negócio que deseja criar.</p>
-    </article>
-    <article class="step">
-      <span class="number">02</span>
-      <h3 id="step2Title">Planeje com dados</h3>
-      <p id="step2Text">Analise mercado, concorrência, números, marketing e preparação para o lançamento.</p>
-    </article>
-    <article class="step">
-      <span class="number">03</span>
-      <h3 id="step3Title">Defina seus próximos passos</h3>
-      <p id="step3Text">Reúna suas decisões em um plano e organize os primeiros 90 dias.</p>
-    </article>
-  </div>
+<div class="section-heading">
+<h2 id="howTitle"></h2>
+<p id="howText"></p>
+</div>
+<div class="steps">
+<article class="step">
+<span class="number">01</span>
+<h3 id="step1Title"></h3>
+<p id="step1Text"></p>
+</article>
+<article class="step">
+<span class="number">02</span>
+<h3 id="step2Title"></h3>
+<p id="step2Text"></p>
+</article>
+<article class="step">
+<span class="number">03</span>
+<h3 id="step3Title"></h3>
+<p id="step3Text"></p>
+</article>
+</div>
 </section>
 
 <section class="section" id="modules">
-  <div class="section-heading">
-    <h2 id="modulesTitle">Suas ferramentas</h2>
-    <p id="modulesText">Oito módulos guiados para estruturar seu negócio, mais um plano final que reúne suas respostas.</p>
-  </div>
-  <div class="modules" id="moduleGrid"></div>
+<div class="section-heading">
+<h2 id="modulesTitle"></h2>
+<p id="modulesText"></p>
+</div>
+<div class="modules" id="moduleGrid"></div>
 </section>
 
 <section class="section">
-  <div class="final-card">
-    <div>
-      <span class="eyebrow" id="finalEyebrow">THE BIG PICTURE</span>
-      <h2 id="finalTitle">Your Final Plan</h2>
-      <p id="finalText">Reúna suas decisões, análises e projeções em uma visão geral do negócio e identifique o que precisa acontecer antes de avançar.</p>
-    </div>
-    <a class="button" href="your-final-plan.html" id="finalButton">Ver plano final</a>
-  </div>
+<div class="final-card">
+<div>
+<span class="eyebrow" id="finalEyebrow"></span>
+<h2 id="finalTitle"></h2>
+<p id="finalText"></p>
+</div>
+<a class="button" href="your-final-plan.html" id="finalButton"></a>
+</div>
 </section>
 
 <section class="section">
-  <div class="credibility">
-    <div class="credibility-number">25+</div>
-    <p id="credibilityText">Anos de experiência em gestão, marketing e empreendedorismo aplicados à construção de ferramentas práticas para quem quer começar um negócio.</p>
-  </div>
+<div class="credibility">
+<div class="credibility-number">25+</div>
+<p id="credibilityText"></p>
+</div>
 </section>
 
 </main>
 
 <footer>
-  <div class="container">
-    <strong>STARTING TOOLKIT</strong>
-    <span id="footerText">Think. Plan. Start.</span>
-    <span>© <span id="year"></span> Starting Toolkit</span>
-  </div>
+<div class="container">
+<strong>STARTING TOOLKIT</strong>
+<span id="footerText"></span>
+<span>© <span id="year"></span> Starting Toolkit</span>
+</div>
 </footer>
 
 <script>
 const translations = {
-pt: {
-eyebrow:"YOUR BUSINESS STARTS HERE",
-heroTitle:"Think. Plan. Start.",
+pt:{
+eyebrow:"SEU NEGÓCIO COMEÇA AQUI",
+heroTitle:"Pense. Planeje. Comece.",
 heroText:"Uma forma mais clara e prática de avaliar sua ideia, planejar seu negócio e decidir os próximos passos antes de investir.",
 heroButton:"Conheça as ferramentas",
 howTitle:"Como funciona",
 howText:"Você avança por etapas, responde perguntas orientadas e constrói seu próprio plano de negócio.",
 step1Title:"Entenda sua ideia",
 step1Text:"Organize sua proposta, seu público e o tipo de negócio que deseja criar.",
-step2Title:"Planeje com dados",
+step2Title:"Planeje com informações",
 step2Text:"Analise mercado, concorrência, números, marketing e preparação para o lançamento.",
 step3Title:"Defina seus próximos passos",
 step3Text:"Reúna suas decisões em um plano e organize os primeiros 90 dias.",
 modulesTitle:"Suas ferramentas",
 modulesText:"Oito módulos guiados para estruturar seu negócio, mais um plano final que reúne suas respostas.",
-finalEyebrow:"THE BIG PICTURE",
-finalTitle:"Your Final Plan",
-finalText:"Reúna suas decisões, análises e projeções em uma visão geral do negócio e identifique o que precisa acontecer antes de avançar.",
-finalButton:"Ver plano final",
-credibilityText:"Anos de experiência em gestão, marketing e empreendedorismo aplicados à construção de ferramentas práticas para quem quer começar um negócio.",
-footerText:"Think. Plan. Start.",
+moduleLabel:"MÓDULO",
 status:"Em preparação",
-available:"Visualizar plano final",
+finalEyebrow:"VISÃO GERAL DO NEGÓCIO",
+finalTitle:"Seu plano final",
+finalText:"Reúna suas decisões, análises e projeções em uma visão geral do negócio e identifique o que precisa acontecer antes de avançar.",
+finalButton:"Ver meu plano final",
+credibilityText:"Anos de experiência em gestão, marketing e empreendedorismo aplicados à criação de ferramentas práticas para quem quer começar um negócio.",
+footerText:"Pense. Planeje. Comece.",
 modules:[
-["MY IDEA","Organize sua ideia, público e proposta de negócio."],
-["MY MODEL","Compare franquia e marca própria e entenda as decisões envolvidas."],
-["MY MARKET","Analise mercado, concorrentes, demanda e posicionamento."],
-["MY SWOT","Identifique forças, fraquezas, oportunidades e ameaças."],
-["MY NUMBERS","Estime investimento, custos, receitas, margem e payback."],
-["MY MARKETING","Defina objetivos, canais, orçamento e ações de marketing."],
-["MY LAUNCH","Organize a preparação e as ações de lançamento."],
-["MY FIRST 90 DAYS","Planeje os primeiros 30, 60 e 90 dias do negócio."]
+["Minha ideia","Organize sua ideia, seu público e sua proposta de negócio."],
+["Meu modelo de negócio","Compare franquia e marca própria e entenda as decisões envolvidas."],
+["Meu mercado","Analise mercado, concorrentes, demanda e posicionamento."],
+["Minha análise SWOT","Identifique forças, fraquezas, oportunidades e ameaças."],
+["Meus números","Estime investimento, custos, receitas, margem e prazo de retorno."],
+["Meu marketing","Defina objetivos, canais, orçamento e ações de marketing."],
+["Meu lançamento","Organize a preparação e as ações de lançamento."],
+["Meus primeiros 90 dias","Planeje os primeiros 30, 60 e 90 dias do negócio."]
 ]},
-en: {
+en:{
 eyebrow:"YOUR BUSINESS STARTS HERE",
 heroTitle:"Think. Plan. Start.",
 heroText:"A clearer, more practical way to evaluate your idea, plan your business and decide what to do next before investing.",
@@ -340,27 +199,27 @@ step3Title:"Define your next steps",
 step3Text:"Bring your decisions together and organize your first 90 days.",
 modulesTitle:"Your tools",
 modulesText:"Eight guided modules to structure your business, plus a final plan that brings your answers together.",
+moduleLabel:"MODULE",
+status:"Coming soon",
 finalEyebrow:"THE BIG PICTURE",
 finalTitle:"Your Final Plan",
 finalText:"Bring your decisions, analysis and projections together to understand your business and identify what needs to happen next.",
-finalButton:"View final plan",
+finalButton:"View my final plan",
 credibilityText:"Years of experience in management, marketing and entrepreneurship applied to practical tools for people planning to start a business.",
 footerText:"Think. Plan. Start.",
-status:"Coming soon",
-available:"View final plan",
 modules:[
-["MY IDEA","Organize your idea, target customer and business proposition."],
-["MY MODEL","Compare franchising and an independent brand."],
-["MY MARKET","Assess the market, competitors, demand and positioning."],
-["MY SWOT","Identify strengths, weaknesses, opportunities and threats."],
-["MY NUMBERS","Estimate investment, costs, revenue, margin and payback."],
-["MY MARKETING","Define objectives, channels, budget and marketing actions."],
-["MY LAUNCH","Organize launch preparation and activities."],
-["MY FIRST 90 DAYS","Plan the first 30, 60 and 90 days of your business."]
+["My Idea","Organize your idea, target customer and business proposition."],
+["My Business Model","Compare franchising and an independent brand."],
+["My Market","Assess the market, competitors, demand and positioning."],
+["My SWOT Analysis","Identify strengths, weaknesses, opportunities and threats."],
+["My Numbers","Estimate investment, costs, revenue, margin and payback."],
+["My Marketing","Define objectives, channels, budget and marketing actions."],
+["My Launch","Organize launch preparation and activities."],
+["My First 90 Days","Plan the first 30, 60 and 90 days of your business."]
 ]},
-es: {
+es:{
 eyebrow:"TU NEGOCIO EMPIEZA AQUÍ",
-heroTitle:"Think. Plan. Start.",
+heroTitle:"Piensa. Planifica. Empieza.",
 heroText:"Una forma más clara y práctica de evaluar tu idea, planificar tu negocio y decidir los próximos pasos antes de invertir.",
 heroButton:"Conoce las herramientas",
 howTitle:"Cómo funciona",
@@ -373,27 +232,27 @@ step3Title:"Define tus próximos pasos",
 step3Text:"Reúne tus decisiones en un plan y organiza los primeros 90 días.",
 modulesTitle:"Tus herramientas",
 modulesText:"Ocho módulos guiados para estructurar tu negocio, más un plan final que reúne tus respuestas.",
-finalEyebrow:"THE BIG PICTURE",
-finalTitle:"Your Final Plan",
-finalText:"Reúne tus decisiones, análisis y proyecciones para tener una visión general del negocio e identificar los próximos pasos.",
-finalButton:"Ver plan final",
-credibilityText:"Años de experiencia en gestión, marketing y emprendimiento aplicados a herramientas prácticas para quienes quieren iniciar un negocio.",
-footerText:"Think. Plan. Start.",
+moduleLabel:"MÓDULO",
 status:"En preparación",
-available:"Ver plan final",
+finalEyebrow:"VISIÓN GENERAL DEL NEGOCIO",
+finalTitle:"Tu plan final",
+finalText:"Reúne tus decisiones, análisis y proyecciones para tener una visión general del negocio e identificar los próximos pasos.",
+finalButton:"Ver mi plan final",
+credibilityText:"Años de experiencia en gestión, marketing y emprendimiento aplicados a herramientas prácticas para quienes quieren iniciar un negocio.",
+footerText:"Piensa. Planifica. Empieza.",
 modules:[
-["MY IDEA","Organiza tu idea, público y propuesta de negocio."],
-["MY MODEL","Compara una franquicia y una marca propia."],
-["MY MARKET","Analiza el mercado, la competencia, la demanda y el posicionamiento."],
-["MY SWOT","Identifica fortalezas, debilidades, oportunidades y amenazas."],
-["MY NUMBERS","Estima inversión, costes, ingresos, margen y payback."],
-["MY MARKETING","Define objetivos, canales, presupuesto y acciones de marketing."],
-["MY LAUNCH","Organiza la preparación y las acciones de lanzamiento."],
-["MY FIRST 90 DAYS","Planifica los primeros 30, 60 y 90 días del negocio."]
+["Mi idea","Organiza tu idea, tu público y tu propuesta de negocio."],
+["Mi modelo de negocio","Compara una franquicia y una marca propia."],
+["Mi mercado","Analiza el mercado, la competencia, la demanda y el posicionamiento."],
+["Mi análisis SWOT","Identifica fortalezas, debilidades, oportunidades y amenazas."],
+["Mis números","Estima inversión, costes, ingresos, margen y plazo de recuperación."],
+["Mi marketing","Define objetivos, canales, presupuesto y acciones de marketing."],
+["Mi lanzamiento","Organiza la preparación y las acciones de lanzamiento."],
+["Mis primeros 90 días","Planifica los primeros 30, 60 y 90 días del negocio."]
 ]}
 };
 
-const moduleFiles = [
+const moduleFiles=[
 "modules/my-idea.html",
 "modules/my-model.html",
 "modules/my-market.html",
@@ -404,42 +263,46 @@ const moduleFiles = [
 "modules/my-first-90-days.html"
 ];
 
-function changeLanguage(lang) {
-  const t = translations[lang] || translations.pt;
-  document.documentElement.lang = lang === "pt" ? "pt-BR" : lang;
-  localStorage.setItem("startingToolkitLanguage", lang);
+function changeLanguage(lang){
+const t=translations[lang]||translations.pt;
+document.documentElement.lang=lang==="pt"?"pt-BR":lang;
 
-  Object.keys(t).forEach(key => {
-    if (key === "modules") return;
-    const element = document.getElementById(key);
-    if (element) element.textContent = t[key];
-  });
+Object.keys(t).forEach(key=>{
+if(key==="modules"||key==="moduleLabel"||key==="status")return;
+const element=document.getElementById(key);
+if(element)element.textContent=t[key];
+});
 
-  const grid = document.getElementById("moduleGrid");
-  grid.innerHTML = "";
+const grid=document.getElementById("moduleGrid");
+grid.innerHTML="";
 
-  t.modules.forEach((module, index) => {
-    const card = document.createElement("article");
-    card.className = "module";
-    const number = String(index + 1).padStart(2,"0");
-    card.innerHTML = `
-      <span class="module-number">MODULE ${number}</span>
-      <h3></h3>
-      <p></p>
-      <span class="module-status">${t.status}</span>
-    `;
-    card.querySelector("h3").textContent = module[0];
-    card.querySelector("p").textContent = module[1];
-    grid.appendChild(card);
-  });
+t.modules.forEach((module,index)=>{
+const card=document.createElement("article");
+card.className="module";
+card.innerHTML=`
+<span class="module-number"></span>
+<h3></h3>
+<p></p>
+<span class="module-status"></span>
+`;
+card.querySelector(".module-number").textContent=
+t.moduleLabel+" "+String(index+1).padStart(2,"0");
+card.querySelector("h3").textContent=module[0];
+card.querySelector("p").textContent=module[1];
+card.querySelector(".module-status").textContent=t.status;
+grid.appendChild(card);
+});
 
-  const year = document.getElementById("year");
-  year.textContent = new Date().getFullYear();
+document.getElementById("year").textContent=new Date().getFullYear();
+localStorage.setItem("startingToolkitLanguage",lang);
 }
 
-const savedLanguage = localStorage.getItem("startingToolkitLanguage") || "pt";
-document.getElementById("language").value = savedLanguage;
+const selector=document.getElementById("language");
+const savedLanguage=localStorage.getItem("startingToolkitLanguage")||"pt";
+selector.value=savedLanguage;
+selector.addEventListener("change",()=>changeLanguage(selector.value));
 changeLanguage(savedLanguage);
 </script>
+
 </body>
 </html>
