@@ -38,13 +38,13 @@ function render(){
 let d=D[lang];document.documentElement.lang=lang;document.getElementById("title").textContent=d.title;document.getElementById("lead").textContent=d.lead;
 let app="";
 d.s.forEach((x,n)=>{let id="g"+(n+1),multi=x[3]===1;app+=`<section><h2>${x[0]}</h2><p class="hint">${x[1]}</p><div class="grid">${x[2].map((o,i)=>`<div class="choice"><input ${multi?"type=checkbox":"type=radio"} name="${id}" id="${id}_${i}" value="${esc(o)}"><label for="${id}_${i}">${esc(o)}</label></div>`).join("")}</div></section>`});
-app+=`<section class="snapshot"><h2>${d.snap}</h2><div class="snapgrid">${d.labels.map((x,i)=>`<div class="metric"><b>${x}</b><span id="m${i}">${d.empty}</span></div>`).join("")}</div><h3>${d.priority}</h3><div class="tags" id="tags"></div><div class="notice">${d.note}</div><h3>${d.next}</h3><div class="plan">${d.nexts.map((x,i)=>`<div class="planbox"><h3>${i+1}</h3>${esc(x)}</div>`).join("")}</div><div class="actions"><button class="btn" onclick="save()">${d.save}</button></div></section>`;
+app+=`<section class="snapshot"><h2>${d.snap}</h2><div class="snapgrid">${d.labels.map((x,i)=>`<div class="metric"><b>${x}</b><span id="m${i}">${d.empty}</span></div>`).join("")}</div><h3>${d.priority}</h3><div class="tags" id="tags"></div><div class="notice">${d.note}</div><h3>${d.next}</h3><div class="plan">${d.nexts.map((x,i)=>`<div class="planbox"><h3>${i+1}</h3>${esc(x)}</div>`).join("")}</div><div class="actions"><button class="btn" onclick="save(true)">${d.save}</button></div></section>`;
 document.getElementById("app").innerHTML=app;
 for(let i=1;i<=9;i++)vals(i).forEach(v=>{let el=[...document.querySelectorAll("#g"+i+" input")].find(x=>x.value===v);if(el)el.checked=true});update();
 }
-function save(){for(let i=1;i<=9;i++)state["g"+i]=[...document.querySelectorAll("#g"+i+" input:checked")].map(x=>x.value);localStorage.setItem("startingToolkitMarketingV1",JSON.stringify(state));update();window.location.href="my-launch.html"}
+function save(navigate=false){for(let i=1;i<=9;i++)state["g"+i]=[...document.querySelectorAll("#g"+i+" input:checked")].map(x=>x.value);localStorage.setItem("startingToolkitMarketingV1",JSON.stringify(state));update();if(navigate)window.location.href="my-launch.html"}
 function update(){let d=D[lang],all=[];for(let i=1;i<=9;i++)all.push(vals(i));document.getElementById("bar").style.width=(all.filter(x=>x.length).length/9*100)+"%";for(let i=0;i<6;i++)document.getElementById("m"+i).textContent=all[[0,1,5,2,3,6][i]].slice(0,i===3||i===4?3:2).join(" • ")||d.empty;document.getElementById("tags").innerHTML=(all[8].map(x=>`<span class="tag">${esc(x)}</span>`).join("")||`<span class="tag">${d.empty}</span>`)}
-document.addEventListener("change",e=>{if(e.target.matches("input"))save()});
+document.addEventListener("change",e=>{if(e.target.matches("input"))save(false)});
 document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;document.querySelectorAll(".lang button").forEach(x=>x.classList.toggle("active",x.dataset.lang===lang));render()});
 document.querySelectorAll(".lang button").forEach(x=>x.classList.toggle("active",x.dataset.lang===lang));render();
 </script></body></html>
