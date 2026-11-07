@@ -290,7 +290,8 @@ labels:{no:"No informado",yes:"Sí",noData:"Sin datos",custom:"Personalizado",in
 };
 
 const $=id=>document.getElementById(id);
-let lang="pt";
+let lang=localStorage.getItem("startingToolkitLanguage")||"pt";
+if(!["pt","en","es"].includes(lang))lang="pt";
 
 function esc(value){
 return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -433,7 +434,8 @@ $("nextSteps").innerHTML=d.steps.map((s,i)=>`<div class="data-row"><div class="d
 $("footer").textContent=d.footer;
 }
 
-$("language").addEventListener("change",e=>{lang=e.target.value;render()});
+$("language").value=lang;
+$("language").addEventListener("change",e=>{lang=e.target.value;localStorage.setItem("startingToolkitLanguage",lang);render()});
 $("printButton").addEventListener("click",()=>window.print());
 $("refreshButton").addEventListener("click",render);
 
