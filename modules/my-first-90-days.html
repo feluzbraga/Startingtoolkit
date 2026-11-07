@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starting Toolkit | My First 90 Days</title>
+<style>
+:root{--ink:#202b38;--muted:#687586;--line:#e1e7ec;--soft:#f4f7f8;--brand:#315c72;--accent:#d9a441;--green:#24734c}
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5f7;color:var(--ink);font:15px/1.5 Arial,sans-serif}
+.wrap{max-width:1050px;margin:auto;padding:25px 18px 55px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:10px}
+.logo{font-weight:800;letter-spacing:.08em;color:var(--brand);font-size:13px}
+select,input,textarea,button{font:inherit}
+.lang{border:1px solid var(--line);border-radius:9px;padding:8px;background:white;color:var(--ink)}
+.hero{background:linear-gradient(135deg,#244b61,#3c7182);color:white;padding:28px;border-radius:20px;margin-bottom:20px}
+.eyebrow{font-size:12px;letter-spacing:.12em;opacity:.8}
+h1{font-size:clamp(28px,5vw,38px);margin:7px 0}
+.hero p{color:#e5edf1;max-width:720px;margin:0}
+.progress{height:7px;background:#dce4e9;border-radius:20px;overflow:hidden;margin-top:19px}
+.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.card{background:white;border:1px solid var(--line);border-radius:17px;padding:22px;margin:16px 0;box-shadow:0 5px 18px #20304008}
+.card h2{font-size:20px;margin:0 0 5px}
+.card h3{font-size:16px;margin:20px 0 8px}
+.intro{color:var(--muted);margin:0 0 17px;font-size:14px}
+.tag{font-size:12px;font-weight:700;color:var(--brand);letter-spacing:.08em;text-transform:uppercase}
+.phasehead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.phaseicon{width:42px;height:42px;border-radius:12px;background:#eaf1f4;display:grid;place-items:center;font-weight:800;color:var(--brand)}
+.tasks{display:grid;gap:9px}
+.task{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:11px}
+.task label{font-size:14px}
+.task select{width:100%;border:1px solid #d4dce3;border-radius:8px;padding:8px;background:#fff;color:var(--ink)}
+.custom{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.custom input{flex:1;min-width:180px;border:1px solid var(--line);border-radius:9px;padding:10px}
+.btn{border:0;border-radius:10px;padding:10px 14px;background:var(--brand);color:white;font-weight:700;cursor:pointer}
+.btn.secondary{background:#edf2f5;color:var(--brand);border:1px solid #d7e0e6}
+.btn.gold{background:var(--accent);color:#29251d}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field label{display:block;font-weight:650;font-size:13px;margin-bottom:6px}
+.field input,.field textarea{width:100%;border:1px solid #d4dce3;border-radius:9px;padding:10px 11px;color:var(--ink);background:white}
+.field textarea{min-height:90px;resize:vertical}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.kpi{background:var(--soft);padding:14px;border-radius:12px;min-width:0}
+.kpi span{display:block;font-size:12px;color:var(--muted)}
+.kpi strong{font-size:20px;display:block;margin-top:4px;overflow-wrap:anywhere}
+.note{background:#f7f8fa;color:#354453;border-left:3px solid var(--accent);padding:12px;border-radius:8px;font-size:13px;margin-top:15px}
+.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px}
+.small{font-size:12px;color:var(--muted)}
+@media(max-width:700px){
+.task{grid-template-columns:1fr}
+.grid{grid-template-columns:1fr}
+.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{padding:17px}
+.hero{padding:23px 19px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<div class="logo">STARTING TOOLKIT</div>
+<select class="lang" id="language">
+<option value="pt">Português</option>
+<option value="en">English</option>
+<option value="es">Español</option>
+</select>
+</div>
+
+<header class="hero">
+<div class="eyebrow" id="eyebrow"></div>
+<h1>MY FIRST 90 DAYS</h1>
+<p id="subtitle"></p>
+<div class="progress"><span id="progressBar"></span></div>
+</header>
+
+<div id="phases"></div>
+
+<section class="card">
+<div class="tag" id="scoreTag"></div>
+<h2 id="scoreTitle"></h2>
+<p class="intro" id="scoreIntro"></p>
+<div class="kpis">
+<div class="kpi"><span id="k1label"></span><strong id="k1">0%</strong></div>
+<div class="kpi"><span id="k2label"></span><strong id="k2">0</strong></div>
+<div class="kpi"><span id="k3label"></span><strong id="k3">0</strong></div>
+<div class="kpi"><span id="k4label"></span><strong id="k4">0</strong></div>
+</div>
+<div class="note" id="scoreNote"></div>
+</section>
+
+<section class="card">
+<div class="tag" id="metricsTag"></div>
+<h2 id="metricsTitle"></h2>
+<p class="intro" id="metricsIntro"></p>
+<div class="grid" id="metricsGrid"></div>
+</section>
+
+<section class="card">
+<div class="tag" id="reflectionTag"></div>
+<h2 id="reflectionTitle"></h2>
+<p class="intro" id="reflectionIntro"></p>
+<div class="field">
+<label id="keepLabel" for="keep"></label>
+<textarea id="keep"></textarea>
+</div>
+<div class="field" style="margin-top:14px">
+<label id="changeLabel" for="change"></label>
+<textarea id="change"></textarea>
+</div>
+<div class="field" style="margin-top:14px">
+<label id="nextLabel" for="next"></label>
+<textarea id="next"></textarea>
+</div>
+<div class="footer">
+<button class="btn secondary" id="saveButton"></button>
+<button class="btn gold" id="continueButton"></button>
+</div>
+<p class="small" id="saveStatus" aria-live="polite"></p>
+</section>
+</div>
+
+<script>
+const KEY="startingToolkit90Days";
+
+const T={
+pt:{
+eyebrow:"MÓDULO 08 · SEUS PRIMEIROS 90 DIAS",
+subtitle:"Organize suas ações, acompanhe os resultados e aprenda com os primeiros três meses de operação.",
+phases:[
+{
+name:"DIAS 1–30",
+title:"Preparar e estabilizar",
+intro:"O primeiro mês é para colocar o negócio em funcionamento, conquistar os primeiros clientes e observar como a operação responde.",
+tasks:["Conquistar os primeiros clientes","Testar a oferta e os preços","Validar os canais de aquisição","Registrar vendas e contatos","Coletar feedback dos clientes","Corrigir problemas operacionais","Acompanhar custos e despesas","Buscar as primeiras avaliações"]
+},
+{
+name:"DIAS 31–60",
+title:"Aprender e melhorar",
+intro:"No segundo mês, identifique o que está funcionando e faça ajustes para melhorar vendas, atendimento e operação.",
+tasks:["Identificar os canais com melhores resultados","Melhorar a conversão de contatos em clientes","Ajustar campanhas e comunicação","Estimular recompra e relacionamento","Revisar custos e desperdícios","Melhorar processos de atendimento","Testar novas ações comerciais","Acompanhar satisfação dos clientes"]
+},
+{
+name:"DIAS 61–90",
+title:"Consolidar e crescer",
+intro:"No terceiro mês, fortaleça o que funciona, organize processos e decida onde vale a pena investir mais.",
+tasks:["Ampliar os canais que geram resultados","Criar processos e rotinas de trabalho","Fortalecer parcerias","Aumentar ticket médio ou recompra","Revisar metas e projeções financeiras","Identificar oportunidades de crescimento","Avaliar necessidade de equipe ou estrutura","Definir prioridades para os próximos 90 dias"]
+}
+],
+status:["Não iniciado","Em andamento","Concluído","Não se aplica"],
+scoreTag:"ACOMPANHAMENTO",
+scoreTitle:"Como está seu progresso?",
+scoreIntro:"Acompanhe a execução das ações planejadas para os primeiros 90 dias.",
+progress:"Ações concluídas",
+done:"Concluídas",
+pending:"Em andamento ou pendentes",
+phasesDone:"Fases finalizadas",
+scoreNote:"O progresso considera apenas as ações aplicáveis. Marque como não se aplica aquilo que não faz sentido para seu modelo de negócio.",
+metricsTag:"INDICADORES DO NEGÓCIO",
+metricsTitle:"Seus números nos primeiros 90 dias",
+metricsIntro:"Registre os resultados reais. Você pode atualizar estes indicadores ao longo do período.",
+metrics:[
+["Receita total (R$)","Ex.: 25000"],
+["Quantidade de clientes","Ex.: 80"],
+["Leads ou contatos recebidos","Ex.: 150"],
+["Ticket médio (R$)","Ex.: 180"],
+["Conversão de contatos em clientes (%)","Ex.: 35"],
+["Investimento em marketing (R$)","Ex.: 1500"],
+["Lucro operacional estimado (R$)","Ex.: 4500"],
+["Avaliações recebidas","Ex.: 12"],
+["Clientes que compraram novamente","Ex.: 15"]
+],
+reflectionTag:"APRENDIZADOS",
+reflectionTitle:"O que você aprendeu?",
+reflectionIntro:"Use este espaço para transformar os resultados em decisões para o próximo ciclo.",
+keep:"O que está funcionando e deve continuar?",
+change:"O que precisa mudar ou melhorar?",
+next:"Qual será sua principal prioridade nos próximos 90 dias?",
+save:"Salvar meu progresso",
+continue:"Continuar para YOUR FINAL PLAN →",
+saved:"Progresso salvo neste dispositivo.",
+keepPlaceholder:"Ex.: Instagram está trazendo contatos qualificados...",
+changePlaceholder:"Ex.: Rever preços e melhorar o tempo de resposta...",
+nextPlaceholder:"Ex.: Aumentar as vendas pelo canal que mais converte..."
+},
+en:{
+eyebrow:"MODULE 08 · YOUR FIRST 90 DAYS",
+subtitle:"Organize your actions, track results, and learn from your first three months of operation.",
+phases:[
+{name:"DAYS 1–30",title:"Prepare and stabilize",intro:"Use the first month to get the business running, attract your first customers, and observe how operations perform.",tasks:["Acquire first customers","Test the offer and pricing","Validate acquisition channels","Track sales and incoming leads","Collect customer feedback","Fix operational issues","Monitor costs and expenses","Get first customer reviews"]},
+{name:"DAYS 31–60",title:"Learn and improve",intro:"In the second month, identify what works and make adjustments to improve sales, service, and operations.",tasks:["Identify best-performing channels","Improve lead-to-customer conversion","Adjust campaigns and messaging","Encourage repeat purchases and relationships","Review costs and waste","Improve customer service processes","Test new sales actions","Monitor customer satisfaction"]},
+{name:"DAYS 61–90",title:"Consolidate and grow",intro:"In the third month, strengthen what works, organize processes, and decide where further investment makes sense.",tasks:["Expand channels that generate results","Create work processes and routines","Strengthen partnerships","Increase average order value or repeat purchases","Review financial goals and projections","Identify growth opportunities","Assess team or infrastructure needs","Set priorities for the next 90 days"]}
+],
+status:["Not started","In progress","Completed","Not applicable"],
+scoreTag:"PROGRESS TRACKER",
+scoreTitle:"How is your progress?",
+scoreIntro:"Track the execution of your planned actions for the first 90 days.",
+progress:"Actions completed",
+done:"Completed",
+pending:"In progress or pending",
+phasesDone:"Phases completed",
+scoreNote:"Progress only includes applicable actions. Mark items as not applicable when they do not fit your business model.",
+metricsTag:"BUSINESS METRICS",
+metricsTitle:"Your numbers during the first 90 days",
+metricsIntro:"Record actual results. You can update these indicators throughout the period.",
+metrics:[
+["Total revenue (R$)","E.g. 25000"],["Number of customers","E.g. 80"],["Leads or contacts received","E.g. 150"],["Average order value (R$)","E.g. 180"],["Lead-to-customer conversion (%)","E.g. 35"],["Marketing investment (R$)","E.g. 1500"],["Estimated operating profit (R$)","E.g. 4500"],["Customer reviews received","E.g. 12"],["Repeat customers","E.g. 15"]
+],
+reflectionTag:"LEARNINGS",
+reflectionTitle:"What have you learned?",
+reflectionIntro:"Use this space to turn results into decisions for the next cycle.",
+keep:"What is working and should continue?",
+change:"What needs to change or improve?",
+next:"What will be your main priority for the next 90 days?",
+save:"Save my progress",
+continue:"Continue to YOUR FINAL PLAN →",
+saved:"Progress saved on this device.",
+keepPlaceholder:"E.g. Instagram is bringing qualified leads...",
+changePlaceholder:"E.g. Review pricing and improve response time...",
+nextPlaceholder:"E.g. Increase sales through the best-converting channel..."
+},
+es:{
+eyebrow:"MÓDULO 08 · TUS PRIMEROS 90 DÍAS",
+subtitle:"Organiza tus acciones, acompaña los resultados y aprende de los primeros tres meses de actividad.",
+phases:[
+{name:"DÍAS 1–30",title:"Preparar y estabilizar",intro:"El primer mes sirve para poner el negocio en marcha, conseguir los primeros clientes y observar cómo funciona la operación.",tasks:["Conseguir los primeros clientes","Probar la oferta y los precios","Validar canales de adquisición","Registrar ventas y contactos","Recoger opiniones de clientes","Corregir problemas operativos","Acompañar costos y gastos","Conseguir las primeras reseñas"]},
+{name:"DÍAS 31–60",title:"Aprender y mejorar",intro:"En el segundo mes, identifica lo que funciona y realiza ajustes para mejorar ventas, atención y operación.",tasks:["Identificar los canales con mejores resultados","Mejorar la conversión de contactos en clientes","Ajustar campañas y comunicación","Estimular recompra y relaciones","Revisar costos y desperdicios","Mejorar procesos de atención","Probar nuevas acciones comerciales","Acompañar la satisfacción de los clientes"]},
+{name:"DÍAS 61–90",title:"Consolidar y crecer",intro:"En el tercer mes, fortalece lo que funciona, organiza procesos y decide dónde vale la pena invertir más.",tasks:["Ampliar los canales que generan resultados","Crear procesos y rutinas de trabajo","Fortalecer alianzas","Aumentar el ticket medio o la recompra","Revisar metas y proyecciones financieras","Identificar oportunidades de crecimiento","Evaluar necesidades de equipo o estructura","Definir prioridades para los próximos 90 días"]}
+],
+status:["No iniciado","En progreso","Completado","No aplica"],
+scoreTag:"SEGUIMIENTO",
+scoreTitle:"¿Cómo va tu progreso?",
+scoreIntro:"Acompaña la ejecución de las acciones planificadas para los primeros 90 días.",
+progress:"Acciones completadas",
+done:"Completadas",
+pending:"En progreso o pendientes",
+phasesDone:"Fases completadas",
+scoreNote:"El progreso considera solo las acciones aplicables. Marca como no aplica aquello que no tenga sentido para tu modelo de negocio.",
+metricsTag:"INDICADORES DEL NEGOCIO",
+metricsTitle:"Tus números durante los primeros 90 días",
+metricsIntro:"Registra los resultados reales. Puedes actualizar estos indicadores durante el período.",
+metrics:[
+["Ingresos totales (R$)","Ej.: 25000"],["Cantidad de clientes","Ej.: 80"],["Leads o contactos recibidos","Ej.: 150"],["Ticket medio (R$)","Ej.: 180"],["Conversión de contactos en clientes (%)","Ej.: 35"],["Inversión en marketing (R$)","Ej.: 1500"],["Beneficio operativo estimado (R$)","Ej.: 4500"],["Reseñas recibidas","Ej.: 12"],["Clientes que volvieron a comprar","Ej.: 15"]
+],
+reflectionTag:"APRENDIZAJES",
+reflectionTitle:"¿Qué has aprendido?",
+reflectionIntro:"Utiliza este espacio para convertir los resultados en decisiones para el próximo ciclo.",
+keep:"¿Qué está funcionando y debe continuar?",
+change:"¿Qué necesita cambiar o mejorar?",
+next:"¿Cuál será tu principal prioridad para los próximos 90 días?",
+save:"Guardar mi progreso",
+continue:"Continuar a YOUR FINAL PLAN →",
+saved:"Progreso guardado en este dispositivo.",
+keepPlaceholder:"Ej.: Instagram está generando contactos cualificados...",
+changePlaceholder:"Ej.: Revisar precios y mejorar el tiempo de respuesta...",
+nextPlaceholder:"Ej.: Aumentar las ventas a través del canal más eficiente..."
+}
+};
+
+let lang="pt";
+let data={tasks:{},metrics:{},reflection:{}};
+try{
+const saved=JSON.parse(localStorage.getItem(KEY)||"null");
+if(saved)data={...data,...saved,tasks:saved.tasks||{},metrics:saved.metrics||{},reflection:saved.reflection||{}};
+}catch(e){}
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function render(){
+const d=T[lang];
+document.documentElement.lang=lang==="pt"?"pt-BR":lang;
+$("eyebrow").textContent=d.eyebrow;
+$("subtitle").textContent=d.subtitle;
+$("scoreTag").textContent=d.scoreTag;
+$("scoreTitle").textContent=d.scoreTitle;
+$("scoreIntro").textContent=d.scoreIntro;
+$("k1label").textContent=d.progress;
+$("k2label").textContent=d.done;
+$("k3label").textContent=d.pending;
+$("k4label").textContent=d.phasesDone;
+$("scoreNote").textContent=d.scoreNote;
+$("metricsTag").textContent=d.metricsTag;
+$("metricsTitle").textContent=d.metricsTitle;
+$("metricsIntro").textContent=d.metricsIntro;
+$("reflectionTag").textContent=d.reflectionTag;
+$("reflectionTitle").textContent=d.reflectionTitle;
+$("reflectionIntro").textContent=d.reflectionIntro;
+$("keepLabel").textContent=d.keep;
+$("changeLabel").textContent=d.change;
+$("nextLabel").textContent=d.next;
+$("keep").placeholder=d.keepPlaceholder;
+$("change").placeholder=d.changePlaceholder;
+$("next").placeholder=d.nextPlaceholder;
+$("saveButton").textContent=d.save;
+$("continueButton").textContent=d.continue;
+
+let phases="";
+d.phases.forEach((phase,i)=>{
+phases+=`<section class="card">
+<div class="phasehead"><div class="phaseicon">${i+1}</div><div><div class="tag">${phase.name}</div><h2>${phase.title}</h2></div></div>
+<p class="intro">${phase.intro}</p>
+<div class="tasks">`;
+phase.tasks.forEach((task,j)=>{
+let id=i+"_"+j;
+let value=Number(data.tasks[id]||0);
+phases+=`<div class="task">
+<label for="task_${id}">${esc(task)}</label>
+<select id="task_${id}" data-task="${id}">
+${d.status.map((s,k)=>`<option value="${k}" ${value===k?"selected":""}>${s}</option>`).join("")}
+</select>
+</div>`;
+});
+phases+=`</div></section>`;
+});
+$("phases").innerHTML=phases;
+
+let metrics="";
+d.metrics.forEach((m,i)=>{
+metrics+=`<div class="field">
+<label for="metric_${i}">${m[0]}</label>
+<input type="number" min="0" step="0.01" id="metric_${i}" data-metric="${i}" value="${esc(data.metrics[i]??"")}" placeholder="${m[1]}">
+</div>`;
+});
+$("metricsGrid").innerHTML=metrics;
+
+$("keep").value=data.reflection.keep||"";
+$("change").value=data.reflection.change||"";
+$("next").value=data.reflection.next||"";
+update();
+}
+
+function update(){
+let total=0,done=0,phasesDone=0;
+for(let i=0;i<3;i++){
+let phaseTotal=0,phaseDone=0;
+document.querySelectorAll(`[data-task^="${i}_"]`).forEach(el=>{
+let v=Number(el.value);
+if(v!==3){
+total++;
+phaseTotal++;
+if(v===2){done++;phaseDone++;}
+}
+});
+if(phaseTotal>0&&phaseDone===phaseTotal)phasesDone++;
+}
+let pending=total-done;
+let percent=total?Math.round(done/total*100):0;
+$("k1").textContent=percent+"%";
+$("k2").textContent=done;
+$("k3").textContent=pending;
+$("k4").textContent=phasesDone+"/3";
+$("progressBar").style.width=percent+"%";
+$("scoreNote").textContent=T[lang].scoreNote;
+save(false);
+}
+
+function save(show=true){
+data.tasks=data.tasks||{};
+document.querySelectorAll("[data-task]").forEach(el=>{
+data.tasks[el.dataset.task]=Number(el.value);
+});
+data.metrics=data.metrics||{};
+document.querySelectorAll("[data-metric]").forEach(el=>{
+data.metrics[el.dataset.metric]=el.value;
+});
+data.reflection={
+keep:$("keep").value,
+change:$("change").value,
+next:$("next").value
+};
+try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
+if(show)$("saveStatus").textContent=T[lang].saved;
+}
+
+document.addEventListener("change",e=>{
+if(e.target.matches("[data-task]"))update();
+if(e.target.matches("[data-metric]"))save(false);
+});
+
+["keep","change","next"].forEach(id=>{
+$(id).addEventListener("input",()=>save(false));
+});
+
+$("language").addEventListener("change",e=>{
+save(false);
+lang=e.target.value;
+render();
+});
+
+$("saveButton").addEventListener("click",()=>save(true));
+
+$("continueButton").addEventListener("click",()=>{
+save(true);
+window.location.href="your-final-plan.html";
+});
+
+render();
+</script>
+</body>
+</html>
