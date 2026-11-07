@@ -1,446 +1,280 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Starting Toolkit | Your Final Plan</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starting Toolkit - Your Final Plan</title>
 <style>
-:root{--ink:#202b38;--muted:#687586;--line:#e1e7ec;--soft:#f4f7f8;--brand:#315c72;--accent:#d9a441;--green:#24734c}
+:root{--bg:#f6f7fb;--card:#fff;--ink:#18202a;--muted:#667085;--line:#e4e7ec;--a:#6c63ff;--soft:#f0efff}
 *{box-sizing:border-box}
-body{margin:0;background:#f2f5f7;color:var(--ink);font:15px/1.55 Arial,sans-serif}
-.wrap{max-width:1050px;margin:auto;padding:25px 18px 60px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
-.logo{font-weight:800;letter-spacing:.08em;color:var(--brand);font-size:13px}
-select,button{font:inherit}
-.lang{border:1px solid var(--line);border-radius:9px;padding:8px;background:white;color:var(--ink)}
-.hero{background:linear-gradient(135deg,#203f52,#3c7182);color:white;padding:34px;border-radius:20px;margin-bottom:20px}
-.eyebrow{font-size:12px;letter-spacing:.13em;opacity:.8}
-h1{font-size:clamp(30px,5vw,42px);line-height:1.1;margin:9px 0}
-.hero p{color:#e5edf1;max-width:730px;margin:0}
-.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.pill{background:#ffffff20;border:1px solid #ffffff35;border-radius:30px;padding:7px 12px;font-size:12px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
-.btn{border:0;border-radius:10px;padding:11px 16px;background:var(--brand);color:white;font-weight:700;cursor:pointer}
-.btn.gold{background:var(--accent);color:#29251d}
-.btn.light{background:#edf2f5;color:var(--brand);border:1px solid #d7e0e6}
-.card{background:white;border:1px solid var(--line);border-radius:17px;padding:23px;margin:16px 0;box-shadow:0 5px 18px #20304008}
-.card h2{font-size:20px;margin:0 0 7px}
-.card h3{font-size:15px;margin:18px 0 7px}
-.tag{font-size:11px;font-weight:800;color:var(--brand);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
-.intro{color:var(--muted);margin:0 0 17px;font-size:14px}
-.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
-.metric{background:var(--soft);padding:15px;border-radius:12px}
-.metric span{display:block;font-size:12px;color:var(--muted)}
-.metric strong{display:block;font-size:23px;margin-top:4px}
-.statusbar{height:9px;background:#e6ebef;border-radius:20px;overflow:hidden;margin-top:14px}
-.statusbar span{display:block;height:100%;background:var(--green);width:0}
-.section{border-top:1px solid var(--line);padding-top:16px;margin-top:17px}
-.section:first-child{border-top:0;padding-top:0;margin-top:0}
-.section-title{font-size:16px;font-weight:750;margin-bottom:8px}
-.data-list{display:grid;gap:8px}
-.data-row{display:grid;grid-template-columns:minmax(150px, .8fr) minmax(0,1.5fr);gap:12px;padding:9px 0;border-bottom:1px solid #edf0f2}
-.data-row:last-child{border-bottom:0}
-.data-label{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
-.data-value{font-size:14px;overflow-wrap:anywhere;white-space:pre-wrap}
-.empty{padding:13px;background:var(--soft);border-radius:10px;color:var(--muted);font-size:13px}
-.callout{background:#f8f6ef;border-left:3px solid var(--accent);border-radius:8px;padding:14px;color:#38434d;font-size:14px;margin-top:14px}
-.decision{background:#203f52;color:white;border-radius:17px;padding:23px;margin:18px 0}
-.decision h2{color:white;margin:0 0 7px}
-.decision p{color:#e3edf1;margin:0}
-.decision strong{color:#fff}
-.footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
-.missing{color:#8a641f}
-@media(max-width:650px){
-.wrap{padding:18px 12px 40px}
-.hero{padding:24px 20px}
-.card{padding:17px}
-.status-grid{grid-template-columns:1fr}
-.data-row{grid-template-columns:1fr;gap:3px}
-}
-@media print{
-body{background:white;color:#17202a}
-.wrap{max-width:none;padding:0}
-.top,.actions,.lang{display:none!important}
-.hero{background:#203f52!important;color:white!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
-.card{box-shadow:none;break-inside:avoid;border:1px solid #ddd}
-.decision{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-.statusbar span{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Arial,sans-serif}
+.wrap{max-width:1050px;margin:auto;padding:28px 20px 60px}
+.top{display:flex;justify-content:space-between;margin-bottom:20px}
+.brand{font-weight:800;letter-spacing:.08em}
+.hero,.section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;margin:18px 0}
+.hero{background:linear-gradient(135deg,#fff,#f1efff)}
+h1{font-size:36px;line-height:1.1;margin:0 0 10px}
+h2{font-size:22px;margin:0 0 8px}
+h3{font-size:16px;margin:0 0 7px}
+p{color:var(--muted);margin:7px 0}
+select{border:1px solid var(--line);border-radius:10px;background:#fff;padding:9px}
+.badge{display:inline-block;font-size:12px;font-weight:700;padding:6px 9px;border-radius:99px;background:var(--soft);color:#5148d9}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card,.swot,.kpi{border:1px solid var(--line);border-radius:14px;padding:14px}
+.card strong{display:block;font-size:17px;margin-bottom:4px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.kpi span{display:block;color:var(--muted);font-size:12px}
+.kpi strong{font-size:21px}
+.matrix{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.list{padding-left:20px}
+.list li{margin:5px 0}
+.missing{color:#b76b00;font-size:13px}
+.decision{padding:20px;border-radius:16px}
+.start{background:#edf9f3;border:1px solid #bfe7d0}
+.validate{background:#fff8e8;border:1px solid #f0d28b}
+.refine{background:#fff0f0;border:1px solid #edb7b7}
+.btn{margin:12px 8px 0 0;border:0;border-radius:10px;background:var(--a);color:#fff;padding:10px 15px;font-weight:700;cursor:pointer}
+.secondary{background:#fff;color:#5148d9;border:1px solid var(--line)}
+.note{font-size:12px;color:var(--muted)}
+@media(max-width:700px){.grid,.matrix{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}h1{font-size:30px}}
+@media(max-width:440px){.kpis{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="top">
-<div class="logo">STARTING TOOLKIT</div>
-<select class="lang" id="language" aria-label="Language">
-<option value="pt">Português</option>
-<option value="en">English</option>
-<option value="es">Español</option>
+<div class="brand">STARTING TOOLKIT</div>
+<select id="lang" onchange="render()">
+<option value="pt">PT</option><option value="en">EN</option><option value="es">ES</option>
 </select>
 </div>
 
-<header class="hero">
-<div class="eyebrow" id="eyebrow"></div>
-<h1 id="title"></h1>
-<p id="subtitle"></p>
-<div class="hero-meta">
-<span class="pill" id="dateLabel"></span>
-<span class="pill" id="modulesLabel"></span>
+<section class="hero">
+<span class="badge" id="badge">SEU PLANO FINAL</span>
+<h1 id="title">YOUR FINAL PLAN</h1>
+<p id="intro">Tudo o que você construiu no Starting Toolkit, reunido em uma visão estratégica para tomar a próxima decisão.</p>
+<div class="kpis">
+<div class="kpi"><span id="l1">Modelo</span><strong id="v1">-</strong></div>
+<div class="kpi"><span id="l2">Investimento inicial</span><strong id="v2">-</strong></div>
+<div class="kpi"><span id="l3">Lucro operacional</span><strong id="v3">-</strong></div>
+<div class="kpi"><span id="l4">Payback</span><strong id="v4">-</strong></div>
 </div>
-</header>
-
-<div class="actions">
-<button class="btn gold" id="printButton"></button>
-<button class="btn light" id="refreshButton"></button>
-</div>
-
-<section class="card">
-<div class="tag" id="overviewTag"></div>
-<h2 id="overviewTitle"></h2>
-<p class="intro" id="overviewIntro"></p>
-<div class="status-grid">
-<div class="metric"><span id="m1label"></span><strong id="m1">0/8</strong></div>
-<div class="metric"><span id="m2label"></span><strong id="m2">0%</strong></div>
-<div class="metric"><span id="m3label"></span><strong id="m3"></strong></div>
-</div>
-<div class="statusbar"><span id="statusbar"></span></div>
-<div class="callout" id="overviewNote"></div>
 </section>
 
-<div id="planSections"></div>
-
-<section class="decision">
-<div class="tag" id="decisionTag" style="color:#f0c76c"></div>
-<h2 id="decisionTitle"></h2>
-<p id="decisionText"></p>
+<section class="section">
+<h2 id="ideaT">MY IDEA</h2>
+<div class="grid" id="idea">
+<div class="card"><strong>Ideia de negócio</strong>Complete o módulo MY IDEA para trazer seus dados para cá.</div>
+<div class="card"><strong>Cliente ideal</strong>Seu público prioritário será apresentado aqui.</div>
+</div>
 </section>
 
-<section class="card">
-<div class="tag" id="nextTag"></div>
-<h2 id="nextTitle"></h2>
-<p class="intro" id="nextIntro"></p>
-<div id="nextSteps"></div>
+<section class="section"><h2 id="modelT">MY MODEL</h2><div id="model"><div class="card">Seu modelo de negócio será apresentado aqui.</div></div></section>
+<section class="section"><h2 id="marketT">MY MARKET</h2><div class="grid" id="market"><div class="card"><strong>Mercado</strong>Região, oportunidade e posicionamento.</div></div></section>
+<section class="section"><h2 id="swotT">MY SWOT</h2><div class="matrix" id="swot"><div class="swot"><h3>Forças</h3>Seus pontos fortes internos.</div><div class="swot"><h3>Fraquezas</h3>Pontos internos que precisam de atenção.</div><div class="swot"><h3>Oportunidades</h3>Condições externas favoráveis.</div><div class="swot"><h3>Ameaças</h3>Riscos externos a acompanhar.</div></div></section>
+<section class="section"><h2 id="numT">MY NUMBERS</h2><div class="kpis" id="numbers"><div class="kpi"><span>Investimento</span><strong>A preencher</strong></div><div class="kpi"><span>Custos</span><strong>A preencher</strong></div><div class="kpi"><span>Margem</span><strong>A preencher</strong></div><div class="kpi"><span>Payback</span><strong>A preencher</strong></div></div></section>
+<section class="section"><h2 id="mktT">MY MARKETING</h2><div class="grid" id="marketing"><div class="card">Objetivos, canais e orçamento de marketing.</div></div></section>
+<section class="section"><h2 id="launchT">MY LAUNCH</h2><div class="grid" id="launch"><div class="card">Preparação e estratégia de lançamento.</div></div></section>
+<section class="section"><h2 id="daysT">MY FIRST 90 DAYS</h2><div class="grid" id="days"><div class="card">Plano de ação para os primeiros 30, 60 e 90 dias.</div></div></section>
+
+<section class="section">
+<h2 id="priT">PRIORIDADES ESTRATÉGICAS</h2>
+<ol class="list" id="priorities">
+<li>Defina claramente a oferta e o cliente.</li>
+<li>Valide a demanda antes de aumentar o investimento.</li>
+<li>Acompanhe receita, custos e margem.</li>
+<li>Concentre o marketing nos canais que geram resultado.</li>
+<li>Transforme os aprendizados dos primeiros 90 dias em processos.</li>
+</ol>
 </section>
 
-<div class="footer" id="footer"></div>
+<section class="section">
+<h2 id="nextT">YOUR NEXT MOVE</h2>
+<p id="nextI">O plano não precisa estar perfeito. A pergunta agora é: qual é o próximo movimento mais inteligente?</p>
+<div id="decision"><div class="decision validate"><h2>VALIDATE FIRST</h2><p>Revise os dados dos módulos e teste os pontos importantes antes de comprometer mais tempo ou dinheiro.</p></div></div>
+<button class="btn" onclick="window.print()" id="print">Imprimir / salvar</button>
+<button class="btn secondary" onclick="clearData()" id="clear">Limpar dados locais</button>
+<p class="note" id="note">Para carregar seus dados, abra este arquivo no mesmo navegador em que preencheu os módulos. Os dados salvos em outro aparelho não são compartilhados automaticamente.</p>
+</section>
 </div>
 
 <script>
-const KEYS=[
-{key:"startingToolkitIdeaV1",id:"idea"},
-{key:"startingToolkitModelV1",id:"model"},
-{key:"startingToolkitMarketV4",id:"market"},
-{key:"startingToolkitSWOTV2",id:"swot"},
-{key:"startingToolkitNumbersV2",id:"numbers"},
-{key:"startingToolkitMarketingV1",id:"marketing"},
-{key:"startingToolkitLaunchV1",id:"launch"},
-{key:"startingToolkit90Days",id:"days"}
-];
-
 const T={
 pt:{
-eyebrow:"SEU PLANO DE NEGÓCIO",
-title:"YOUR FINAL PLAN",
-subtitle:"Uma visão consolidada das suas decisões, do potencial do negócio e dos próximos passos para transformar seu planejamento em ação.",
-date:"Plano atualizado em",
-modules:"Módulos integrados",
-print:"Imprimir / salvar em PDF",
-refresh:"Atualizar meu plano",
-overviewTag:"VISÃO GERAL",
-overviewTitle:"O que você já construiu",
-overviewIntro:"Este documento reúne as informações salvas nos módulos do Starting Toolkit. Você pode continuar revisando os módulos e atualizar este plano quando quiser.",
-completed:"Módulos com informações",
-progress:"Cobertura do planejamento",
-recommendation:"Próximo passo sugerido",
-completeNote:"Seu planejamento já reúne informações de todos os módulos. Revise os dados e confirme se as estimativas e decisões continuam realistas.",
-partialNote:"Seu plano ainda tem módulos sem informações salvas. Continue preenchendo as etapas para completar sua visão do negócio.",
-missing:"Ainda não preenchido",
-sections:{
-idea:"01. A IDEIA DO NEGÓCIO",
-model:"02. MODELO DE NEGÓCIO",
-market:"03. MERCADO E CLIENTES",
-swot:"04. ANÁLISE SWOT ESTRATÉGICA",
-numbers:"05. PLANEJAMENTO FINANCEIRO",
-marketing:"06. ESTRATÉGIA DE MARKETING",
-launch:"07. PREPARAÇÃO PARA O LANÇAMENTO",
-days:"08. PRIMEIROS 90 DIAS"
-},
-descriptions:{
-idea:"A proposta do negócio, o público que pretende atender e o que torna a ideia relevante.",
-model:"A estrutura escolhida para operar: franquia, marca própria ou decisão ainda em aberto.",
-market:"O mercado, os clientes, a concorrência e o posicionamento pretendido.",
-swot:"Forças, fraquezas, oportunidades, ameaças e prioridades estratégicas.",
-numbers:"Investimento inicial, custos, receita, margem, ponto de equilíbrio e prazo estimado de retorno.",
-marketing:"Objetivos, oferta, canais, aquisição, conteúdo e prioridades de divulgação.",
-launch:"Preparação, estrutura, estratégia de lançamento e tarefas dos primeiros dias.",
-days:"Ações planejadas, indicadores de acompanhamento e aprendizados dos primeiros três meses."
-},
-emptySection:"Nenhuma informação encontrada neste módulo. Volte ao módulo correspondente, preencha e salve suas respostas.",
-decisionTag:"SUA PRÓXIMA DECISÃO",
-start:"SEU PLANO ESTÁ PRONTO PARA REVISÃO",
-startText:"Você já reuniu informações dos oito módulos. Isso não significa que o negócio esteja garantido, mas que existe uma base para revisar, validar e decidir os próximos passos.",
-validate:"VALIDAR ANTES DE AVANÇAR",
-validateText:"Você já tem uma parte importante do planejamento. Antes de investir ou abrir, confirme as informações que ainda estão incompletas e teste as principais hipóteses com clientes reais.",
-refine:"APERFEIÇOAR O PLANEJAMENTO",
-refineText:"Ainda faltam informações relevantes. Complete os módulos pendentes e revise as decisões principais antes de assumir compromissos financeiros.",
-nextTag:"PRÓXIMOS PASSOS",
-nextTitle:"O que fazer agora",
-nextIntro:"Use esta lista como referência para transformar o planejamento em ações concretas.",
-steps:["Revise os dados e confirme se estão atualizados.","Valide a demanda e converse com potenciais clientes.","Confirme custos, fornecedores, licenças e capital de giro.","Revise a estratégia de marketing e o plano de lançamento.","Defina metas e indicadores para acompanhar os primeiros 90 dias."],
-footer:"Criado com Starting Toolkit. Este documento é um instrumento de planejamento e não substitui aconselhamento jurídico, contábil ou financeiro.",
-labels:{
-no:"Não informado",yes:"Sim",noData:"Sem dados",custom:"Personalizado",
-initial:"Investimento inicial",fixed:"Custos fixos mensais",variable:"Custos variáveis mensais",revenue:"Receita estimada mensal",profit:"Lucro operacional estimado",margin:"Margem operacional",breakEven:"Ponto de equilíbrio",breakRevenue:"Receita para equilíbrio",payback:"Prazo de recuperação do investimento",
-ticket:"Ticket médio",sales:"Vendas mensais",growth:"Crescimento esperado",
-status:"Status",priority:"Prioridade",notes:"Observações",reflection:"Reflexão",
-true:"Sim",false:"Não"
-}
-},
+badge:'SEU PLANO FINAL',title:'YOUR FINAL PLAN',
+intro:'Tudo o que você construiu no Starting Toolkit, reunido em uma visão estratégica para tomar a próxima decisão.',
+labs:['Modelo','Investimento inicial','Lucro operacional','Payback'],
+sec:['MY IDEA','MY MODEL','MY MARKET','MY SWOT','MY NUMBERS','MY MARKETING','MY LAUNCH','MY FIRST 90 DAYS','PRIORIDADES ESTRATÉGICAS','YOUR NEXT MOVE'],
+next:'O plano não precisa estar perfeito. A pergunta agora é: qual é o próximo movimento mais inteligente?',
+print:'Imprimir / salvar',clear:'Limpar dados locais',
+note:'Síntese dos dados salvos neste navegador. Na versão final, poderá ser gerada como documento/PDF.',
+missing:'Ainda não preenchido',
+prior:['Defina claramente a oferta e o cliente','Valide a demanda antes de aumentar o investimento','Acompanhe receita, custos e margem','Concentre marketing nos canais que geram resultado','Transforme os aprendizados dos primeiros 90 dias em processos'],
+dec:{
+start:['START NOW','Seu plano apresenta uma base consistente para avançar.'],
+validate:['VALIDATE FIRST','Há pontos importantes que devem ser testados antes de comprometer mais tempo ou dinheiro.'],
+refine:['REFINE YOUR PLAN','Existem lacunas relevantes. Complete e refine os módulos antes de avançar.']
+}},
 en:{
-eyebrow:"YOUR BUSINESS PLAN",
-title:"YOUR FINAL PLAN",
-subtitle:"A consolidated view of your decisions, business potential, and next steps to turn your planning into action.",
-date:"Plan updated on",
-modules:"Integrated modules",
-print:"Print / save as PDF",
-refresh:"Refresh my plan",
-overviewTag:"OVERVIEW",
-overviewTitle:"What you have built",
-overviewIntro:"This document brings together the information saved in the Starting Toolkit modules. You can keep reviewing the modules and refresh this plan whenever you want.",
-completed:"Modules with saved information",
-progress:"Planning coverage",
-recommendation:"Suggested next step",
-completeNote:"Your plan now includes information from all modules. Review the data and confirm that your estimates and decisions are still realistic.",
-partialNote:"Your plan still has modules without saved information. Continue completing the steps to build a fuller business overview.",
-missing:"Not completed yet",
-sections:{
-idea:"01. THE BUSINESS IDEA",model:"02. BUSINESS MODEL",market:"03. MARKET AND CUSTOMERS",swot:"04. STRATEGIC SWOT ANALYSIS",numbers:"05. FINANCIAL PLAN",marketing:"06. MARKETING STRATEGY",launch:"07. LAUNCH PREPARATION",days:"08. FIRST 90 DAYS"
-},
-descriptions:{
-idea:"The business concept, intended audience, and what makes the idea relevant.",
-model:"The chosen operating structure: franchise, own brand, or a decision still to be made.",
-market:"The market, customers, competitors, and intended positioning.",
-swot:"Strengths, weaknesses, opportunities, threats, and strategic priorities.",
-numbers:"Initial investment, costs, revenue, margin, break-even point, and estimated payback.",
-marketing:"Objectives, offer, channels, acquisition, content, and marketing priorities.",
-launch:"Preparation, structure, launch strategy, and first-days tasks.",
-days:"Planned actions, tracking metrics, and learnings from the first three months."
-},
-emptySection:"No information found in this module. Return to the relevant module, complete it, and save your answers.",
-decisionTag:"YOUR NEXT DECISION",
-start:"YOUR PLAN IS READY FOR REVIEW",
-startText:"You have gathered information from all eight modules. This does not guarantee business success, but it gives you a foundation to review, validate, and decide what comes next.",
-validate:"VALIDATE BEFORE MOVING FORWARD",
-validateText:"You have completed an important part of the plan. Before investing or opening, confirm incomplete information and test your main assumptions with real customers.",
-refine:"REFINE YOUR PLAN",
-refineText:"Important information is still missing. Complete the pending modules and review key decisions before making financial commitments.",
-nextTag:"NEXT STEPS",
-nextTitle:"What to do now",
-nextIntro:"Use this list as a guide to turn your plan into concrete actions.",
-steps:["Review the information and confirm that it is up to date.","Validate demand and speak with potential customers.","Confirm costs, suppliers, permits, and working capital.","Review your marketing strategy and launch plan.","Set goals and metrics for the first 90 days."],
-footer:"Created with Starting Toolkit. This document is a planning tool and does not replace legal, accounting, or financial advice.",
-labels:{no:"Not informed",yes:"Yes",noData:"No data",custom:"Custom",initial:"Initial investment",fixed:"Monthly fixed costs",variable:"Monthly variable costs",revenue:"Estimated monthly revenue",profit:"Estimated operating profit",margin:"Operating margin",breakEven:"Break-even point",breakRevenue:"Break-even revenue",payback:"Estimated payback period",ticket:"Average order value",sales:"Monthly sales",growth:"Expected growth",status:"Status",priority:"Priority",notes:"Notes",reflection:"Reflection",true:"Yes",false:"No"}
-},
+badge:'YOUR FINAL PLAN',title:'YOUR FINAL PLAN',
+intro:'Everything you built in Starting Toolkit, brought together into a strategic view to help you decide what to do next.',
+labs:['Model','Initial investment','Operating profit','Payback'],
+sec:['MY IDEA','MY MODEL','MY MARKET','MY SWOT','MY NUMBERS','MY MARKETING','MY LAUNCH','MY FIRST 90 DAYS','STRATEGIC PRIORITIES','YOUR NEXT MOVE'],
+next:'The plan does not need to be perfect. What is the smartest next move?',
+print:'Print / save',clear:'Clear local data',
+note:'Summary of data saved in this browser. The final version can generate a complete document/PDF.',
+missing:'Not filled in yet',
+prior:['Define the offer and customer clearly','Validate demand before increasing investment','Track revenue, costs and margin','Focus marketing on channels that generate results','Turn first-90-day learnings into processes'],
+dec:{
+start:['START NOW','Your plan has a consistent base to move forward.'],
+validate:['VALIDATE FIRST','Important points should be tested before committing more time or money.'],
+refine:['REFINE YOUR PLAN','Relevant gaps remain. Complete and refine the modules before moving forward.']
+}},
 es:{
-eyebrow:"TU PLAN DE NEGOCIO",
-title:"YOUR FINAL PLAN",
-subtitle:"Una visión consolidada de tus decisiones, del potencial del negocio y de los próximos pasos para convertir tu planificación en acción.",
-date:"Plan actualizado el",
-modules:"Módulos integrados",
-print:"Imprimir / guardar en PDF",
-refresh:"Actualizar mi plan",
-overviewTag:"VISIÓN GENERAL",
-overviewTitle:"Lo que has construido",
-overviewIntro:"Este documento reúne la información guardada en los módulos de Starting Toolkit. Puedes seguir revisando los módulos y actualizar este plan cuando quieras.",
-completed:"Módulos con información guardada",
-progress:"Cobertura de la planificación",
-recommendation:"Próximo paso sugerido",
-completeNote:"Tu planificación ya reúne información de todos los módulos. Revisa los datos y confirma que las estimaciones y decisiones siguen siendo realistas.",
-partialNote:"Tu plan todavía tiene módulos sin información guardada. Continúa completando las etapas para tener una visión más completa del negocio.",
-missing:"Aún no completado",
-sections:{
-idea:"01. LA IDEA DEL NEGOCIO",model:"02. MODELO DE NEGOCIO",market:"03. MERCADO Y CLIENTES",swot:"04. ANÁLISIS SWOT ESTRATÉGICO",numbers:"05. PLANIFICACIÓN FINANCIERA",marketing:"06. ESTRATEGIA DE MARKETING",launch:"07. PREPARACIÓN DEL LANZAMIENTO",days:"08. PRIMEROS 90 DÍAS"
-},
-descriptions:{
-idea:"La propuesta del negocio, el público al que quieres atender y lo que hace relevante la idea.",
-model:"La estructura elegida para operar: franquicia, marca propia o una decisión pendiente.",
-market:"El mercado, los clientes, la competencia y el posicionamiento previsto.",
-swot:"Fortalezas, debilidades, oportunidades, amenazas y prioridades estratégicas.",
-numbers:"Inversión inicial, costos, ingresos, margen, punto de equilibrio y plazo estimado de recuperación.",
-marketing:"Objetivos, oferta, canales, captación, contenido y prioridades de divulgación.",
-launch:"Preparación, estructura, estrategia de lanzamiento y tareas de los primeros días.",
-days:"Acciones planificadas, indicadores de seguimiento y aprendizajes de los primeros tres meses."
-},
-emptySection:"No se encontró información en este módulo. Vuelve al módulo correspondiente, complétalo y guarda tus respuestas.",
-decisionTag:"TU PRÓXIMA DECISIÓN",
-start:"TU PLAN ESTÁ LISTO PARA REVISIÓN",
-startText:"Ya has reunido información de los ocho módulos. Esto no garantiza el éxito del negocio, pero ofrece una base para revisar, validar y decidir los próximos pasos.",
-validate:"VALIDAR ANTES DE AVANZAR",
-validateText:"Ya tienes una parte importante de la planificación. Antes de invertir o abrir, confirma la información incompleta y prueba tus principales hipótesis con clientes reales.",
-refine:"PERFECCIONAR LA PLANIFICACIÓN",
-refineText:"Todavía falta información relevante. Completa los módulos pendientes y revisa las decisiones principales antes de asumir compromisos financieros.",
-nextTag:"PRÓXIMOS PASOS",
-nextTitle:"Qué hacer ahora",
-nextIntro:"Utiliza esta lista como referencia para convertir la planificación en acciones concretas.",
-steps:["Revisa los datos y confirma que estén actualizados.","Valida la demanda y habla con potenciales clientes.","Confirma costos, proveedores, permisos y capital de trabajo.","Revisa la estrategia de marketing y el plan de lanzamiento.","Define metas e indicadores para los primeros 90 días."],
-footer:"Creado con Starting Toolkit. Este documento es una herramienta de planificación y no sustituye el asesoramiento jurídico, contable o financiero.",
-labels:{no:"No informado",yes:"Sí",noData:"Sin datos",custom:"Personalizado",initial:"Inversión inicial",fixed:"Costos fijos mensuales",variable:"Costos variables mensuales",revenue:"Ingresos mensuales estimados",profit:"Beneficio operativo estimado",margin:"Margen operativo",breakEven:"Punto de equilibrio",breakRevenue:"Ingresos para el equilibrio",payback:"Plazo de recuperación",ticket:"Ticket medio",sales:"Ventas mensuales",growth:"Crecimiento esperado",status:"Estado",priority:"Prioridad",notes:"Observaciones",reflection:"Reflexión",true:"Sí",false:"No"}
-}
+badge:'TU PLAN FINAL',title:'YOUR FINAL PLAN',
+intro:'Todo lo que construiste en Starting Toolkit, reunido en una visión estratégica para decidir el siguiente paso.',
+labs:['Modelo','Inversión inicial','Beneficio operativo','Payback'],
+sec:['MY IDEA','MY MODEL','MY MARKET','MY SWOT','MY NUMBERS','MY MARKETING','MY LAUNCH','MY FIRST 90 DAYS','PRIORIDADES ESTRATÉGICAS','YOUR NEXT MOVE'],
+next:'El plan no tiene que ser perfecto. ¿Cuál es el siguiente movimiento más inteligente?',
+print:'Imprimir / guardar',clear:'Borrar datos locales',
+note:'Resumen de los datos guardados en este navegador. La versión final podrá generar un documento/PDF.',
+missing:'Aún no completado',
+prior:['Define claramente la oferta y el cliente','Valida la demanda antes de aumentar la inversión','Acompaña ingresos, costes y margen','Concentra el marketing en los canales que generan resultados','Convierte los aprendizajes de los primeros 90 días en procesos'],
+dec:{
+start:['START NOW','Tu plan tiene una base consistente para avanzar.'],
+validate:['VALIDATE FIRST','Hay puntos importantes que deben probarse antes de comprometer más tiempo o dinero.'],
+refine:['REFINE YOUR PLAN','Existen vacíos relevantes. Completa y refina los módulos antes de avanzar.']
+}}
 };
 
-const $=id=>document.getElementById(id);
-let lang=localStorage.getItem("startingToolkitLanguage")||"pt";
-if(!["pt","en","es"].includes(lang))lang="pt";
+let lang=localStorage.getItem('startingToolkitLang')||'pt';
 
-function esc(value){
-return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function get(k){
+try{return JSON.parse(localStorage.getItem(k))||{}}
+catch(e){return{}}
 }
-
-function readData(){
-let result={};
-KEYS.forEach(item=>{
-try{
-let raw=localStorage.getItem(item.key);
-result[item.id]=raw?JSON.parse(raw):null;
-}catch(e){result[item.id]=null;}
-});
-return result;
+function tx(v,t){
+return v!==undefined&&v!==null&&String(v).trim()?String(v):'<span class="missing">'+t.missing+'</span>'
 }
-
-function labelize(value){
-return String(value)
-.replace(/([a-z0-9])([A-Z])/g,"$1 $2")
-.replace(/[_-]/g," ")
-.replace(/\b\w/g,c=>c.toUpperCase());
-}
-
-function useful(value){
-if(value===null||value===undefined||value==="")return false;
-if(typeof value==="number"||typeof value==="boolean")return true;
-if(typeof value==="string")return value.trim().length>0;
-if(Array.isArray(value))return value.length>0;
-if(typeof value==="object")return Object.keys(value).length>0;
-return false;
-}
-
-function formatValue(value){
-const l=T[lang].labels;
-if(value===null||value===undefined||value==="")return l.no;
-if(typeof value==="boolean")return value?l.true:l.false;
-if(typeof value==="number")return new Intl.NumberFormat(lang==="pt"?"pt-BR":lang==="es"?"es-ES":"en-US",{maximumFractionDigits:2}).format(value);
-if(typeof value==="string")return value;
-if(Array.isArray(value)){
-if(value.length===0)return l.noData;
-return value.map(formatValue).join(" • ");
-}
-if(typeof value==="object"){
-return Object.entries(value)
-.filter(([k,v])=>useful(v))
-.map(([k,v])=>labelize(k)+": "+formatValue(v))
-.join("\n");
-}
-return String(value);
-}
-
-function countValues(value){
-if(!useful(value))return 0;
-if(Array.isArray(value))return value.reduce((n,x)=>n+countValues(x),0)||1;
-if(typeof value==="object")return Object.values(value).reduce((n,x)=>n+countValues(x),0);
-return 1;
-}
-
-function moduleRows(id,data){
-if(!data)return [];
-let entries=Object.entries(data);
-return entries.filter(([k,v])=>useful(v)&&!["language","lang","updatedAt","createdAt"].includes(k));
-}
-
-function renderSection(id,data){
-const d=T[lang],title=d.sections[id],description=d.descriptions[id];
-let html=`<section class="card">
-<div class="tag">${title}</div>
-<p class="intro">${description}</p>`;
-if(!data){
-html+=`<div class="empty missing">${d.emptySection}</div></section>`;
-return html;
-}
-let rows=moduleRows(id,data);
-if(rows.length===0){
-html+=`<div class="empty">${d.emptySection}</div>`;
-}else{
-html+=`<div class="data-list">`;
-rows.forEach(([key,value])=>{
-html+=`<div class="data-row"><div class="data-label">${esc(labelize(key))}</div><div class="data-value">${esc(formatValue(value))}</div></div>`;
-});
-html+=`</div>`;
-}
-html+=`</section>`;
-return html;
-}
-
-function getDecision(data,present){
-let missing=8-present;
-let numberData=data.numbers;
-let profit=null;
-if(numberData&&typeof numberData==="object"){
-const candidates=["profit","operatingProfit","monthlyProfit","estimatedProfit"];
-for(const key of candidates){
-if(typeof numberData[key]==="number"){profit=numberData[key];break;}
-}
-}
-if(missing===0)return ["start","startText"];
-if(missing<=2)return ["validate","validateText"];
-return ["refine","refineText"];
+function ar(v){
+return Array.isArray(v)?v.join(', '):(v||'')
 }
 
 function render(){
-const d=T[lang],data=readData();
-document.documentElement.lang=lang==="pt"?"pt-BR":lang;
-$("eyebrow").textContent=d.eyebrow;
-$("title").textContent=d.title;
-$("subtitle").textContent=d.subtitle;
-$("dateLabel").textContent=d.date+" "+new Date().toLocaleDateString(lang==="pt"?"pt-BR":lang==="es"?"es-ES":"en-US");
-$("modulesLabel").textContent=d.modules+": 8";
-$("printButton").textContent=d.print;
-$("refreshButton").textContent=d.refresh;
-$("overviewTag").textContent=d.overviewTag;
-$("overviewTitle").textContent=d.overviewTitle;
-$("overviewIntro").textContent=d.overviewIntro;
-$("m1label").textContent=d.completed;
-$("m2label").textContent=d.progress;
-$("m3label").textContent=d.recommendation;
-$("overviewNote").textContent="";
+lang=document.getElementById('lang').value||lang;
+localStorage.setItem('startingToolkitLang',lang);
+let t=T[lang];
 
-let present=KEYS.filter(k=>data[k.id]&&moduleRows(k.id,data[k.id]).length>0).length;
-let percent=Math.round(present/8*100);
-$("m1").textContent=present+"/8";
-$("m2").textContent=percent+"%";
-$("m3").textContent=present===8?d.start:present>=6?d.validate:d.refine;
-$("statusbar").style.width=percent+"%";
-$("overviewNote").textContent=present===8?d.completeNote:d.partialNote;
+document.getElementById('badge').textContent=t.badge;
+document.getElementById('title').textContent=t.title;
+document.getElementById('intro').textContent=t.intro;
+document.getElementById('nextI').textContent=t.next;
+document.getElementById('print').textContent=t.print;
+document.getElementById('clear').textContent=t.clear;
+document.getElementById('note').textContent=t.note;
 
-$("planSections").innerHTML=KEYS.map(k=>renderSection(k.id,data[k.id])).join("");
+['ideaT','modelT','marketT','swotT','numT','mktT','launchT','daysT','priT','nextT'].forEach((id,i)=>{
+document.getElementById(id).textContent=t.sec[i]
+});
+['l1','l2','l3','l4'].forEach((id,i)=>{
+document.getElementById(id).textContent=t.labs[i]
+});
 
-let decision=getDecision(data,present);
-$("decisionTag").textContent=d.decisionTag;
-$("decisionTitle").textContent=d[decision[0]];
-$("decisionText").textContent=d[decision[1]];
+let idea=get('startingToolkitIdeaV1');
+let model=get('startingToolkitModelV1');
+let market=get('startingToolkitMarketV4');
+let swot=get('startingToolkitSWOTV2');
+let num=get('startingToolkitNumbersV2');
+let mkt=get('startingToolkitMarketingV1');
+let launch=get('startingToolkitLaunchV1');
+let days=get('startingToolkit90Days');
 
-$("nextTag").textContent=d.nextTag;
-$("nextTitle").textContent=d.nextTitle;
-$("nextIntro").textContent=d.nextIntro;
-$("nextSteps").innerHTML=d.steps.map((s,i)=>`<div class="data-row"><div class="data-label">${i+1}</div><div class="data-value">${esc(s)}</div></div>`).join("");
-$("footer").textContent=d.footer;
+let business=idea.businessName||idea.name||idea.business||idea.idea||'';
+let customer=idea.customerDescription||idea.customer||idea.idealCustomer||'';
+let loc=idea.baseLocation||idea.location||idea.city||'';
+let goal=idea.goals||idea.goal||'';
+
+document.getElementById('idea').innerHTML=[
+['Business',business],['Ideal customer',customer],['Location',loc],['Goal',ar(goal)]
+].map(x=>'<div class="card"><strong>'+x[0]+'</strong><div>'+tx(x[1],t)+'</div></div>').join('');
+
+let mv=model.model||model.type||model.choice||model.businessModel||'';
+document.getElementById('model').innerHTML='<div class="card"><strong>'+tx(mv,t)+'</strong></div>';
+
+let mf=[
+['Region',market.region||market.marketRegion||''],
+['Opportunity',market.opportunities||market.opportunity||''],
+['Differentiators',market.differentiators||market.differentiation||''],
+['Positioning',market.positioning||'']
+];
+document.getElementById('market').innerHTML=mf.map(x=>'<div class="card"><strong>'+x[0]+'</strong><div>'+tx(ar(x[1]),t)+'</div></div>').join('');
+
+let sw=[
+['Strengths','strengths'],['Weaknesses','weaknesses'],
+['Opportunities','opportunities'],['Threats','threats']
+];
+document.getElementById('swot').innerHTML=sw.map(x=>{
+let a=Array.isArray(swot[x[1]])?swot[x[1]]:[];
+return '<div class="swot"><h3>'+x[0]+'</h3>'+
+(a.length?'<ul class="list">'+a.map(y=>'<li>'+y+'</li>').join('')+'</ul>':'<span class="missing">'+t.missing+'</span>')+
+'</div>'
+}).join('');
+
+let inv=num.initialInvestment||num.totalInvestment||'';
+let profit=num.operatingProfit||num.profit||'';
+let pay=num.payback||num.paybackMonths||'';
+
+document.getElementById('numbers').innerHTML=[
+[t.labs[0],mv],[t.labs[1],inv],[t.labs[2],profit],[t.labs[3],pay]
+].map(x=>'<div class="kpi"><span>'+x[0]+'</span><strong>'+tx(x[1],t)+'</strong></div>').join('');
+
+document.getElementById('marketing').innerHTML=[
+['Objective',mkt.objective||mkt.goals||''],
+['Channels',mkt.channels||mkt.selectedChannels||''],
+['Budget',mkt.budget||mkt.monthlyBudget||'']
+].map(x=>'<div class="card"><strong>'+x[0]+'</strong><div>'+tx(ar(x[1]),t)+'</div></div>').join('');
+
+document.getElementById('launch').innerHTML=[
+['Readiness',launch.readiness||launch.score||launch.progress||''],
+['Strategy',launch.strategy||launch.launchStrategy||'']
+].map(x=>'<div class="card"><strong>'+x[0]+'</strong><div>'+tx(x[1],t)+'</div></div>').join('');
+
+let ph=days.phases||[];
+let done=ph.filter(x=>x.status==='done').length;
+let actions=ph.reduce((n,x)=>n+(x.actions?.length||0),0);
+let metrics=(days.metrics||[]).filter(x=>String(x).trim()).length;
+
+document.getElementById('days').innerHTML=[
+['Phases completed',done+'/3'],
+['Selected actions',actions],
+['Metrics filled',metrics+'/8'],
+['Learning',days.reflection||'']
+].map(x=>'<div class="card"><strong>'+x[0]+'</strong><div>'+tx(x[1],t)+'</div></div>').join('');
+
+document.getElementById('priorities').innerHTML=t.prior.map(x=>'<li>'+x+'</li>').join('');
+
+let missing=[business,customer,mv,inv,profit].filter(x=>!String(x||'').trim()).length;
+let cls=missing===0&&done>=2?'start':missing<=2?'validate':'refine';
+let d=t.dec[cls];
+
+document.getElementById('decision').innerHTML=
+'<div class="decision '+cls+'"><h2>'+d[0]+'</h2><p>'+d[1]+'</p></div>';
+
+document.getElementById('v1').textContent=mv||'-';
+document.getElementById('v2').textContent=inv||'-';
+document.getElementById('v3').textContent=profit||'-';
+document.getElementById('v4').textContent=pay||'-';
 }
 
-$("language").value=lang;
-$("language").addEventListener("change",e=>{lang=e.target.value;localStorage.setItem("startingToolkitLanguage",lang);render()});
-$("printButton").addEventListener("click",()=>window.print());
-$("refreshButton").addEventListener("click",render);
+function clearData(){
+if(confirm('Clear Starting Toolkit data saved in this browser?')){
+Object.keys(localStorage).filter(k=>k.startsWith('startingToolkit')).forEach(k=>localStorage.removeItem(k));
+location.reload();
+}
+}
 
+document.getElementById('lang').value=lang;
 render();
 </script>
-<script src="toolkit-navigation.js"></script>
 </body>
 </html>
