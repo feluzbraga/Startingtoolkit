@@ -1,0 +1,1578 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Glossary | Starting Toolkit</title>
+<style>
+:root{
+ --navy:#172d3b;
+ --navy2:#243f50;
+ --teal:#4f8b87;
+ --gold:#c6a66b;
+ --bg:#f5f7f7;
+ --white:#fff;
+ --text:#263943;
+ --muted:#71818a;
+ --line:#e4e9e9;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ line-height:1.6;
+}
+button,input,select{font:inherit}
+.topbar{
+ background:var(--navy);
+ color:white;
+ padding:15px 5%;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+}
+.brand{font-size:19px;font-weight:700;letter-spacing:.4px}
+.brand span{color:var(--gold)}
+.language{
+ background:rgba(255,255,255,.12);
+ color:white;
+ border:1px solid rgba(255,255,255,.3);
+ border-radius:8px;
+ padding:9px 12px;
+ cursor:pointer;
+}
+.language option{color:#172d3b}
+.container{max-width:1100px;margin:auto;padding:30px 22px 60px}
+.back{
+ display:inline-block;
+ color:var(--teal);
+ text-decoration:none;
+ font-size:14px;
+ font-weight:700;
+ margin-bottom:18px;
+}
+.back:hover{text-decoration:underline}
+.hero{
+ background:var(--navy);
+ color:white;
+ border-radius:17px;
+ padding:38px 35px;
+}
+.eyebrow{
+ color:var(--gold);
+ font-size:12px;
+ font-weight:700;
+ letter-spacing:2px;
+ text-transform:uppercase;
+}
+.hero h1{
+ font-size:clamp(29px,4vw,40px);
+ line-height:1.2;
+ margin:12px 0;
+}
+.hero p{color:#dce5e9;max-width:690px;margin:0}
+.search-area{
+ background:white;
+ padding:22px;
+ border:1px solid var(--line);
+ border-radius:13px;
+ margin-top:22px;
+}
+.search-area label{
+ display:block;
+ font-size:13px;
+ font-weight:700;
+ color:var(--navy);
+ margin-bottom:8px;
+}
+.search-box{
+ width:100%;
+ padding:14px 15px;
+ border:1px solid #d8e0e0;
+ border-radius:9px;
+ background:#fff;
+ color:var(--text);
+ outline:none;
+}
+.search-box:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(79,139,135,.12)}
+.search-help{font-size:12px;color:var(--muted);margin-top:7px}
+.category-area{margin-top:22px}
+.category-title{
+ font-size:13px;
+ font-weight:700;
+ color:var(--navy);
+ margin-bottom:10px;
+}
+.categories{display:flex;flex-wrap:wrap;gap:8px}
+.category{
+ border:1px solid var(--line);
+ background:white;
+ color:var(--text);
+ padding:8px 13px;
+ border-radius:20px;
+ cursor:pointer;
+ font-size:13px;
+}
+.category.active{
+ background:var(--navy);
+ color:white;
+ border-color:var(--navy);
+}
+.results-header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ margin:28px 0 13px;
+}
+.results-header h2{font-size:20px;color:var(--navy);margin:0}
+.count{font-size:12px;color:var(--muted)}
+.terms{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:13px;
+}
+.term{
+ background:white;
+ border:1px solid var(--line);
+ border-radius:12px;
+ padding:19px;
+ cursor:pointer;
+ text-align:left;
+ width:100%;
+ color:var(--text);
+ transition:.15s;
+}
+.term:hover{border-color:var(--teal);transform:translateY(-2px)}
+.term-top{
+ display:flex;
+ justify-content:space-between;
+ align-items:flex-start;
+ gap:12px;
+}
+.term h3{margin:0;color:var(--navy);font-size:17px}
+.term .translation{
+ font-size:12px;
+ color:var(--teal);
+ font-weight:700;
+ margin-top:3px;
+}
+.term .short{
+ font-size:13px;
+ color:var(--muted);
+ margin-top:10px;
+}
+.arrow{color:var(--teal);font-weight:700}
+.no-results{
+ background:white;
+ padding:30px;
+ border:1px solid var(--line);
+ border-radius:12px;
+ text-align:center;
+ color:var(--muted);
+ grid-column:1/-1;
+}
+.modal{
+ position:fixed;
+ inset:0;
+ background:rgba(15,30,39,.65);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:18px;
+ z-index:10;
+}
+.modal.show{display:flex}
+.modal-content{
+ background:white;
+ border-radius:16px;
+ width:100%;
+ max-width:620px;
+ max-height:85vh;
+ overflow:auto;
+ padding:28px;
+ position:relative;
+}
+.close{
+ position:absolute;
+ right:17px;
+ top:12px;
+ border:0;
+ background:#edf1f1;
+ border-radius:50%;
+ width:34px;height:34px;
+ cursor:pointer;
+ font-size:20px;
+ color:var(--navy);
+}
+.modal-category{
+ color:var(--teal);
+ font-size:12px;
+ font-weight:700;
+ text-transform:uppercase;
+ letter-spacing:1px;
+ margin-top:10px;
+}
+.modal h2{color:var(--navy);font-size:27px;margin:8px 35px 4px 0}
+.modal-translation{color:var(--teal);font-size:13px;font-weight:700}
+.modal-section{margin-top:22px}
+.modal-section h3{font-size:14px;color:var(--navy);margin:0 0 6px}
+.modal-section p{font-size:14px;color:#53656d;margin:0}
+.example{
+ background:#edf4f3;
+ border-left:3px solid var(--teal);
+ padding:14px;
+ border-radius:0 8px 8px 0;
+}
+.example p{color:#40565e}
+.footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+@media(max-width:650px){
+ .container{padding:20px 14px 40px}
+ .hero{padding:29px 22px}
+ .terms{grid-template-columns:1fr}
+ .results-header{align-items:flex-start;flex-direction:column}
+ .modal-content{padding:23px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+ <div class="brand">STARTING<span>TOOLKIT</span></div>
+ <select class="language" id="language" aria-label="Select language">
+  <option value="en">English</option>
+  <option value="pt">Português</option>
+  <option value="es">Español</option>
+ </select>
+</header>
+
+<main class="container">
+ <a href="welcome.html" class="back" id="backLink">← Back to Welcome</a>
+
+ <section class="hero">
+  <div class="eyebrow" id="eyebrow">YOUR BUSINESS REFERENCE LIBRARY</div>
+  <h1 id="pageTitle">Business Glossary</h1>
+  <p id="intro">Understand the language of business. Explore essential terms, learn what they mean and discover how to apply them to your business decisions.</p>
+ </section>
+
+ <section class="search-area">
+  <label for="search" id="searchLabel">Search for a term</label>
+  <input type="search" id="search" class="search-box" placeholder="Try: cash flow, marketing, investment..." autocomplete="off">
+  <div class="search-help" id="searchHelp">You can search in English, Portuguese or Spanish.</div>
+ </section>
+
+ <section class="category-area">
+  <div class="category-title" id="categoryTitle">Browse by category</div>
+  <div class="categories" id="categories"></div>
+ </section>
+
+ <div class="results-header">
+  <h2 id="resultsTitle">All terms</h2>
+  <span class="count" id="resultCount"></span>
+ </div>
+
+ <section class="terms" id="terms"></section>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal-content">
+  <button class="close" id="closeModal" aria-label="Close">×</button>
+  <div class="modal-category" id="modalCategory"></div>
+  <h2 id="modalTitle"></h2>
+  <div class="modal-translation" id="modalTranslation"></div>
+  <div class="modal-section">
+   <h3 id="definitionLabel">Definition</h3>
+   <p id="modalDefinition"></p>
+  </div>
+  <div class="modal-section example">
+   <h3 id="exampleLabel">Practical example</h3>
+   <p id="modalExample"></p>
+  </div>
+  <div class="modal-section">
+   <h3 id="relatedLabel">Related terms</h3>
+   <p id="modalRelated"></p>
+  </div>
+ </div>
+</div>
+
+<footer class="footer">
+ © <span id="year"></span> Starting Toolkit · <span id="footerText">Learn. Understand. Make better decisions.</span>
+</footer>
+
+<script>
+const categories = {
+ strategy:{
+  en:"Strategy & Planning",pt:"Estratégia e Planejamento",es:"Estrategia y Planificación"
+ },
+ finance:{
+  en:"Finance & Numbers",pt:"Finanças e Números",es:"Finanzas y Números"
+ },
+ marketing:{
+  en:"Marketing & Sales",pt:"Marketing e Vendas",es:"Marketing y Ventas"
+ },
+ market:{
+  en:"Market & Customers",pt:"Mercado e Clientes",es:"Mercado y Clientes"
+ },
+ operations:{
+  en:"Operations & Management",pt:"Operações e Gestão",es:"Operaciones y Gestión"
+ },
+ legal:{
+  en:"Legal & Business Structure",pt:"Aspectos Legais e Estrutura",es:"Aspectos Legales y Estructura"
+ },
+ franchise:{
+  en:"Franchising",pt:"Franquias",es:"Franquicias"
+ },
+ growth:{
+  en:"Growth & Performance",pt:"Crescimento e Desempenho",es:"Crecimiento y Desempeño"
+ }
+};
+
+const terms = [
+{
+ id:"business-model",cat:"strategy",
+ name:["Business Model","Modelo de Negócio","Modelo de Negocio"],
+ definition:[
+ "The way a business creates value for customers, delivers its products or services and generates revenue.",
+ "A forma como uma empresa cria valor para seus clientes, entrega seus produtos ou serviços e gera receita.",
+ "La forma en que una empresa crea valor para sus clientes, entrega sus productos o servicios y genera ingresos."
+ ],
+ example:[
+ "A subscription-based business model generates recurring revenue by charging customers a monthly fee.",
+ "Um negócio baseado em assinatura gera receita recorrente cobrando uma mensalidade dos clientes.",
+ "Un negocio basado en suscripciones genera ingresos recurrentes mediante el cobro de una cuota mensual."
+ ],
+ related:["Value Proposition","Revenue Stream","Target Audience"]
+},
+{
+ id:"business-plan",cat:"strategy",
+ name:["Business Plan","Plano de Negócios","Plan de Negocios"],
+ definition:[
+ "A document that organizes a business idea, market analysis, strategy, operations and financial projections.",
+ "Documento que organiza uma ideia de negócio, análise de mercado, estratégia, operação e projeções financeiras.",
+ "Documento que organiza una idea de negocio, análisis de mercado, estrategia, operaciones y proyecciones financieras."
+ ],
+ example:[
+ "A business plan can help an entrepreneur evaluate costs, estimate sales and define how the company will operate.",
+ "Um plano de negócios ajuda o empreendedor a avaliar custos, estimar vendas e definir como a empresa vai funcionar.",
+ "Un plan de negocios ayuda al emprendedor a evaluar costos, estimar ventas y definir cómo funcionará la empresa."
+ ],
+ related:["Business Model","SWOT Analysis","Financial Projection"]
+},
+{
+ id:"value-proposition",cat:"strategy",
+ name:["Value Proposition","Proposta de Valor","Propuesta de Valor"],
+ definition:[
+ "The main benefit or value a business promises to deliver to its customers and the reason they should choose it.",
+ "O principal benefício que uma empresa promete entregar aos clientes e o motivo pelo qual eles deveriam escolhê-la.",
+ "El principal beneficio que una empresa promete ofrecer a sus clientes y la razón por la que deberían elegirla."
+ ],
+ example:[
+ "A dental clinic may offer digital planning, experienced professionals and personalized treatment as its value proposition.",
+ "Uma clínica odontológica pode oferecer planejamento digital, profissionais experientes e atendimento personalizado como proposta de valor.",
+ "Una clínica dental puede ofrecer planificación digital, profesionales experimentados y atención personalizada como propuesta de valor."
+ ],
+ related:["Differentiation","Positioning","USP"]
+},
+{
+ id:"swot",cat:"strategy",
+ name:["SWOT Analysis","Análise SWOT","Análisis DAFO"],
+ definition:[
+ "A strategic tool used to identify Strengths, Weaknesses, Opportunities and Threats that may affect a business.",
+ "Ferramenta estratégica para identificar Forças, Fraquezas, Oportunidades e Ameaças que podem afetar um negócio.",
+ "Herramienta estratégica para identificar Fortalezas, Debilidades, Oportunidades y Amenazas que pueden afectar a un negocio."
+ ],
+ example:[
+ "A strong location may be a strength, while a new competitor opening nearby may represent a threat.",
+ "Uma boa localização pode ser uma força, enquanto a chegada de um novo concorrente pode representar uma ameaça.",
+ "Una buena ubicación puede ser una fortaleza, mientras que la llegada de un nuevo competidor puede representar una amenaza."
+ ],
+ related:["Strategic Priority","Competitive Advantage","Market Analysis"]
+},
+{
+ id:"strategic-planning",cat:"strategy",
+ name:["Strategic Planning","Planejamento Estratégico","Planificación Estratégica"],
+ definition:[
+ "The process of defining business objectives, choosing priorities and deciding how resources will be used to achieve them.",
+ "Processo de definir objetivos, escolher prioridades e decidir como os recursos serão utilizados para alcançá-los.",
+ "Proceso de definir objetivos, elegir prioridades y decidir cómo se utilizarán los recursos para alcanzarlos."
+ ],
+ example:[
+ "A business may set a goal to increase recurring customers and define marketing and service actions to achieve it.",
+ "Uma empresa pode estabelecer a meta de aumentar clientes recorrentes e definir ações de marketing e atendimento para alcançá-la.",
+ "Una empresa puede establecer el objetivo de aumentar los clientes recurrentes y definir acciones de marketing y servicio para lograrlo."
+ ],
+ related:["Business Plan","KPI","Strategic Priority"]
+},
+{
+ id:"mission-vision",cat:"strategy",
+ name:["Mission & Vision","Missão e Visão","Misión y Visión"],
+ definition:[
+ "Mission explains why a business exists and what it does. Vision describes what it wants to become in the future.",
+ "Missão explica por que uma empresa existe e o que faz. Visão descreve o que ela deseja se tornar no futuro.",
+ "La misión explica por qué existe una empresa y qué hace. La visión describe lo que desea llegar a ser en el futuro."
+ ],
+ example:[
+ "Mission: make healthy food accessible. Vision: become a leading healthy food brand in the region.",
+ "Missão: tornar a alimentação saudável acessível. Visão: ser uma marca de referência em alimentação saudável na região.",
+ "Misión: hacer accesible la alimentación saludable. Visión: convertirse en una marca de referencia en la región."
+ ],
+ related:["Business Plan","Core Values","Strategic Planning"]
+},
+{
+ id:"competitive-advantage",cat:"strategy",
+ name:["Competitive Advantage","Vantagem Competitiva","Ventaja Competitiva"],
+ definition:[
+ "A characteristic or capability that allows a business to perform better than its competitors in an area that matters to customers.",
+ "Característica ou capacidade que permite a uma empresa se destacar dos concorrentes em algo valorizado pelos clientes.",
+ "Característica o capacidad que permite a una empresa destacarse de sus competidores en algo valorado por los clientes."
+ ],
+ example:[
+ "A faster delivery service may give an online store an advantage over competitors.",
+ "Um serviço de entrega mais rápido pode dar a uma loja virtual uma vantagem sobre seus concorrentes.",
+ "Un servicio de entrega más rápido puede dar a una tienda online una ventaja frente a sus competidores."
+ ],
+ related:["Differentiation","USP","Positioning"]
+},
+{
+ id:"break-even",cat:"finance",
+ name:["Break-even Point","Ponto de Equilíbrio","Punto de Equilibrio"],
+ definition:[
+ "The level of sales at which total revenue equals total costs. The business is neither making a profit nor a loss.",
+ "Nível de vendas em que a receita total é igual aos custos totais. A empresa não tem lucro nem prejuízo.",
+ "Nivel de ventas en el que los ingresos totales son iguales a los costos totales. El negocio no obtiene ganancias ni pérdidas."
+ ],
+ example:[
+ "If monthly costs are $5,000 and the contribution margin is 50%, the business needs $10,000 in monthly sales to break even.",
+ "Se os custos mensais são R$ 5.000 e a margem de contribuição é 50%, o negócio precisa faturar R$ 10.000 para atingir o ponto de equilíbrio.",
+ "Si los costos mensuales son 5.000 € y el margen de contribución es del 50%, el negocio necesita vender 10.000 € para alcanzar el punto de equilibrio."
+ ],
+ related:["Fixed Costs","Variable Costs","Contribution Margin"]
+},
+{
+ id:"cash-flow",cat:"finance",
+ name:["Cash Flow","Fluxo de Caixa","Flujo de Caja"],
+ definition:[
+ "The movement of money entering and leaving a business over a period of time.",
+ "Movimentação de dinheiro que entra e sai de uma empresa durante determinado período.",
+ "Movimiento del dinero que entra y sale de una empresa durante un período determinado."
+ ],
+ example:[
+ "A company may be profitable on paper but still have cash flow problems if customers pay late.",
+ "Uma empresa pode apresentar lucro, mas ter problemas de caixa se os clientes pagarem com atraso.",
+ "Una empresa puede mostrar ganancias, pero tener problemas de flujo de caja si los clientes pagan tarde."
+ ],
+ related:["Working Capital","Revenue","Operating Expenses"]
+},
+{
+ id:"working-capital",cat:"finance",
+ name:["Working Capital","Capital de Giro","Capital de Trabajo"],
+ definition:[
+ "The money a business needs to cover day-to-day expenses and keep operating while waiting for revenue to come in.",
+ "Dinheiro necessário para pagar as despesas do dia a dia e manter a operação funcionando enquanto a receita não entra.",
+ "Dinero necesario para cubrir los gastos diarios y mantener el negocio funcionando mientras llegan los ingresos."
+ ],
+ example:[
+ "A store may need working capital to pay rent, suppliers and employees before receiving payment from customers.",
+ "Uma loja pode precisar de capital de giro para pagar aluguel, fornecedores e funcionários antes de receber dos clientes.",
+ "Una tienda puede necesitar capital de trabajo para pagar el alquiler, proveedores y empleados antes de cobrar a sus clientes."
+ ],
+ related:["Cash Flow","Fixed Costs","Initial Investment"]
+},
+{
+ id:"roi",cat:"finance",
+ name:["ROI (Return on Investment)","ROI (Retorno sobre o Investimento)","ROI (Retorno de la Inversión)"],
+ definition:[
+ "A measure used to evaluate the return generated by an investment in relation to its cost.",
+ "Indicador utilizado para avaliar o retorno gerado por um investimento em relação ao seu custo.",
+ "Indicador utilizado para evaluar el rendimiento generado por una inversión en relación con su costo."
+ ],
+ example:[
+ "If a $1,000 investment generates $1,200 in net gain, the ROI is 120%.",
+ "Se um investimento de R$ 1.000 gera R$ 1.200 de ganho líquido, o ROI é de 120%.",
+ "Si una inversión de 1.000 € genera 1.200 € de ganancia neta, el ROI es del 120%."
+ ],
+ related:["Payback Period","Profit Margin","Initial Investment"]
+},
+{
+ id:"payback",cat:"finance",
+ name:["Payback Period","Prazo de Retorno","Período de Recuperación"],
+ definition:[
+ "The estimated time required for an investment to generate enough cash to recover its initial cost.",
+ "Tempo estimado necessário para que um investimento gere caixa suficiente para recuperar o valor investido inicialmente.",
+ "Tiempo estimado necesario para que una inversión genere suficiente efectivo para recuperar el capital inicial."
+ ],
+ example:[
+ "If an investment is $24,000 and the business generates $2,000 per month in available cash, the simple payback period is 12 months.",
+ "Se o investimento é de R$ 24.000 e o negócio gera R$ 2.000 por mês de caixa disponível, o prazo simples de retorno é de 12 meses.",
+ "Si la inversión es de 24.000 € y el negocio genera 2.000 € mensuales de efectivo disponible, el período simple de recuperación es de 12 meses."
+ ],
+ related:["ROI","Initial Investment","Cash Flow"]
+},
+{
+ id:"fixed-costs",cat:"finance",
+ name:["Fixed Costs","Custos Fixos","Costos Fijos"],
+ definition:[
+ "Expenses that generally remain stable regardless of how much a business sells or produces within a relevant range.",
+ "Despesas que geralmente permanecem estáveis, independentemente do volume de vendas ou produção, dentro de determinada faixa de operação.",
+ "Gastos que generalmente permanecen estables independientemente del volumen de ventas o producción, dentro de un rango de operación."
+ ],
+ example:[
+ "Rent, accounting fees and some software subscriptions are examples of fixed costs.",
+ "Aluguel, honorários contábeis e algumas assinaturas de software são exemplos de custos fixos.",
+ "El alquiler, los honorarios contables y algunas suscripciones de software son ejemplos de costos fijos."
+ ],
+ related:["Variable Costs","Break-even Point","Operating Expenses"]
+},
+{
+ id:"variable-costs",cat:"finance",
+ name:["Variable Costs","Custos Variáveis","Costos Variables"],
+ definition:[
+ "Expenses that change according to the volume of products sold or services delivered.",
+ "Despesas que variam de acordo com a quantidade de produtos vendidos ou serviços prestados.",
+ "Gastos que varían según la cantidad de productos vendidos o servicios prestados."
+ ],
+ example:[
+ "Raw materials, packaging and sales commissions may increase as sales increase.",
+ "Matéria-prima, embalagens e comissões de vendas podem aumentar conforme as vendas crescem.",
+ "Las materias primas, los envases y las comisiones de venta pueden aumentar a medida que crecen las ventas."
+ ],
+ related:["Fixed Costs","Contribution Margin","Break-even Point"]
+},
+{
+ id:"revenue",cat:"finance",
+ name:["Revenue","Faturamento / Receita","Facturación / Ingresos"],
+ definition:[
+ "The total amount of money generated from selling products or services before deducting expenses.",
+ "Valor total gerado pelas vendas de produtos ou serviços antes da dedução das despesas.",
+ "Importe total generado por la venta de productos o servicios antes de descontar los gastos."
+ ],
+ example:[
+ "If a business sells 100 products for $20 each, its gross revenue is $2,000.",
+ "Se uma empresa vende 100 produtos a R$ 20 cada, seu faturamento bruto é de R$ 2.000.",
+ "Si una empresa vende 100 productos a 20 € cada uno, su facturación bruta es de 2.000 €."
+ ],
+ related:["Profit","Profit Margin","Average Ticket"]
+},
+{
+ id:"profit",cat:"finance",
+ name:["Profit","Lucro","Beneficio"],
+ definition:[
+ "The amount remaining after the relevant costs and expenses have been deducted from revenue.",
+ "Valor que sobra após a dedução dos custos e despesas pertinentes do faturamento.",
+ "Cantidad que queda después de descontar los costos y gastos correspondientes de los ingresos."
+ ],
+ example:[
+ "If monthly revenue is $10,000 and total expenses are $8,000, the resulting profit is $2,000.",
+ "Se o faturamento mensal é de R$ 10.000 e as despesas totais são R$ 8.000, o lucro é de R$ 2.000.",
+ "Si los ingresos mensuales son 10.000 € y los gastos totales son 8.000 €, el beneficio es de 2.000 €."
+ ],
+ related:["Revenue","Profit Margin","Operating Expenses"]
+},
+{
+ id:"profit-margin",cat:"finance",
+ name:["Profit Margin","Margem de Lucro","Margen de Beneficio"],
+ definition:[
+ "The percentage of revenue that remains as profit after the relevant costs and expenses are deducted.",
+ "Percentual do faturamento que permanece como lucro após a dedução dos custos e despesas pertinentes.",
+ "Porcentaje de los ingresos que queda como beneficio después de descontar los costos y gastos correspondientes."
+ ],
+ example:[
+ "If revenue is $10,000 and profit is $2,000, the profit margin is 20%.",
+ "Se o faturamento é de R$ 10.000 e o lucro é de R$ 2.000, a margem de lucro é de 20%.",
+ "Si los ingresos son 10.000 € y el beneficio es de 2.000 €, el margen de beneficio es del 20%."
+ ],
+ related:["Profit","Revenue","ROI"]
+},
+{
+ id:"average-ticket",cat:"finance",
+ name:["Average Ticket","Ticket Médio","Ticket Medio"],
+ definition:[
+ "The average amount spent by each customer per purchase or transaction.",
+ "Valor médio gasto por cada cliente em uma compra ou transação.",
+ "Importe promedio gastado por cada cliente en una compra o transacción."
+ ],
+ example:[
+ "If a store makes $5,000 from 100 purchases, its average ticket is $50.",
+ "Se uma loja fatura R$ 5.000 em 100 compras, seu ticket médio é de R$ 50.",
+ "Si una tienda factura 5.000 € en 100 compras, su ticket medio es de 50 €."
+ ],
+ related:["Revenue","Upselling","Cross-selling"]
+},
+{
+ id:"initial-investment",cat:"finance",
+ name:["Initial Investment","Investimento Inicial","Inversión Inicial"],
+ definition:[
+ "The total amount of money required to start a business, including setup costs, equipment, initial inventory and other opening expenses.",
+ "Valor total necessário para iniciar um negócio, incluindo estrutura, equipamentos, estoque inicial e outras despesas de abertura.",
+ "Importe total necesario para iniciar un negocio, incluyendo instalaciones, equipos, inventario inicial y otros gastos de apertura."
+ ],
+ example:[
+ "Opening a café may require investment in renovation, equipment, furniture, initial inventory and licenses.",
+ "A abertura de uma cafeteria pode exigir investimento em reforma, equipamentos, móveis, estoque inicial e licenças.",
+ "Abrir una cafetería puede requerir inversión en reformas, equipos, mobiliario, inventario inicial y licencias."
+ ],
+ related:["Working Capital","Payback Period","Cash Flow"]
+},
+{
+ id:"financial-projection",cat:"finance",
+ name:["Financial Projection","Projeção Financeira","Proyección Financiera"],
+ definition:[
+ "An estimate of future revenue, costs, expenses and financial results based on assumptions about how the business will operate.",
+ "Estimativa de faturamento, custos, despesas e resultados financeiros futuros, baseada em hipóteses sobre o funcionamento do negócio.",
+ "Estimación de ingresos, costos, gastos y resultados financieros futuros, basada en supuestos sobre el funcionamiento del negocio."
+ ],
+ example:[
+ "A business may project monthly sales for the next 12 months using expected customer numbers and average ticket.",
+ "Uma empresa pode projetar as vendas mensais dos próximos 12 meses usando o número esperado de clientes e o ticket médio.",
+ "Una empresa puede proyectar las ventas mensuales de los próximos 12 meses utilizando el número esperado de clientes y el ticket medio."
+ ],
+ related:["Revenue","Fixed Costs","Break-even Point"]
+},
+{
+ id:"target-audience",cat:"market",
+ name:["Target Audience","Público-Alvo","Público Objetivo"],
+ definition:[
+ "The group of people a business intends to reach because they are more likely to need, value or purchase its offer.",
+ "Grupo de pessoas que uma empresa pretende alcançar por terem maior probabilidade de precisar, valorizar ou comprar sua oferta.",
+ "Grupo de personas al que una empresa desea llegar porque es más probable que necesiten, valoren o compren su oferta."
+ ],
+ example:[
+ "A children's clothing store may focus on parents of children aged 0 to 10.",
+ "Uma loja de roupas infantis pode ter como público-alvo pais de crianças de 0 a 10 anos.",
+ "Una tienda de ropa infantil puede dirigirse a padres de niños de 0 a 10 años."
+ ],
+ related:["Customer Persona","Market Segmentation","Positioning"]
+},
+{
+ id:"customer-persona",cat:"market",
+ name:["Customer Persona","Persona / Cliente Ideal","Buyer Persona / Cliente Ideal"],
+ definition:[
+ "A detailed representation of a typical customer, including motivations, needs, habits and purchasing behavior.",
+ "Representação detalhada de um cliente típico, incluindo motivações, necessidades, hábitos e comportamento de compra.",
+ "Representación detallada de un cliente típico, incluyendo motivaciones, necesidades, hábitos y comportamiento de compra."
+ ],
+ example:[
+ "A persona for a fitness studio might be a 35-year-old professional seeking convenient classes and personalized guidance.",
+ "A persona de um estúdio de atividade física pode ser uma profissional de 35 anos que busca aulas convenientes e orientação personalizada.",
+ "La persona de un centro deportivo puede ser una profesional de 35 años que busca clases convenientes y orientación personalizada."
+ ],
+ related:["Target Audience","Customer Journey","Market Segmentation"]
+},
+{
+ id:"market-segmentation",cat:"market",
+ name:["Market Segmentation","Segmentação de Mercado","Segmentación de Mercado"],
+ definition:[
+ "The process of dividing a broad market into smaller groups with similar characteristics, needs or behaviors.",
+ "Processo de dividir um mercado amplo em grupos menores com características, necessidades ou comportamentos semelhantes.",
+ "Proceso de dividir un mercado amplio en grupos más pequeños con características, necesidades o comportamientos similares."
+ ],
+ example:[
+ "A travel company may segment customers by budget, travel style and preferred destinations.",
+ "Uma empresa de turismo pode segmentar clientes por orçamento, estilo de viagem e destinos preferidos.",
+ "Una empresa de turismo puede segmentar a sus clientes por presupuesto, estilo de viaje y destinos preferidos."
+ ],
+ related:["Target Audience","Customer Persona","Market Analysis"]
+},
+{
+ id:"market-analysis",cat:"market",
+ name:["Market Analysis","Análise de Mercado","Análisis de Mercado"],
+ definition:[
+ "The study of a market's size, customers, competitors, trends and conditions to understand its opportunities and challenges.",
+ "Estudo do tamanho do mercado, clientes, concorrentes, tendências e condições para compreender oportunidades e desafios.",
+ "Estudio del tamaño del mercado, clientes, competidores, tendencias y condiciones para comprender oportunidades y desafíos."
+ ],
+ example:[
+ "Before opening a restaurant, an entrepreneur may study local demand, competing restaurants, prices and customer preferences.",
+ "Antes de abrir um restaurante, o empreendedor pode estudar a demanda local, os concorrentes, os preços e as preferências dos clientes.",
+ "Antes de abrir un restaurante, el emprendedor puede estudiar la demanda local, los competidores, los precios y las preferencias de los clientes."
+ ],
+ related:["Competitor Analysis","Market Research","Demand"]
+},
+{
+ id:"competitor-analysis",cat:"market",
+ name:["Competitor Analysis","Análise da Concorrência","Análisis de la Competencia"],
+ definition:[
+ "The process of studying competitors to understand their offers, pricing, strengths, weaknesses and market positioning.",
+ "Processo de estudar concorrentes para compreender suas ofertas, preços, forças, fraquezas e posicionamento.",
+ "Proceso de estudiar a los competidores para comprender sus ofertas, precios, fortalezas, debilidades y posicionamiento."
+ ],
+ example:[
+ "A new gym may compare competitors' monthly fees, class schedules, facilities and customer reviews.",
+ "Uma nova academia pode comparar mensalidades, horários de aulas, estrutura e avaliações dos concorrentes.",
+ "Un nuevo gimnasio puede comparar cuotas mensuales, horarios de clases, instalaciones y opiniones de los competidores."
+ ],
+ related:["Market Analysis","Positioning","Competitive Advantage"]
+},
+{
+ id:"market-research",cat:"market",
+ name:["Market Research","Pesquisa de Mercado","Investigación de Mercado"],
+ definition:[
+ "The collection and analysis of information about customers, competitors and market conditions to support business decisions.",
+ "Coleta e análise de informações sobre clientes, concorrentes e condições do mercado para apoiar decisões empresariais.",
+ "Recopilación y análisis de información sobre clientes, competidores y condiciones del mercado para apoyar decisiones empresariales."
+ ],
+ example:[
+ "Interviewing potential customers and reviewing competitor prices are simple market research activities.",
+ "Entrevistar clientes em potencial e analisar preços dos concorrentes são atividades simples de pesquisa de mercado.",
+ "Entrevistar a clientes potenciales y analizar los precios de la competencia son actividades sencillas de investigación de mercado."
+ ],
+ related:["Market Analysis","Customer Feedback","Validation"]
+},
+{
+ id:"positioning",cat:"marketing",
+ name:["Positioning","Posicionamento","Posicionamiento"],
+ definition:[
+ "The way a business wants customers to perceive its brand or offer compared with competing alternatives.",
+ "A forma como uma empresa deseja que os clientes percebam sua marca ou oferta em comparação com as alternativas concorrentes.",
+ "La forma en que una empresa quiere que los clientes perciban su marca u oferta en comparación con las alternativas de la competencia."
+ ],
+ example:[
+ "A hotel may position itself as a premium option focused on personalized service and exclusive experiences.",
+ "Um hotel pode se posicionar como uma opção premium, focada em atendimento personalizado e experiências exclusivas.",
+ "Un hotel puede posicionarse como una opción premium, centrada en el servicio personalizado y las experiencias exclusivas."
+ ],
+ related:["Value Proposition","Target Audience","Differentiation"]
+},
+{
+ id:"usp",cat:"marketing",
+ name:["USP (Unique Selling Proposition)","USP / Proposta Única de Venda","USP / Propuesta Única de Venta"],
+ definition:[
+ "A clear statement of what makes a product or service distinct and why customers should choose it over alternatives.",
+ "Declaração clara do que diferencia um produto ou serviço e por que os clientes deveriam escolhê-lo em vez das alternativas.",
+ "Declaración clara de lo que diferencia a un producto o servicio y por qué los clientes deberían elegirlo frente a otras opciones."
+ ],
+ example:[
+ "A bakery may communicate that all its products are made fresh daily using locally sourced ingredients.",
+ "Uma padaria pode comunicar que todos os seus produtos são preparados diariamente com ingredientes de fornecedores locais.",
+ "Una panadería puede comunicar que todos sus productos se elaboran diariamente con ingredientes de proveedores locales."
+ ],
+ related:["Value Proposition","Differentiation","Positioning"]
+},
+{
+ id:"branding",cat:"marketing",
+ name:["Branding","Gestão de Marca","Gestión de Marca"],
+ definition:[
+ "The process of building and managing a brand's identity, reputation and perception in the minds of customers.",
+ "Processo de construir e gerenciar a identidade, reputação e percepção de uma marca na mente dos clientes.",
+ "Proceso de construir y gestionar la identidad, reputación y percepción de una marca en la mente de los clientes."
+ ],
+ example:[
+ "A consistent visual identity, tone of voice and customer experience help build a recognizable brand.",
+ "Uma identidade visual, tom de comunicação e experiência do cliente consistentes ajudam a construir uma marca reconhecível.",
+ "Una identidad visual, un tono de comunicación y una experiencia de cliente coherentes ayudan a construir una marca reconocible."
+ ],
+ related:["Brand Identity","Positioning","Brand Awareness"]
+},
+{
+ id:"brand-identity",cat:"marketing",
+ name:["Brand Identity","Identidade de Marca","Identidad de Marca"],
+ definition:[
+ "The visual and verbal elements that represent a brand, such as its name, logo, colors, typography and communication style.",
+ "Elementos visuais e verbais que representam uma marca, como nome, logotipo, cores, tipografia e estilo de comunicação.",
+ "Elementos visuales y verbales que representan una marca, como nombre, logotipo, colores, tipografía y estilo de comunicación."
+ ],
+ example:[
+ "A brand identity may use a consistent logo, color palette and writing style across its website, packaging and social media.",
+ "Uma marca pode utilizar logotipo, paleta de cores e estilo de escrita consistentes no site, nas embalagens e nas redes sociais.",
+ "Una marca puede utilizar un logotipo, una paleta de colores y un estilo de escritura coherentes en su sitio web, envases y redes sociales."
+ ],
+ related:["Branding","Brand Awareness","Positioning"]
+},
+{
+ id:"lead",cat:"marketing",
+ name:["Lead","Lead / Potencial Cliente","Lead / Cliente Potencial"],
+ definition:[
+ "A person or organization that has shown some interest in a product or service and may become a customer.",
+ "Pessoa ou empresa que demonstrou algum interesse em um produto ou serviço e pode se tornar cliente.",
+ "Persona u organización que ha mostrado cierto interés en un producto o servicio y puede convertirse en cliente."
+ ],
+ example:[
+ "Someone who fills out a contact form asking for a price quotation becomes a lead.",
+ "Alguém que preenche um formulário solicitando um orçamento se torna um lead.",
+ "Alguien que completa un formulario solicitando un presupuesto se convierte en un lead."
+ ],
+ related:["Lead Generation","Conversion Rate","Sales Funnel"]
+},
+{
+ id:"lead-generation",cat:"marketing",
+ name:["Lead Generation","Geração de Leads","Generación de Leads"],
+ definition:[
+ "The activities used to attract potential customers and encourage them to express interest in a business.",
+ "Ações utilizadas para atrair potenciais clientes e estimular que demonstrem interesse em uma empresa.",
+ "Actividades utilizadas para atraer clientes potenciales y animarlos a mostrar interés en una empresa."
+ ],
+ example:[
+ "A free consultation offer promoted on social media can generate leads for a professional service.",
+ "Uma oferta de consulta gratuita divulgada nas redes sociais pode gerar leads para um serviço profissional.",
+ "Una oferta de consulta gratuita promocionada en redes sociales puede generar leads para un servicio profesional."
+ ],
+ related:["Lead","Conversion Rate","Customer Acquisition"]
+},
+{
+ id:"conversion-rate",cat:"marketing",
+ name:["Conversion Rate","Taxa de Conversão","Tasa de Conversión"],
+ definition:[
+ "The percentage of people who complete a desired action out of the total number who had the opportunity to do so.",
+ "Percentual de pessoas que realizam uma ação desejada em relação ao total de pessoas que tiveram a oportunidade de realizá-la.",
+ "Porcentaje de personas que realizan una acción deseada en relación con el total de personas que tuvieron la oportunidad de hacerlo."
+ ],
+ example:[
+ "If 100 people visit a website and 5 make a purchase, the conversion rate is 5%.",
+ "Se 100 pessoas visitam um site e 5 realizam uma compra, a taxa de conversão é de 5%.",
+ "Si 100 personas visitan un sitio web y 5 realizan una compra, la tasa de conversión es del 5%."
+ ],
+ related:["Lead","Sales Funnel","Customer Acquisition"]
+},
+{
+ id:"sales-funnel",cat:"marketing",
+ name:["Sales Funnel","Funil de Vendas","Embudo de Ventas"],
+ definition:[
+ "A model representing the stages a potential customer goes through, from first contact with a business to making a purchase.",
+ "Modelo que representa as etapas pelas quais um potencial cliente passa, desde o primeiro contato com a empresa até a compra.",
+ "Modelo que representa las etapas por las que pasa un cliente potencial, desde el primer contacto con la empresa hasta la compra."
+ ],
+ example:[
+ "A person discovers a brand, visits its website, requests information and eventually buys a product.",
+ "Uma pessoa conhece uma marca, visita seu site, solicita informações e, por fim, compra um produto.",
+ "Una persona descubre una marca, visita su sitio web, solicita información y finalmente compra un producto."
+ ],
+ related:["Lead Generation","Conversion Rate","Customer Journey"]
+},
+{
+ id:"cac",cat:"marketing",
+ name:["CAC (Customer Acquisition Cost)","CAC (Custo de Aquisição de Clientes)","CAC (Costo de Adquisición de Clientes)"],
+ definition:[
+ "The average amount a business spends to acquire one new customer, considering the relevant acquisition costs.",
+ "Valor médio que uma empresa gasta para conquistar um novo cliente, considerando os custos envolvidos na aquisição.",
+ "Importe promedio que una empresa gasta para conseguir un nuevo cliente, considerando los costos relacionados con su adquisición."
+ ],
+ example:[
+ "If a company spends $1,000 on marketing and sales and gains 20 new customers, its CAC is $50.",
+ "Se uma empresa investe R$ 1.000 em marketing e vendas e conquista 20 clientes, seu CAC é de R$ 50.",
+ "Si una empresa invierte 1.000 € en marketing y ventas y consigue 20 clientes, su CAC es de 50 €."
+ ],
+ related:["LTV","Lead Generation","Customer Acquisition"]
+},
+{
+ id:"ltv",cat:"marketing",
+ name:["LTV (Lifetime Value)","LTV (Valor do Tempo de Vida do Cliente)","LTV (Valor del Ciclo de Vida del Cliente)"],
+ definition:[
+ "The estimated total value or revenue a customer generates for a business throughout the relationship with that business.",
+ "Valor ou receita total estimada que um cliente gera para uma empresa durante todo o relacionamento com ela.",
+ "Valor o ingresos totales estimados que un cliente genera para una empresa durante toda la relación comercial."
+ ],
+ example:[
+ "A customer who spends $100 every month for 12 months generates $1,200 in revenue over that period.",
+ "Um cliente que gasta R$ 100 por mês durante 12 meses gera R$ 1.200 de faturamento nesse período.",
+ "Un cliente que gasta 100 € al mes durante 12 meses genera 1.200 € de ingresos en ese período."
+ ],
+ related:["CAC","Retention Rate","Repeat Purchase"]
+},
+{
+ id:"customer-journey",cat:"marketing",
+ name:["Customer Journey","Jornada do Cliente","Recorrido del Cliente"],
+ definition:[
+ "The stages and interactions a person experiences when discovering, evaluating, purchasing and using a product or service.",
+ "Etapas e interações vividas por uma pessoa ao conhecer, avaliar, comprar e utilizar um produto ou serviço.",
+ "Etapas e interacciones que experimenta una persona al descubrir, evaluar, comprar y utilizar un producto o servicio."
+ ],
+ example:[
+ "A customer may discover a restaurant on social media, read reviews, visit the restaurant and later recommend it.",
+ "Um cliente pode conhecer um restaurante nas redes sociais, ler avaliações, visitar o local e depois recomendá-lo.",
+ "Un cliente puede descubrir un restaurante en redes sociales, leer opiniones, visitarlo y luego recomendarlo."
+ ],
+ related:["Target Audience","Sales Funnel","Customer Experience"]
+},
+{
+ id:"differentiation",cat:"marketing",
+ name:["Differentiation","Diferenciação","Diferenciación"],
+ definition:[
+ "The characteristics that make a business, product or service distinct from competing alternatives.",
+ "Características que tornam uma empresa, produto ou serviço diferente das alternativas concorrentes.",
+ "Características que hacen que una empresa, producto o servicio sea diferente de las alternativas de la competencia."
+ ],
+ example:[
+ "A repair service may differentiate itself through same-day service, transparent pricing and a warranty.",
+ "Uma assistência técnica pode se diferenciar pelo atendimento no mesmo dia, preços transparentes e garantia.",
+ "Un servicio de reparación puede diferenciarse por la atención el mismo día, precios transparentes y garantía."
+ ],
+ related:["USP","Value Proposition","Competitive Advantage"]
+},
+{
+ id:"customer-acquisition",cat:"marketing",
+ name:["Customer Acquisition","Aquisição de Clientes","Adquisición de Clientes"],
+ definition:[
+ "The process of attracting and converting people or organizations into paying customers.",
+ "Processo de atrair e converter pessoas ou empresas em clientes pagantes.",
+ "Proceso de atraer y convertir personas u organizaciones en clientes que pagan."
+ ],
+ example:[
+ "A business may acquire customers through referrals, paid advertising, partnerships and organic content.",
+ "Uma empresa pode conquistar clientes por indicação, anúncios pagos, parcerias e conteúdo orgânico.",
+ "Una empresa puede conseguir clientes mediante recomendaciones, publicidad pagada, alianzas y contenido orgánico."
+ ],
+ related:["CAC","Lead Generation","Conversion Rate"]
+},
+{
+ id:"retention",cat:"marketing",
+ name:["Customer Retention","Retenção de Clientes","Retención de Clientes"],
+ definition:[
+ "The ability of a business to keep customers returning and continuing to purchase over time.",
+ "Capacidade de uma empresa de manter clientes ativos e fazendo novas compras ao longo do tempo.",
+ "Capacidad de una empresa para mantener a sus clientes activos y realizando nuevas compras con el tiempo."
+ ],
+ example:[
+ "A loyalty program and consistent customer service may encourage customers to return.",
+ "Um programa de fidelidade e um atendimento consistente podem estimular os clientes a voltar.",
+ "Un programa de fidelización y un servicio consistente pueden animar a los clientes a regresar."
+ ],
+ related:["LTV","Repeat Purchase","Customer Experience"]
+},
+{
+ id:"kpi",cat:"growth",
+ name:["KPI (Key Performance Indicator)","KPI (Indicador-Chave de Desempenho)","KPI (Indicador Clave de Desempeño)"],
+ definition:[
+ "A measurable indicator used to evaluate progress toward a specific business objective.",
+ "Indicador mensurável utilizado para avaliar o progresso em relação a um objetivo específico do negócio.",
+ "Indicador medible utilizado para evaluar el progreso hacia un objetivo específico del negocio."
+ ],
+ example:[
+ "A business may track monthly revenue, number of new customers and conversion rate as KPIs.",
+ "Uma empresa pode acompanhar faturamento mensal, número de novos clientes e taxa de conversão como KPIs.",
+ "Una empresa puede monitorear los ingresos mensuales, el número de nuevos clientes y la tasa de conversión como KPIs."
+ ],
+ related:["Strategic Planning","Conversion Rate","Performance"]
+},
+{
+ id:"scalability",cat:"growth",
+ name:["Scalability","Escalabilidade","Escalabilidad"],
+ definition:[
+ "The ability of a business to increase its activity, customers or revenue without costs and complexity growing at the same rate.",
+ "Capacidade de um negócio aumentar sua atividade, clientes ou faturamento sem que os custos e a complexidade cresçam na mesma proporção.",
+ "Capacidad de un negocio para aumentar su actividad, clientes o ingresos sin que los costos y la complejidad crezcan en la misma proporción."
+ ],
+ example:[
+ "A digital product can be sold to more customers without requiring a new physical unit for each sale.",
+ "Um produto digital pode ser vendido para mais clientes sem exigir uma nova unidade física a cada venda.",
+ "Un producto digital puede venderse a más clientes sin necesitar una nueva unidad física por cada venta."
+ ],
+ related:["Growth Strategy","Business Model","Operational Efficiency"]
+},
+{
+ id:"validation",cat:"growth",
+ name:["Business Validation","Validação do Negócio","Validación del Negocio"],
+ definition:[
+ "The process of testing whether a business idea, offer or assumption has real demand before making larger investments.",
+ "Processo de testar se uma ideia, oferta ou hipótese de negócio tem demanda real antes de realizar investimentos maiores.",
+ "Proceso de comprobar si una idea, oferta o hipótesis de negocio tiene demanda real antes de realizar inversiones mayores."
+ ],
+ example:[
+ "Offering a small batch of products to potential customers can help validate demand before increasing inventory.",
+ "Oferecer um pequeno lote de produtos a potenciais clientes pode ajudar a validar a demanda antes de aumentar o estoque.",
+ "Ofrecer un pequeño lote de productos a clientes potenciales puede ayudar a validar la demanda antes de aumentar el inventario."
+ ],
+ related:["Market Research","Minimum Viable Product","Customer Feedback"]
+},
+{
+ id:"mvp",cat:"growth",
+ name:["MVP (Minimum Viable Product)","MVP (Produto Mínimo Viável)","MVP (Producto Mínimo Viable)"],
+ definition:[
+ "A basic version of a product or service that allows a business to test its main idea with real customers using limited resources.",
+ "Versão básica de um produto ou serviço que permite testar a ideia principal com clientes reais e recursos limitados.",
+ "Versión básica de un producto o servicio que permite probar la idea principal con clientes reales y recursos limitados."
+ ],
+ example:[
+ "Before building a complete app, a founder may test the service using a simple website and manual processes.",
+ "Antes de desenvolver um aplicativo completo, um empreendedor pode testar o serviço com um site simples e processos manuais.",
+ "Antes de desarrollar una aplicación completa, un emprendedor puede probar el servicio con un sitio web sencillo y procesos manuales."
+ ],
+ related:["Business Validation","Market Research","Product Development"]
+},
+{
+ id:"growth-strategy",cat:"growth",
+ name:["Growth Strategy","Estratégia de Crescimento","Estrategia de Crecimiento"],
+ definition:[
+ "A plan for increasing a business's customers, revenue, market presence or operational capacity over time.",
+ "Plano para aumentar clientes, faturamento, presença de mercado ou capacidade operacional de uma empresa ao longo do tempo.",
+ "Plan para aumentar los clientes, ingresos, presencia en el mercado o capacidad operativa de una empresa con el tiempo."
+ ],
+ example:[
+ "A company may grow by opening another location, expanding online sales or introducing new products.",
+ "Uma empresa pode crescer abrindo outra unidade, ampliando as vendas online ou lançando novos produtos.",
+ "Una empresa puede crecer abriendo otra sucursal, ampliando las ventas online o lanzando nuevos productos."
+ ],
+ related:["Scalability","Strategic Planning","KPI"]
+},
+{
+ id:"operations",cat:"operations",
+ name:["Operations","Operações","Operaciones"],
+ definition:[
+ "The daily activities and processes required to deliver a product or service to customers.",
+ "Atividades e processos diários necessários para entregar um produto ou serviço aos clientes.",
+ "Actividades y procesos diarios necesarios para entregar un producto o servicio a los clientes."
+ ],
+ example:[
+ "For a bakery, operations include purchasing ingredients, preparing products, managing stock and serving customers.",
+ "Em uma padaria, as operações incluem comprar ingredientes, preparar produtos, controlar estoque e atender clientes.",
+ "En una panadería, las operaciones incluyen comprar ingredientes, preparar productos, controlar inventario y atender clientes."
+ ],
+ related:["Process","Operational Efficiency","Supply Chain"]
+},
+{
+ id:"supply-chain",cat:"operations",
+ name:["Supply Chain","Cadeia de Suprimentos","Cadena de Suministro"],
+ definition:[
+ "The network of suppliers, activities and processes involved in sourcing, producing and delivering a product or service.",
+ "Rede de fornecedores, atividades e processos envolvidos na aquisição, produção e entrega de um produto ou serviço.",
+ "Red de proveedores, actividades y procesos involucrados en la adquisición, producción y entrega de un producto o servicio."
+ ],
+ example:[
+ "A clothing store's supply chain may include fabric suppliers, manufacturers, transport companies and distributors.",
+ "A cadeia de suprimentos de uma loja de roupas pode incluir fornecedores de tecidos, fabricantes, transportadoras e distribuidores.",
+ "La cadena de suministro de una tienda de ropa puede incluir proveedores de tejidos, fabricantes, transportistas y distribuidores."
+ ],
+ related:["Supplier","Inventory","Operations"]
+},
+{
+ id:"inventory",cat:"operations",
+ name:["Inventory","Estoque","Inventario"],
+ definition:[
+ "The products, materials or supplies a business keeps available for production or sale.",
+ "Produtos, materiais ou insumos que uma empresa mantém disponíveis para produção ou venda.",
+ "Productos, materiales o suministros que una empresa mantiene disponibles para producción o venta."
+ ],
+ example:[
+ "A retailer monitors inventory to avoid running out of popular products or holding excessive stock.",
+ "Uma loja acompanha o estoque para evitar a falta de produtos procurados ou o excesso de mercadorias paradas.",
+ "Una tienda controla el inventario para evitar quedarse sin productos populares o acumular existencias excesivas."
+ ],
+ related:["Supply Chain","Working Capital","Supplier"]
+},
+{
+ id:"supplier",cat:"operations",
+ name:["Supplier","Fornecedor","Proveedor"],
+ definition:[
+ "A person or company that provides products, materials or services needed by another business.",
+ "Pessoa ou empresa que fornece produtos, materiais ou serviços necessários para outra empresa.",
+ "Persona o empresa que proporciona productos, materiales o servicios necesarios para otro negocio."
+ ],
+ example:[
+ "A restaurant may work with suppliers of fresh produce, beverages and cleaning materials.",
+ "Um restaurante pode trabalhar com fornecedores de alimentos frescos, bebidas e materiais de limpeza.",
+ "Un restaurante puede trabajar con proveedores de alimentos frescos, bebidas y materiales de limpieza."
+ ],
+ related:["Supply Chain","Inventory","Negotiation"]
+},
+{
+ id:"operational-efficiency",cat:"operations",
+ name:["Operational Efficiency","Eficiência Operacional","Eficiencia Operativa"],
+ definition:[
+ "The ability to deliver products or services using resources, time and processes effectively while maintaining quality.",
+ "Capacidade de entregar produtos ou serviços utilizando recursos, tempo e processos de forma eficiente, mantendo a qualidade.",
+ "Capacidad de entregar productos o servicios utilizando recursos, tiempo y procesos de manera eficiente, manteniendo la calidad."
+ ],
+ example:[
+ "A restaurant that organizes preparation tasks to reduce waste and waiting time improves operational efficiency.",
+ "Um restaurante que organiza o preparo para reduzir desperdícios e tempo de espera melhora sua eficiência operacional.",
+ "Un restaurante que organiza la preparación para reducir desperdicios y tiempos de espera mejora su eficiencia operativa."
+ ],
+ related:["Operations","Process","Cost Management"]
+},
+{
+ id:"process",cat:"operations",
+ name:["Business Process","Processo Empresarial","Proceso Empresarial"],
+ definition:[
+ "A sequence of activities designed to achieve a specific result in a business.",
+ "Sequência de atividades organizadas para alcançar um resultado específico dentro de uma empresa.",
+ "Secuencia de actividades organizadas para lograr un resultado específico dentro de una empresa."
+ ],
+ example:[
+ "A sales process may include receiving an inquiry, understanding the need, presenting an offer and following up.",
+ "Um processo de vendas pode incluir receber uma consulta, entender a necessidade, apresentar uma proposta e fazer o acompanhamento.",
+ "Un proceso de ventas puede incluir recibir una consulta, comprender la necesidad, presentar una propuesta y realizar el seguimiento."
+ ],
+ related:["Operations","Operational Efficiency","Standard Operating Procedure"]
+},
+{
+ id:"entrepreneur",cat:"strategy",
+ name:["Entrepreneur","Empreendedor","Emprendedor"],
+ definition:[
+ "A person who identifies an opportunity and organizes resources to create or develop a business.",
+ "Pessoa que identifica uma oportunidade e organiza recursos para criar ou desenvolver um negócio.",
+ "Persona que identifica una oportunidad y organiza recursos para crear o desarrollar un negocio."
+ ],
+ example:[
+ "Someone who identifies a need for a local service and creates a company to meet that need is an entrepreneur.",
+ "Alguém que identifica uma necessidade por um serviço local e cria uma empresa para atendê-la é um empreendedor.",
+ "Alguien que identifica una necesidad de un servicio local y crea una empresa para atenderla es un emprendedor."
+ ],
+ related:["Entrepreneurship","Business Model","Business Plan"]
+},
+{
+ id:"entrepreneurship",cat:"strategy",
+ name:["Entrepreneurship","Empreendedorismo","Emprendimiento"],
+ definition:[
+ "The activity of identifying opportunities, creating solutions and organizing resources to build and develop a business.",
+ "Atividade de identificar oportunidades, criar soluções e organizar recursos para construir e desenvolver um negócio.",
+ "Actividad de identificar oportunidades, crear soluciones y organizar recursos para construir y desarrollar un negocio."
+ ],
+ example:[
+ "Starting a small online store to serve a specific customer need is an example of entrepreneurship.",
+ "Criar uma pequena loja online para atender a uma necessidade específica dos clientes é um exemplo de empreendedorismo.",
+ "Crear una pequeña tienda online para atender una necesidad específica de los clientes es un ejemplo de emprendimiento."
+ ],
+ related:["Entrepreneur","Business Model","Innovation"]
+},
+{
+ id:"legal-structure",cat:"legal",
+ name:["Legal Structure","Natureza Jurídica / Estrutura Legal","Forma Jurídica"],
+ definition:[
+ "The legal form under which a business is registered and operates, determining certain responsibilities, obligations and tax rules.",
+ "Forma jurídica sob a qual uma empresa é registrada e opera, determinando responsabilidades, obrigações e regras tributárias.",
+ "Forma jurídica bajo la cual una empresa se registra y opera, determinando responsabilidades, obligaciones y reglas fiscales."
+ ],
+ example:[
+ "Depending on the country, a business may operate as a sole proprietorship, partnership or limited liability company.",
+ "Dependendo do país, uma empresa pode operar como empresário individual, sociedade ou sociedade limitada.",
+ "Según el país, una empresa puede operar como empresario individual, sociedad o sociedad de responsabilidad limitada."
+ ],
+ related:["Business Registration","Tax","Liability"]
+},
+{
+ id:"business-registration",cat:"legal",
+ name:["Business Registration","Registro da Empresa","Registro de Empresa"],
+ definition:[
+ "The official process of registering a business with the relevant government authorities so it can operate legally.",
+ "Processo oficial de registrar uma empresa nos órgãos competentes para que possa operar legalmente.",
+ "Proceso oficial de registrar una empresa ante las autoridades correspondientes para que pueda operar legalmente."
+ ],
+ example:[
+ "A business owner may need to register the company, obtain a tax identification number and secure local permits.",
+ "O empreendedor pode precisar registrar a empresa, obter um número de identificação fiscal e conseguir licenças locais.",
+ "El emprendedor puede necesitar registrar la empresa, obtener un número de identificación fiscal y conseguir permisos locales."
+ ],
+ related:["Legal Structure","Tax","Licenses and Permits"]
+},
+{
+ id:"tax",cat:"legal",
+ name:["Tax","Impostos / Tributação","Impuestos / Fiscalidad"],
+ definition:[
+ "Mandatory payments imposed by governments on businesses, income, transactions or certain activities.",
+ "Pagamentos obrigatórios cobrados pelo governo sobre empresas, renda, transações ou determinadas atividades.",
+ "Pagos obligatorios exigidos por los gobiernos sobre empresas, ingresos, transacciones o determinadas actividades."
+ ],
+ example:[
+ "A business may need to collect or pay taxes on sales and profits, depending on local tax rules.",
+ "Uma empresa pode precisar recolher impostos sobre vendas e lucros, conforme as regras tributárias locais.",
+ "Una empresa puede tener que recaudar o pagar impuestos sobre ventas y beneficios, según las normas fiscales locales."
+ ],
+ related:["Legal Structure","Business Registration","Accounting"]
+},
+{
+ id:"licenses",cat:"legal",
+ name:["Licenses and Permits","Licenças e Alvarás","Licencias y Permisos"],
+ definition:[
+ "Official authorizations required by authorities for a business to operate certain activities or locations.",
+ "Autorizações oficiais exigidas pelos órgãos competentes para que uma empresa exerça determinadas atividades ou opere em certos locais.",
+ "Autorizaciones oficiales exigidas por las autoridades para que una empresa realice determinadas actividades u opere en ciertos lugares."
+ ],
+ example:[
+ "A food business may need health permits and local operating licenses before opening.",
+ "Um negócio de alimentação pode precisar de licenças sanitárias e autorizações municipais antes de abrir.",
+ "Un negocio de alimentación puede necesitar permisos sanitarios y licencias municipales antes de abrir."
+ ],
+ related:["Business Registration","Legal Structure","Compliance"]
+},
+{
+ id:"franchise",cat:"franchise",
+ name:["Franchise","Franquia","Franquicia"],
+ definition:[
+ "A business arrangement in which a franchisee operates under an established brand and business system in exchange for fees and compliance with agreed rules.",
+ "Modelo de negócio em que o franqueado opera utilizando uma marca e um sistema empresarial estabelecidos, em troca de taxas e do cumprimento de regras acordadas.",
+ "Modelo de negocio en el que el franquiciado opera utilizando una marca y un sistema empresarial establecidos, a cambio de tarifas y del cumplimiento de reglas acordadas."
+ ],
+ example:[
+ "A franchisee may open a unit of a restaurant chain and follow its standards, products and operating processes.",
+ "Um franqueado pode abrir uma unidade de uma rede de restaurantes e seguir seus padrões, produtos e processos operacionais.",
+ "Un franquiciado puede abrir una unidad de una cadena de restaurantes y seguir sus estándares, productos y procesos operativos."
+ ],
+ related:["Franchisor","Franchisee","Franchise Fee"]
+},
+{
+ id:"franchisor",cat:"franchise",
+ name:["Franchisor","Franqueador","Franquiciante"],
+ definition:[
+ "The company or brand that grants another party the right to operate a franchise using its brand and business system.",
+ "Empresa ou marca que concede a outra parte o direito de operar uma franquia utilizando sua marca e seu sistema de negócios.",
+ "Empresa o marca que concede a otra parte el derecho de operar una franquicia utilizando su marca y su sistema de negocio."
+ ],
+ example:[
+ "The franchisor provides brand standards, training and operational guidance to franchisees.",
+ "O franqueador fornece padrões de marca, treinamento e orientação operacional aos franqueados.",
+ "El franquiciante proporciona estándares de marca, formación y orientación operativa a los franquiciados."
+ ],
+ related:["Franchise","Franchisee","Franchise Fee"]
+},
+{
+ id:"franchisee",cat:"franchise",
+ name:["Franchisee","Franqueado","Franquiciado"],
+ definition:[
+ "The person or company that receives the right to operate a franchise under the franchisor's brand and system.",
+ "Pessoa ou empresa que recebe o direito de operar uma franquia utilizando a marca e o sistema do franqueador.",
+ "Persona o empresa que recibe el derecho de operar una franquicia utilizando la marca y el sistema del franquiciante."
+ ],
+ example:[
+ "A franchisee invests in a unit and operates it according to the franchise agreement.",
+ "O franqueado investe em uma unidade e a opera de acordo com o contrato de franquia.",
+ "El franquiciado invierte en una unidad y la opera de acuerdo con el contrato de franquicia."
+ ],
+ related:["Franchise","Franchisor","Franchise Agreement"]
+},
+{
+ id:"franchise-fee",cat:"franchise",
+ name:["Franchise Fee","Taxa de Franquia","Canon de Entrada"],
+ definition:[
+ "An initial payment made by a franchisee to obtain the right to join and operate within a franchise network.",
+ "Pagamento inicial realizado pelo franqueado para obter o direito de ingressar e operar em uma rede de franquias.",
+ "Pago inicial realizado por el franquiciado para obtener el derecho de incorporarse y operar dentro de una red de franquicias."
+ ],
+ example:[
+ "A franchise may charge an initial fee, but the total investment also includes setup, equipment, inventory and working capital.",
+ "Uma franquia pode cobrar uma taxa inicial, mas o investimento total também inclui estrutura, equipamentos, estoque e capital de giro.",
+ "Una franquicia puede cobrar un canon de entrada, pero la inversión total también incluye instalaciones, equipos, inventario y capital de trabajo."
+ ],
+ related:["Franchise","Royalties","Working Capital"]
+},
+{
+ id:"royalties",cat:"franchise",
+ name:["Royalties","Royalties / Taxas de Franquia","Regalías / Royalties"],
+ definition:[
+ "Recurring payments made by a franchisee to the franchisor, usually calculated as a percentage of revenue or according to a fixed amount.",
+ "Pagamentos recorrentes feitos pelo franqueado ao franqueador, geralmente calculados como percentual do faturamento ou valor fixo.",
+ "Pagos periódicos realizados por el franquiciado al franquiciante, generalmente calculados como porcentaje de los ingresos o un importe fijo."
+ ],
+ example:[
+ "A franchise agreement may require a monthly royalty equal to 5% of gross revenue.",
+ "Um contrato de franquia pode exigir royalties mensais equivalentes a 5% do faturamento bruto.",
+ "Un contrato de franquicia puede exigir regalías mensuales equivalentes al 5% de los ingresos brutos."
+ ],
+ related:["Franchise Fee","Franchisor","Marketing Fund"]
+},
+{
+ id:"franchise-agreement",cat:"franchise",
+ name:["Franchise Agreement","Contrato de Franquia","Contrato de Franquicia"],
+ definition:[
+ "The legal agreement that defines the rights, obligations, fees, standards and conditions between franchisor and franchisee.",
+ "Contrato que define direitos, obrigações, taxas, padrões e condições entre franqueador e franqueado.",
+ "Contrato que define los derechos, obligaciones, tarifas, estándares y condiciones entre franquiciante y franquiciado."
+ ],
+ example:[
+ "The agreement may specify the territory, contract duration, renewal conditions, fees and operating standards.",
+ "O contrato pode especificar território, duração, condições de renovação, taxas e padrões operacionais.",
+ "El contrato puede especificar territorio, duración, condiciones de renovación, tarifas y estándares operativos."
+ ],
+ related:["Franchise","Franchisor","Franchisee"]
+},
+{
+ id:"cof",cat:"franchise",
+ name:["COF (Circular de Oferta de Franquia)","COF (Circular de Oferta de Franquia)","COF (Circular de Oferta de Franquicia)"],
+ definition:[
+ "In Brazil, a legal disclosure document that a franchisor must provide to a prospective franchisee with important information about the franchise, its costs, obligations and network.",
+ "No Brasil, documento de divulgação exigido por lei que o franqueador deve entregar ao candidato a franqueado, com informações importantes sobre a franquia, seus custos, obrigações e rede.",
+ "En Brasil, documento informativo exigido por ley que el franquiciante debe entregar al posible franquiciado, con información importante sobre la franquicia, sus costos, obligaciones y red."
+ ],
+ example:[
+ "A candidate should review the COF carefully and seek qualified advice before signing or paying any amount.",
+ "O candidato deve analisar a COF com atenção e buscar orientação especializada antes de assinar ou realizar qualquer pagamento.",
+ "El candidato debe revisar cuidadosamente la COF y buscar asesoramiento especializado antes de firmar o realizar cualquier pago."
+ ],
+ related:["Franchise Agreement","Franchise Fee","Royalties"]
+},
+{
+ id:"marketing-fund",cat:"franchise",
+ name:["Marketing Fund","Fundo de Propaganda","Fondo de Marketing"],
+ definition:[
+ "A contribution paid by franchisees to support shared marketing and advertising activities for the franchise network.",
+ "Contribuição paga pelos franqueados para apoiar ações de marketing e publicidade compartilhadas pela rede.",
+ "Contribución pagada por los franquiciados para apoyar actividades de marketing y publicidad compartidas por la red."
+ ],
+ example:[
+ "A franchise may collect a monthly contribution to finance national campaigns and shared advertising materials.",
+ "Uma franquia pode cobrar uma contribuição mensal para financiar campanhas nacionais e materiais de publicidade compartilhados.",
+ "Una franquicia puede cobrar una contribución mensual para financiar campañas nacionales y materiales publicitarios compartidos."
+ ],
+ related:["Royalties","Franchise","Marketing Strategy"]
+},
+{
+ id:"negotiation",cat:"operations",
+ name:["Negotiation","Negociação","Negociación"],
+ definition:[
+ "The process of discussing terms and reaching an agreement between two or more parties.",
+ "Processo de discutir condições e chegar a um acordo entre duas ou mais partes.",
+ "Proceso de discutir condiciones y llegar a un acuerdo entre dos o más partes."
+ ],
+ example:[
+ "A business owner may negotiate payment terms, delivery schedules and prices with suppliers.",
+ "Um empresário pode negociar prazos de pagamento, entregas e preços com fornecedores.",
+ "Un empresario puede negociar plazos de pago, entregas y precios con proveedores."
+ ],
+ related:["Supplier","Cost Management","Partnership"]
+},
+{
+ id:"partnership",cat:"strategy",
+ name:["Partnership","Parceria","Alianza / Asociación"],
+ definition:[
+ "A relationship between two or more parties who collaborate to achieve shared or complementary objectives.",
+ "Relacionamento entre duas ou mais partes que colaboram para alcançar objetivos comuns ou complementares.",
+ "Relación entre dos o más partes que colaboran para alcanzar objetivos comunes o complementarios."
+ ],
+ example:[
+ "A gym may partner with a nutrition clinic to offer combined benefits to customers.",
+ "Uma academia pode fazer parceria com uma clínica de nutrição para oferecer benefícios conjuntos aos clientes.",
+ "Un gimnasio puede asociarse con una clínica de nutrición para ofrecer beneficios conjuntos a sus clientes."
+ ],
+ related:["Strategic Planning","Growth Strategy","Customer Acquisition"]
+},
+{
+ id:"compliance",cat:"legal",
+ name:["Compliance","Conformidade","Cumplimiento Normativo"],
+ definition:[
+ "The practice of following laws, regulations, industry standards and internal policies applicable to a business.",
+ "Prática de cumprir leis, regulamentos, normas do setor e políticas internas aplicáveis a uma empresa.",
+ "Práctica de cumplir las leyes, regulaciones, normas del sector y políticas internas aplicables a una empresa."
+ ],
+ example:[
+ "A company may establish procedures to protect customer data and comply with applicable privacy laws.",
+ "Uma empresa pode estabelecer procedimentos para proteger dados de clientes e cumprir as leis de privacidade aplicáveis.",
+ "Una empresa puede establecer procedimientos para proteger los datos de sus clientes y cumplir las leyes de privacidad aplicables."
+ ],
+ related:["Business Registration","Licenses and Permits","Risk Management"]
+},
+{
+ id:"risk-management",cat:"strategy",
+ name:["Risk Management","Gestão de Riscos","Gestión de Riesgos"],
+ definition:[
+ "The process of identifying, evaluating and preparing for events that could negatively affect a business.",
+ "Processo de identificar, avaliar e se preparar para situações que possam afetar negativamente um negócio.",
+ "Proceso de identificar, evaluar y prepararse para situaciones que puedan afectar negativamente a un negocio."
+ ],
+ example:[
+ "A business may identify dependence on a single supplier as a risk and look for alternative suppliers.",
+ "Uma empresa pode identificar a dependência de um único fornecedor como risco e buscar alternativas.",
+ "Una empresa puede identificar la dependencia de un único proveedor como un riesgo y buscar alternativas."
+ ],
+ related:["SWOT Analysis","Compliance","Business Continuity"]
+}
+];
+
+const ui = {
+ en:{
+  eyebrow:"YOUR BUSINESS REFERENCE LIBRARY",
+  title:"Business Glossary",
+  intro:"Understand the language of business. Explore essential terms, learn what they mean and discover how to apply them to your business decisions.",
+  back:"← Back to Welcome",
+  search:"Search for a term",
+  placeholder:"Try: cash flow, marketing, investment...",
+  help:"You can search in English, Portuguese or Spanish.",
+  categories:"Browse by category",
+  all:"All terms",
+  results:"terms found",
+  definition:"Definition",
+  example:"Practical example",
+  related:"Related terms",
+  noResults:"No terms found. Try another word or select a different category.",
+  footer:"Learn. Understand. Make better decisions."
+ },
+ pt:{
+  eyebrow:"SUA BIBLIOTECA DE CONSULTA SOBRE NEGÓCIOS",
+  title:"Glossário de Negócios",
+  intro:"Entenda a linguagem dos negócios. Explore termos essenciais, descubra seus significados e veja como aplicá-los nas decisões da sua empresa.",
+  back:"← Voltar para boas-vindas",
+  search:"Pesquise um termo",
+  placeholder:"Experimente: fluxo de caixa, marketing, investimento...",
+  help:"Você pode pesquisar em português, inglês ou espanhol.",
+  categories:"Explore por categoria",
+  all:"Todos os termos",
+  results:"termos encontrados",
+  definition:"Definição",
+  example:"Exemplo prático",
+  related:"Termos relacionados",
+  noResults:"Nenhum termo encontrado. Experimente outra palavra ou selecione uma categoria diferente.",
+  footer:"Aprenda. Compreenda. Tome decisões melhores."
+ },
+ es:{
+  eyebrow:"TU BIBLIOTECA DE CONSULTA SOBRE NEGOCIOS",
+  title:"Glosario de Negocios",
+  intro:"Comprende el lenguaje de los negocios. Explora términos esenciales, descubre qué significan y aprende a aplicarlos en las decisiones de tu empresa.",
+  back:"← Volver a bienvenida",
+  search:"Busca un término",
+  placeholder:"Prueba: flujo de caja, marketing, inversión...",
+  help:"Puedes buscar en español, inglés o portugués.",
+  categories:"Explora por categoría",
+  all:"Todos los términos",
+  results:"términos encontrados",
+  definition:"Definición",
+  example:"Ejemplo práctico",
+  related:"Términos relacionados",
+  noResults:"No se encontraron términos. Prueba otra palabra o selecciona una categoría diferente.",
+  footer:"Aprende. Comprende. Toma mejores decisiones."
+ }
+};
+
+let lang="en";
+let selectedCategory="all";
+let searchText="";
+
+function getLangValue(values){
+ return values[["en","pt","es"].indexOf(lang)] || values[0];
+}
+
+function setLanguage(newLang){
+ lang=newLang;
+ document.documentElement.lang=lang;
+ const t=ui[lang];
+ document.getElementById("eyebrow").textContent=t.eyebrow;
+ document.getElementById("pageTitle").textContent=t.title;
+ document.getElementById("intro").textContent=t.intro;
+ document.getElementById("backLink").textContent=t.back;
+ document.getElementById("searchLabel").textContent=t.search;
+ document.getElementById("search").placeholder=t.placeholder;
+ document.getElementById("searchHelp").textContent=t.help;
+ document.getElementById("categoryTitle").textContent=t.categories;
+ document.getElementById("definitionLabel").textContent=t.definition;
+ document.getElementById("exampleLabel").textContent=t.example;
+ document.getElementById("relatedLabel").textContent=t.related;
+ document.getElementById("footerText").textContent=t.footer;
+ localStorage.setItem("startingToolkitLanguage",lang);
+ renderCategories();
+ renderTerms();
+}
+
+function renderCategories(){
+ const holder=document.getElementById("categories");
+ holder.innerHTML="";
+ const allButton=document.createElement("button");
+ allButton.className="category"+(selectedCategory==="all"?" active":"");
+ allButton.textContent=ui[lang].all;
+ allButton.onclick=()=>{
+  selectedCategory="all";
+  renderCategories();
+  renderTerms();
+ };
+ holder.appendChild(allButton);
+
+ Object.keys(categories).forEach(key=>{
+  const btn=document.createElement("button");
+  btn.className="category"+(selectedCategory===key?" active":"");
+  btn.textContent=categories[key][lang];
+  btn.onclick=()=>{
+   selectedCategory=key;
+   renderCategories();
+   renderTerms();
+  };
+  holder.appendChild(btn);
+ });
+}
+
+function renderTerms(){
+ const holder=document.getElementById("terms");
+ holder.innerHTML="";
+ const query=searchText.trim().toLocaleLowerCase();
+ const filtered=terms.filter(term=>{
+  const matchesCategory=selectedCategory==="all"||term.cat===selectedCategory;
+  const searchable=[
+   ...term.name,
+   ...term.definition,
+   ...term.example,
+   ...term.related
+  ].join(" ").toLocaleLowerCase();
+  return matchesCategory&&(!query||searchable.includes(query));
+ });
+
+ document.getElementById("resultsTitle").textContent=
+  selectedCategory==="all"?ui[lang].all:categories[selectedCategory][lang];
+ document.getElementById("resultCount").textContent=
+  filtered.length+" "+ui[lang].results;
+
+ if(filtered.length===0){
+  const empty=document.createElement("div");
+  empty.className="no-results";
+  empty.textContent=ui[lang].noResults;
+  holder.appendChild(empty);
+  return;
+ }
+
+ filtered.forEach(term=>{
+  const card=document.createElement("button");
+  card.className="term";
+  card.type="button";
+  const top=document.createElement("div");
+  top.className="term-top";
+  const titleWrap=document.createElement("div");
+  const title=document.createElement("h3");
+  title.textContent=term.name[["en","pt","es"].indexOf(lang)];
+  const translation=document.createElement("div");
+  translation.className="translation";
+  const otherNames=term.name.filter((_,i)=>i!==["en","pt","es"].indexOf(lang));
+  translation.textContent=otherNames.join(" · ");
+  titleWrap.append(title,translation);
+  const arrow=document.createElement("span");
+  arrow.className="arrow";
+  arrow.textContent="+";
+  top.append(titleWrap,arrow);
+  const short=document.createElement("div");
+  short.className="short";
+  short.textContent=getLangValue(term.definition);
+  card.append(top,short);
+  card.addEventListener("click",()=>openTerm(term));
+  holder.appendChild(card);
+ });
+}
+
+function openTerm(term){
+ document.getElementById("modalCategory").textContent=categories[term.cat][lang];
+ document.getElementById("modalTitle").textContent=getLangValue(term.name);
+ document.getElementById("modalTranslation").textContent=
+  term.name.filter((_,i)=>i!==["en","pt","es"].indexOf(lang)).join(" · ");
+ document.getElementById("modalDefinition").textContent=getLangValue(term.definition);
+ document.getElementById("modalExample").textContent=getLangValue(term.example);
+ document.getElementById("modalRelated").textContent=term.related.join(" · ");
+ document.getElementById("modal").classList.add("show");
+ document.getElementById("closeModal").focus();
+}
+
+function closeModal(){
+ document.getElementById("modal").classList.remove("show");
+}
+
+document.getElementById("search").addEventListener("input",e=>{
+ searchText=e.target.value;
+ renderTerms();
+});
+document.getElementById("closeModal").addEventListener("click",closeModal);
+document.getElementById("modal").addEventListener("click",e=>{
+ if(e.target.id==="modal")closeModal();
+});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")closeModal();
+});
+document.getElementById("language").addEventListener("change",e=>{
+ setLanguage(e.target.value);
+});
+
+document.getElementById("year").textContent=new Date().getFullYear();
+
+const saved=localStorage.getItem("startingToolkitLanguage");
+const browser=(navigator.language||"en").slice(0,2);
+const initial=["en","pt","es"].includes(saved)?saved:
+ (["pt","es"].includes(browser)?browser:"en");
+document.getElementById("language").value=initial;
+setLanguage(initial);
+</script>
+<script src="toolkit-navigation.js"></script>
+</body>
+</html>
