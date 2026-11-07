@@ -1,0 +1,538 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starting Toolkit | My SWOT</title>
+<style>
+:root{--navy:#19283d;--purple:#6c63ff;--soft:#f0efff;--bg:#f6f7fb;--muted:#667085;--line:#e4e7ec;--green:#258568;--red:#c56b64;--blue:#527db5;--gold:#b58a3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--navy);line-height:1.5}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:1080px;margin:auto;padding:24px 18px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.brand{font-weight:800;letter-spacing:2px;font-size:14px;color:inherit;text-decoration:none}
+.top-right{display:flex;align-items:center;gap:12px}
+.lang{border:1px solid var(--line);background:white;border-radius:10px;padding:9px}
+.home{font-size:13px;color:var(--purple);text-decoration:none}
+.hero{background:var(--navy);color:white;border-radius:22px;padding:28px 30px;margin-bottom:18px}
+.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;opacity:.8}
+.hero h1{font-size:30px;margin:8px 0}
+.hero p{max-width:740px;margin:0;opacity:.88;font-size:15px}
+.progress{margin-top:22px}
+.progress-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px}
+.bar{height:8px;background:#ffffff30;border-radius:20px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#b8e986;transition:width .2s}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:25px;margin-bottom:17px}
+.section-title{font-size:20px;margin:0 0 6px}
+.section-help{color:var(--muted);font-size:14px;margin:0 0 20px}
+.note{background:#f0f3f8;border:1px solid #dce4ee;border-radius:12px;padding:13px;color:#475467;font-size:13px;margin:12px 0}
+.matrix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.quadrant{border:1px solid var(--line);border-radius:15px;padding:17px;min-width:0}
+.quadrant h3{margin:0 0 5px;font-size:17px}
+.quadrant .desc{font-size:13px;color:var(--muted);margin:0 0 14px;min-height:38px}
+.quadrant.strength{border-top:4px solid var(--green)}
+.quadrant.weakness{border-top:4px solid var(--red)}
+.quadrant.opportunity{border-top:4px solid var(--blue)}
+.quadrant.threat{border-top:4px solid var(--gold)}
+.items{display:grid;gap:8px}
+.item{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;cursor:pointer}
+.item input{width:17px;height:17px;margin:1px 0 0;accent-color:var(--purple);flex-shrink:0}
+.custom{display:flex;gap:7px;margin-top:13px}
+.custom input{min-width:0;flex:1}
+input,textarea{border:1px solid var(--line);border-radius:10px;padding:11px;color:var(--navy);background:white;width:100%;outline:none}
+input:focus,textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #6c63ff18}
+.add{background:var(--navy);color:white;border:0;border-radius:10px;padding:0 13px;font-weight:700;white-space:nowrap}
+.custom-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.tag{background:var(--soft);color:#5148d9;border-radius:20px;padding:6px 10px;font-size:12px;display:flex;gap:8px;align-items:center}
+.tag button{border:0;background:transparent;color:inherit;font-weight:bold;padding:0}
+.strategy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.strategy{border:1px solid var(--line);border-radius:13px;padding:15px}
+.strategy h3{font-size:15px;margin:0 0 6px}
+.strategy p{font-size:13px;color:var(--muted);margin:0 0 12px}
+.strategy textarea{min-height:85px;resize:vertical}
+.priority-list{display:grid;gap:10px}
+.priority-row{display:grid;grid-template-columns:1fr 130px;gap:10px;align-items:center}
+.priority-row input{min-width:0}
+.priority-row select{border:1px solid var(--line);border-radius:10px;padding:11px;background:white;color:var(--navy);width:100%}
+.actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+.btn{border:0;border-radius:11px;padding:13px 18px;font-weight:700}
+.primary{background:var(--purple);color:white}
+.secondary{background:white;color:var(--navy);border:1px solid var(--line)}
+.save{font-size:12px;color:var(--muted);margin-top:10px;min-height:18px}
+.summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.summary-item{border:1px solid var(--line);border-radius:13px;padding:14px;overflow-wrap:anywhere}
+.summary-item small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.summary-item div{font-size:14px;white-space:pre-wrap}
+.hidden{display:none!important}
+@media(max-width:700px){
+.app{padding:15px 12px 40px}.hero{padding:23px 19px}.hero h1{font-size:25px}
+.card{padding:19px}.matrix,.strategy-grid,.summary-grid{grid-template-columns:1fr}
+.actions{flex-direction:column}.btn{width:100%}
+.priority-row{grid-template-columns:1fr}
+.custom{flex-wrap:wrap}.custom input{flex-basis:100%}.add{padding:11px 14px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="top">
+<a class="brand" href="../index.html">STARTING TOOLKIT</a>
+<div class="top-right">
+<a class="home" href="../index.html" id="homeLink">Início</a>
+<select id="language" class="lang" aria-label="Language">
+<option value="pt">PT</option><option value="en">EN</option><option value="es">ES</option>
+</select>
+</div>
+</header>
+
+<section class="hero">
+<div class="eyebrow" id="eyebrow"></div>
+<h1 id="title"></h1>
+<p id="lead"></p>
+<div class="progress">
+<div class="progress-top"><span id="progressLabel"></span><strong id="progressPct">0%</strong></div>
+<div class="bar"><i id="bar"></i></div>
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="introTitle"></h2>
+<p class="section-help" id="introHelp"></p>
+<div class="note" id="internalNote"></div>
+<div class="note" id="externalNote"></div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="matrixTitle"></h2>
+<p class="section-help" id="matrixHelp"></p>
+<div class="matrix">
+
+<div class="quadrant strength">
+<h3 id="strengthTitle"></h3>
+<p class="desc" id="strengthDesc"></p>
+<div class="items" id="strengthItems"></div>
+<div class="custom">
+<input id="strengthCustomInput">
+<button class="add" id="strengthAdd" type="button"></button>
+</div>
+<div class="custom-list" id="strengthCustomList"></div>
+</div>
+
+<div class="quadrant weakness">
+<h3 id="weaknessTitle"></h3>
+<p class="desc" id="weaknessDesc"></p>
+<div class="items" id="weaknessItems"></div>
+<div class="custom">
+<input id="weaknessCustomInput">
+<button class="add" id="weaknessAdd" type="button"></button>
+</div>
+<div class="custom-list" id="weaknessCustomList"></div>
+</div>
+
+<div class="quadrant opportunity">
+<h3 id="opportunityTitle"></h3>
+<p class="desc" id="opportunityDesc"></p>
+<div class="items" id="opportunityItems"></div>
+<div class="custom">
+<input id="opportunityCustomInput">
+<button class="add" id="opportunityAdd" type="button"></button>
+</div>
+<div class="custom-list" id="opportunityCustomList"></div>
+</div>
+
+<div class="quadrant threat">
+<h3 id="threatTitle"></h3>
+<p class="desc" id="threatDesc"></p>
+<div class="items" id="threatItems"></div>
+<div class="custom">
+<input id="threatCustomInput">
+<button class="add" id="threatAdd" type="button"></button>
+</div>
+<div class="custom-list" id="threatCustomList"></div>
+</div>
+
+</div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="strategyTitle"></h2>
+<p class="section-help" id="strategyHelp"></p>
+<div class="strategy-grid" id="strategyGrid"></div>
+</section>
+
+<section class="card">
+<h2 class="section-title" id="prioritiesTitle"></h2>
+<p class="section-help" id="prioritiesHelp"></p>
+<div class="priority-list" id="priorityList"></div>
+<div class="custom">
+<input id="priorityInput">
+<button class="add" id="priorityAdd" type="button"></button>
+</div>
+<div class="custom-list" id="priorityCustomList"></div>
+<div class="actions">
+<button class="btn secondary" id="saveBtn" type="button"></button>
+<button class="btn primary" id="summaryBtn" type="button"></button>
+</div>
+<div class="save" id="saveStatus" aria-live="polite"></div>
+</section>
+
+<section class="card hidden" id="result">
+<h2 class="section-title" id="resultTitle"></h2>
+<p class="section-help" id="resultHelp"></p>
+<div class="summary-grid" id="resultGrid"></div>
+<div class="actions">
+<button class="btn secondary" id="editBtn" type="button"></button>
+<button class="btn primary" id="continueBtn" type="button"></button>
+</div>
+</section>
+
+</div>
+
+<script>
+const KEY="startingToolkitSWOTV2";
+const LANG="startingToolkitLanguage";
+const $=id=>document.getElementById(id);
+
+const state={
+lang:"pt",
+strength:[],weakness:[],opportunity:[],threat:[],
+customStrength:[],customWeakness:[],customOpportunity:[],customThreat:[],
+strategy:{so:"",st:"",wo:"",wt:""},
+priorities:[]
+};
+
+const D={
+pt:{
+eyebrow:"ETAPA 04 · ANÁLISE SWOT",
+title:"Entenda a posição do seu negócio.",
+lead:"Organize os fatores internos e externos que podem influenciar seu negócio. Depois, transforme essa análise em prioridades estratégicas.",
+progress:"Progresso do módulo",home:"Início",
+introTitle:"Antes de começar, entenda a lógica da SWOT",
+introHelp:"A análise SWOT organiza os fatores que influenciam um negócio em quatro grupos.",
+internalNote:"Fatores internos: Forças e Fraquezas estão relacionados ao próprio negócio. São aspectos que você pode desenvolver, melhorar ou administrar.",
+externalNote:"Fatores externos: Oportunidades e Ameaças vêm do mercado e do ambiente em que o negócio atua. Você não controla esses fatores, mas pode se preparar para eles.",
+matrixTitle:"Sua matriz SWOT",
+matrixHelp:"Selecione os itens que fazem sentido para sua realidade. As sugestões servem como ponto de partida. Você também pode acrescentar seus próprios itens.",
+strengthTitle:"FORÇAS",strengthDesc:"Aspectos internos que favorecem seu negócio.",
+weaknessTitle:"FRAQUEZAS",weaknessDesc:"Limitações internas que precisam de atenção.",
+opportunityTitle:"OPORTUNIDADES",opportunityDesc:"Condições externas favoráveis no mercado.",
+threatTitle:"AMEAÇAS",threatDesc:"Fatores externos que podem dificultar seus resultados.",
+strength:["Experiência no setor","Conhecimento técnico","Localização privilegiada","Marca forte ou reconhecida","Diferenciação clara","Capacidade operacional","Bom relacionamento com clientes","Baixo custo operacional","Uso de tecnologia"],
+weakness:["Pouca experiência no setor","Marca ainda desconhecida","Recursos financeiros limitados","Dependência de fornecedores","Estrutura pequena","Presença digital fraca","Falta de equipe ou mão de obra","Baixo poder de negociação","Processos ainda não definidos"],
+opportunity:["Demanda crescente","Público pouco atendido","Concorrentes com avaliações negativas","Região com oferta limitada","Novas tendências de consumo","Mudanças no comportamento do cliente","Avanços tecnológicos","Possibilidade de parcerias","Novos canais de venda"],
+threat:["Concorrência forte","Guerra de preços","Entrada de novos concorrentes","Dependência de plataformas","Aumento de custos","Mudanças regulatórias","Sazonalidade","Mudanças tecnológicas","Concentração de fornecedores"],
+add:"Adicionar",otherPlaceholder:"Outro item que você identifica...",
+strategyTitle:"Da análise à estratégia",
+strategyHelp:"Agora pense em como utilizar suas forças e oportunidades, proteger o negócio e reduzir suas vulnerabilidades.",
+strategies:[
+["Forças + Oportunidades","Como usar suas forças para aproveitar oportunidades do mercado?","so"],
+["Forças + Ameaças","Como suas forças podem ajudar a enfrentar ameaças externas?","st"],
+["Fraquezas + Oportunidades","Quais fraquezas precisam ser corrigidas para aproveitar oportunidades?","wo"],
+["Fraquezas + Ameaças","Como reduzir suas vulnerabilidades diante das ameaças?","wt"]
+],
+priorityTitle:"Suas prioridades estratégicas",
+priorityHelp:"Registre até cinco ações que merecem atenção a partir da análise. Pense no que precisa ser feito, não apenas no que seria desejável.",
+priorityPlaceholder:"Escreva uma prioridade ou ação...",
+priority:"Prioridade",
+addPriority:"Adicionar prioridade",
+priorityPlaceholderInput:"Digite uma prioridade...",
+priorityOptions:["Alta","Média","Baixa"],
+save:"Salvar respostas",summary:"Ver meu resumo",
+saved:"Respostas salvas neste navegador.",
+resultTitle:"Seu SWOT Snapshot",
+resultHelp:"Este é o diagnóstico que você construiu e as prioridades que definiu.",
+labels:["Forças","Fraquezas","Oportunidades","Ameaças","Forças + Oportunidades","Forças + Ameaças","Fraquezas + Oportunidades","Fraquezas + Ameaças","Prioridades estratégicas"],
+edit:"Voltar e editar",continue:"Continuar para Meus números",
+none:"Nenhum item selecionado"
+},
+en:{
+eyebrow:"STEP 04 · SWOT ANALYSIS",
+title:"Understand your business position.",
+lead:"Organize the internal and external factors that may influence your business. Then turn your analysis into strategic priorities.",
+progress:"Module progress",home:"Home",
+introTitle:"First, understand the SWOT framework",
+introHelp:"SWOT organizes the factors influencing a business into four categories.",
+internalNote:"Internal factors: Strengths and Weaknesses relate to the business itself. These are aspects you can develop, improve or manage.",
+externalNote:"External factors: Opportunities and Threats come from the market and business environment. You cannot control them, but you can prepare for them.",
+matrixTitle:"Your SWOT matrix",
+matrixHelp:"Select the items that fit your situation. Suggestions are a starting point. You can also add your own items.",
+strengthTitle:"STRENGTHS",strengthDesc:"Internal attributes that support your business.",
+weaknessTitle:"WEAKNESSES",weaknessDesc:"Internal limitations that need attention.",
+opportunityTitle:"OPPORTUNITIES",opportunityDesc:"Favorable external market conditions.",
+threatTitle:"THREATS",threatDesc:"External factors that may affect your results.",
+strength:["Industry experience","Technical knowledge","Strong location","Strong or recognized brand","Clear differentiation","Operational capacity","Good customer relationships","Low operating costs","Use of technology"],
+weakness:["Limited industry experience","Unknown brand","Limited financial resources","Supplier dependence","Small structure","Weak digital presence","Lack of staff","Low negotiating power","Undefined processes"],
+opportunity:["Growing demand","Underserved audience","Competitors with negative reviews","Underserved region","New consumer trends","Changing customer behavior","Technological advances","Partnership opportunities","New sales channels"],
+threat:["Strong competition","Price wars","New competitors entering","Platform dependence","Rising costs","Regulatory changes","Seasonality","Technological changes","Supplier concentration"],
+add:"Add",otherPlaceholder:"Another item you identify...",
+strategyTitle:"From SWOT to Strategy",
+strategyHelp:"Now consider how to use your strengths and opportunities, protect the business and reduce vulnerabilities.",
+strategies:[
+["Strengths + Opportunities","How can you use your strengths to take advantage of market opportunities?","so"],
+["Strengths + Threats","How can your strengths help you address external threats?","st"],
+["Weaknesses + Opportunities","Which weaknesses must be addressed to take advantage of opportunities?","wo"],
+["Weaknesses + Threats","How can you reduce vulnerabilities in the face of threats?","wt"]
+],
+priorityTitle:"Your strategic priorities",
+priorityHelp:"Record up to five actions that deserve attention based on your analysis. Focus on what needs to be done.",
+priorityPlaceholder:"Write a priority or action...",
+priority:"Priority",
+addPriority:"Add priority",
+priorityPlaceholderInput:"Enter a priority...",
+priorityOptions:["High","Medium","Low"],
+save:"Save answers",summary:"View my summary",
+saved:"Answers saved in this browser.",
+resultTitle:"Your SWOT Snapshot",
+resultHelp:"This is the diagnosis you created and the priorities you defined.",
+labels:["Strengths","Weaknesses","Opportunities","Threats","Strengths + Opportunities","Strengths + Threats","Weaknesses + Opportunities","Weaknesses + Threats","Strategic priorities"],
+edit:"Back and edit",continue:"Continue to My Numbers",
+none:"No items selected"
+},
+es:{
+eyebrow:"ETAPA 04 · ANÁLISIS SWOT",
+title:"Comprende la posición de tu negocio.",
+lead:"Organiza los factores internos y externos que pueden influir en tu negocio. Después, transforma el análisis en prioridades estratégicas.",
+progress:"Progreso del módulo",home:"Inicio",
+introTitle:"Antes de empezar, comprende la lógica del SWOT",
+introHelp:"El análisis SWOT organiza los factores que influyen en un negocio en cuatro grupos.",
+internalNote:"Factores internos: Fortalezas y Debilidades están relacionados con el propio negocio. Son aspectos que puedes desarrollar, mejorar o gestionar.",
+externalNote:"Factores externos: Oportunidades y Amenazas provienen del mercado y del entorno. No puedes controlarlos, pero puedes prepararte para ellos.",
+matrixTitle:"Tu matriz SWOT",
+matrixHelp:"Selecciona los elementos que se ajustan a tu realidad. Las sugerencias son un punto de partida. También puedes añadir tus propios elementos.",
+strengthTitle:"FORTALEZAS",strengthDesc:"Aspectos internos que favorecen tu negocio.",
+weaknessTitle:"DEBILIDADES",weaknessDesc:"Limitaciones internas que requieren atención.",
+opportunityTitle:"OPORTUNIDADES",opportunityDesc:"Condiciones externas favorables del mercado.",
+threatTitle:"AMENAZAS",threatDesc:"Factores externos que pueden dificultar tus resultados.",
+strength:["Experiencia en el sector","Conocimiento técnico","Ubicación privilegiada","Marca fuerte o reconocida","Diferenciación clara","Capacidad operativa","Buena relación con clientes","Bajos costes operativos","Uso de tecnología"],
+weakness:["Poca experiencia en el sector","Marca poco conocida","Recursos financieros limitados","Dependencia de proveedores","Estructura pequeña","Presencia digital débil","Falta de equipo","Bajo poder de negociación","Procesos aún no definidos"],
+opportunity:["Demanda creciente","Público poco atendido","Competidores con reseñas negativas","Región con oferta limitada","Nuevas tendencias de consumo","Cambios en el comportamiento del cliente","Avances tecnológicos","Posibilidad de alianzas","Nuevos canales de venta"],
+threat:["Competencia fuerte","Guerra de precios","Entrada de nuevos competidores","Dependencia de plataformas","Aumento de costes","Cambios regulatorios","Estacionalidad","Cambios tecnológicos","Concentración de proveedores"],
+add:"Añadir",otherPlaceholder:"Otro elemento que identificas...",
+strategyTitle:"Del análisis a la estrategia",
+strategyHelp:"Piensa cómo utilizar tus fortalezas y oportunidades, proteger el negocio y reducir sus vulnerabilidades.",
+strategies:[
+["Fortalezas + Oportunidades","¿Cómo utilizar tus fortalezas para aprovechar oportunidades del mercado?","so"],
+["Fortalezas + Amenazas","¿Cómo pueden tus fortalezas ayudarte a enfrentar amenazas externas?","st"],
+["Debilidades + Oportunidades","¿Qué debilidades debes corregir para aprovechar oportunidades?","wo"],
+["Debilidades + Amenazas","¿Cómo reducir tus vulnerabilidades frente a las amenazas?","wt"]
+],
+priorityTitle:"Tus prioridades estratégicas",
+priorityHelp:"Registra hasta cinco acciones que merecen atención a partir del análisis. Piensa en lo que hay que hacer.",
+priorityPlaceholder:"Escribe una prioridad o acción...",
+priority:"Prioridad",
+addPriority:"Añadir prioridad",
+priorityPlaceholderInput:"Escribe una prioridad...",
+priorityOptions:["Alta","Media","Baja"],
+save:"Guardar respuestas",summary:"Ver mi resumen",
+saved:"Respuestas guardadas en este navegador.",
+resultTitle:"Tu SWOT Snapshot",
+resultHelp:"Este es el diagnóstico que has construido y las prioridades que has definido.",
+labels:["Fortalezas","Debilidades","Oportunidades","Amenazas","Fortalezas + Oportunidades","Fortalezas + Amenazas","Debilidades + Oportunidades","Debilidades + Amenazas","Prioridades estratégicas"],
+edit:"Volver y editar",continue:"Continuar a Mis números",
+none:"Ningún elemento seleccionado"
+}
+};
+
+const groups=["strength","weakness","opportunity","threat"];
+const customKeys={strength:"customStrength",weakness:"customWeakness",opportunity:"customOpportunity",threat:"customThreat"};
+
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+function renderGroup(key){
+const d=D[state.lang];
+const list=$(key+"Items");
+list.innerHTML="";
+d[key].forEach((label,index)=>{
+const row=document.createElement("label");
+row.className="item";
+const check=document.createElement("input");
+check.type="checkbox";
+check.checked=state[key].includes(index);
+const span=document.createElement("span");
+span.textContent=label;
+check.addEventListener("change",()=>{
+if(check.checked){if(!state[key].includes(index))state[key].push(index)}
+else state[key]=state[key].filter(i=>i!==index);
+updateProgress();save(false);
+});
+row.append(check,span);
+list.appendChild(row);
+});
+renderCustom(key);
+}
+function renderCustom(key){
+const d=D[state.lang],container=$(customKeys[key]+"List");
+container.innerHTML="";
+state[customKeys[key]].forEach((value,index)=>{
+const tag=document.createElement("span");
+tag.className="tag";
+const text=document.createElement("span");text.textContent=value;
+const remove=document.createElement("button");
+remove.type="button";remove.textContent="×";remove.setAttribute("aria-label","Remove "+value);
+remove.addEventListener("click",()=>{
+state[customKeys[key]].splice(index,1);
+renderCustom(key);updateProgress();save(false);
+});
+tag.append(text,remove);container.appendChild(tag);
+});
+$(key+"CustomInput").placeholder=d.otherPlaceholder;
+$(key+"Add").textContent=d.add;
+}
+function addCustom(key){
+const input=$(key+"CustomInput");
+const value=input.value.trim();
+if(!value)return;
+if(!state[customKeys[key]].includes(value)){
+state[customKeys[key]].push(value);
+}
+input.value="";
+renderCustom(key);updateProgress();save(false);
+}
+function renderStrategies(){
+const d=D[state.lang],root=$("strategyGrid");
+root.innerHTML="";
+d.strategies.forEach(([title,description,key])=>{
+const card=document.createElement("div");card.className="strategy";
+const h=document.createElement("h3");h.textContent=title;
+const p=document.createElement("p");p.textContent=description;
+const area=document.createElement("textarea");
+area.value=state.strategy[key]||"";
+area.addEventListener("input",()=>{state.strategy[key]=area.value;updateProgress();save(false)});
+card.append(h,p,area);root.appendChild(card);
+});
+}
+function renderPriorities(){
+const d=D[state.lang],root=$("priorityList");
+root.innerHTML="";
+state.priorities.forEach((item,index)=>{
+const row=document.createElement("div");row.className="priority-row";
+const input=document.createElement("input");
+input.value=item.text||"";
+input.placeholder=d.priorityPlaceholder;
+input.addEventListener("input",()=>{item.text=input.value;updateProgress();save(false)});
+const select=document.createElement("select");
+d.priorityOptions.forEach((v,i)=>{
+const o=document.createElement("option");o.value=String(i);o.textContent=v;select.appendChild(o);
+});
+select.value=String(item.level??1);
+select.addEventListener("change",()=>{item.level=Number(select.value);save(false)});
+row.append(input,select);root.appendChild(row);
+});
+}
+function render(){
+const d=D[state.lang];
+document.documentElement.lang=state.lang==="pt"?"pt-BR":state.lang;
+const map={
+eyebrow:"eyebrow",title:"title",lead:"lead",progressLabel:"progress",homeLink:"home",
+introTitle:"introTitle",introHelp:"introHelp",internalNote:"internalNote",externalNote:"externalNote",
+matrixTitle:"matrixTitle",matrixHelp:"matrixHelp",
+strengthTitle:"strengthTitle",strengthDesc:"strengthDesc",
+weaknessTitle:"weaknessTitle",weaknessDesc:"weaknessDesc",
+opportunityTitle:"opportunityTitle",opportunityDesc:"opportunityDesc",
+threatTitle:"threatTitle",threatDesc:"threatDesc",
+strategyTitle:"strategyTitle",strategyHelp:"strategyHelp",
+prioritiesTitle:"priorityTitle",prioritiesHelp:"priorityHelp",
+priorityAdd:"addPriority",saveBtn:"save",summaryBtn:"summary",
+resultTitle:"resultTitle",resultHelp:"resultHelp",editBtn:"edit",continueBtn:"continue"
+};
+Object.entries(map).forEach(([id,key])=>$(id).textContent=d[key]);
+$("priorityInput").placeholder=d.priorityPlaceholderInput;
+groups.forEach(renderGroup);
+renderStrategies();renderPriorities();updateProgress();
+}
+function updateProgress(){
+let total=4,done=0;
+groups.forEach(key=>{
+total+=D[state.lang][key].length+1;
+done+=state[key].length+state[customKeys[key]].length;
+if(state[key].length||state[customKeys[key]].length)done++;
+});
+total+=4+5;
+done+=Object.values(state.strategy).filter(v=>v.trim()).length;
+done+=state.priorities.filter(p=>p.text.trim()).length;
+const pct=Math.min(100,Math.round(done/total*100));
+$("progressPct").textContent=pct+"%";
+$("bar").style.width=pct+"%";
+}
+function save(show=true){
+const data={...state,updatedAt:new Date().toISOString()};
+localStorage.setItem(KEY,JSON.stringify(data));
+if(show)$("saveStatus").textContent=D[state.lang].saved;
+}
+function load(){
+try{
+const data=JSON.parse(localStorage.getItem(KEY)||"null");
+if(!data)return;
+Object.keys(state).forEach(key=>{
+if(data[key]!==undefined)state[key]=data[key];
+});
+groups.forEach(key=>{
+if(!Array.isArray(state[key]))state[key]=[];
+if(!Array.isArray(state[customKeys[key]]))state[customKeys[key]]=[];
+});
+if(!state.strategy||typeof state.strategy!=="object")state.strategy={so:"",st:"",wo:"",wt:""};
+if(!Array.isArray(state.priorities))state.priorities=[];
+}catch(e){}
+}
+function showSummary(){
+save(false);
+const d=D[state.lang];
+const values=[
+groups.map(k=>[...state[k].map(i=>d[k][i]),...state[customKeys[k]]].join("\n")||d.none),
+Object.values(state.strategy).map(v=>v||d.none),
+state.priorities.filter(p=>p.text.trim()).map(p=>p.text+" ("+d.priorityOptions[p.level??1]+")").join("\n")||d.none
+];
+const labels=d.labels;
+const content=[
+...values[0],
+...values[1],
+values[2]
+];
+$("resultGrid").innerHTML=content.map((v,i)=>
+`<div class="summary-item"><small>${escapeHTML(labels[i])}</small><div>${escapeHTML(v)}</div></div>`
+).join("");
+$("result").classList.remove("hidden");
+$("result").scrollIntoView({behavior:"smooth"});
+}
+groups.forEach(key=>{
+$(key+"Add").addEventListener("click",()=>addCustom(key));
+$(key+"CustomInput").addEventListener("keydown",e=>{
+if(e.key==="Enter"){e.preventDefault();addCustom(key)}
+});
+});
+$("priorityAdd").addEventListener("click",()=>{
+const value=$("priorityInput").value.trim();
+if(!value||state.priorities.length>=5)return;
+state.priorities.push({text:value,level:1});
+$("priorityInput").value="";
+renderPriorities();updateProgress();save(false);
+});
+$("priorityInput").addEventListener("keydown",e=>{
+if(e.key==="Enter"){e.preventDefault();$("priorityAdd").click()}
+});
+$("language").addEventListener("change",()=>{
+state.lang=$("language").value;
+localStorage.setItem("startingToolkitLanguage",state.lang);
+localStorage.setItem("startingToolkitLang",state.lang);
+render();save(false);
+});
+$("saveBtn").addEventListener("click",()=>save(true));
+$("summaryBtn").addEventListener("click",showSummary);
+$("editBtn").addEventListener("click",()=>{
+$("result").classList.add("hidden");
+window.scrollTo({top:0,behavior:"smooth"});
+});
+$("continueBtn").addEventListener("click",()=>{
+save(false);
+window.location.href="my-numbers.html";
+});
+state.lang=localStorage.getItem(LANG)||localStorage.getItem("startingToolkitLang")||"pt";
+load();render();
+</script>
+</body>
+</html>
