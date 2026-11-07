@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome | Starting Toolkit</title>
+<style>
+:root {
+  --navy:#172d3b;
+  --navy2:#243f50;
+  --teal:#4f8b87;
+  --gold:#c6a66b;
+  --bg:#f5f7f7;
+  --white:#ffffff;
+  --text:#263943;
+  --muted:#71818a;
+  --line:#e4e9e9;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+button,a{font:inherit}
+.topbar{
+  background:var(--navy);
+  color:white;
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+.brand{
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:.4px;
+}
+.brand span{color:var(--gold)}
+.language{
+  background:rgba(255,255,255,.12);
+  color:white;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:8px;
+  padding:9px 12px;
+  cursor:pointer;
+}
+.container{max-width:1100px;margin:auto;padding:35px 22px 60px}
+.hero{
+  background:var(--navy);
+  color:white;
+  border-radius:18px;
+  padding:55px 45px;
+  position:relative;
+  overflow:hidden;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:280px;height:280px;
+  border:1px solid rgba(198,166,107,.35);
+  border-radius:50%;
+  right:-75px;top:-90px;
+}
+.eyebrow{
+  color:var(--gold);
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:2px;
+}
+.hero h1{
+  font-size:clamp(32px,5vw,48px);
+  line-height:1.15;
+  max-width:700px;
+  margin:15px 0;
+}
+.hero p{
+  max-width:680px;
+  color:#dce5e9;
+  font-size:17px;
+}
+.tagline{
+  color:var(--gold);
+  font-weight:700;
+  letter-spacing:1.5px;
+  margin-top:25px;
+}
+.primary-btn,.secondary-btn{
+  display:inline-block;
+  border-radius:9px;
+  padding:13px 21px;
+  text-decoration:none;
+  font-weight:700;
+  transition:.2s;
+}
+.primary-btn{
+  background:var(--gold);
+  color:var(--navy);
+  margin-top:18px;
+}
+.primary-btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.secondary-btn{
+  background:white;
+  color:var(--navy);
+  border:1px solid var(--line);
+}
+.section{margin-top:48px}
+.section-heading{margin-bottom:22px}
+.section-heading h2{
+  color:var(--navy);
+  font-size:27px;
+  margin:0 0 7px;
+}
+.section-heading p{margin:0;color:var(--muted)}
+.modules{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.module{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:21px;
+  display:flex;
+  flex-direction:column;
+  min-height:190px;
+}
+.module-number{
+  color:var(--teal);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+.module h3{color:var(--navy);margin:8px 0;font-size:18px}
+.module p{color:var(--muted);font-size:14px;margin:0 0 15px;flex:1}
+.module a{
+  color:var(--teal);
+  font-size:13px;
+  font-weight:700;
+  text-decoration:none;
+}
+.module a:hover{text-decoration:underline}
+.steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.step{
+  background:white;
+  border-radius:13px;
+  padding:22px;
+  border:1px solid var(--line);
+}
+.step-icon{
+  width:36px;height:36px;
+  background:#edf4f3;
+  color:var(--teal);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  margin-bottom:12px;
+}
+.step h3{margin:0 0 7px;color:var(--navy);font-size:16px}
+.step p{margin:0;color:var(--muted);font-size:14px}
+.tipbox{
+  margin-top:35px;
+  background:#eaf1f0;
+  border-left:4px solid var(--teal);
+  padding:22px 25px;
+  border-radius:0 12px 12px 0;
+}
+.tipbox h3{margin:0 0 8px;color:var(--navy)}
+.tipbox p{margin:0;color:#40565e;font-size:14px}
+.glossary{
+  background:var(--navy2);
+  color:white;
+  border-radius:16px;
+  padding:30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:25px;
+}
+.glossary h2{margin:0 0 7px;font-size:23px}
+.glossary p{margin:0;color:#dce5e9;font-size:14px;max-width:650px}
+.glossary .secondary-btn{white-space:nowrap}
+.footer{
+  text-align:center;
+  padding:28px 15px;
+  color:var(--muted);
+  font-size:12px;
+}
+@media(max-width:800px){
+  .modules{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .topbar{padding:13px 18px}
+  .brand{font-size:17px}
+  .container{padding:20px 15px 40px}
+  .hero{padding:35px 23px}
+  .hero p{font-size:15px}
+  .modules{grid-template-columns:1fr}
+  .glossary{flex-direction:column;align-items:flex-start}
+  .glossary .secondary-btn{white-space:normal}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">STARTING<span>TOOLKIT</span></div>
+  <select class="language" id="language" aria-label="Select language">
+    <option value="en">English</option>
+    <option value="pt">Português</option>
+    <option value="es">Español</option>
+  </select>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="eyebrow" data-i18n="eyebrow">YOUR NEXT CHAPTER STARTS HERE</div>
+    <h1 data-i18n="heroTitle">Welcome to Starting Toolkit!</h1>
+    <p data-i18n="heroText">Congratulations on taking this step towards building your own business. Starting a business is an important decision, and we are happy to help you organize your ideas, evaluate your opportunities and prepare for what comes next.</p>
+    <p data-i18n="heroText2">You don't need to have all the answers right now. This toolkit will guide you through the questions and decisions that deserve your attention before you start.</p>
+    <a href="my-idea.html" class="primary-btn" data-i18n="startButton">Start planning →</a>
+    <div class="tagline">THINK. PLAN. START.</div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2 data-i18n="modulesTitle">Your business planning journey</h2>
+      <p data-i18n="modulesSubtitle">Nine practical modules to help you move from an initial idea to a structured business plan.</p>
+    </div>
+
+    <div class="modules" id="modulesGrid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2 data-i18n="howTitle">How to use your toolkit</h2>
+      <p data-i18n="howSubtitle">A few simple guidelines to make the most of your experience.</p>
+    </div>
+
+    <div class="steps" id="stepsGrid"></div>
+
+    <div class="tipbox">
+      <h3 data-i18n="tipTitle">A reminder before you begin</h3>
+      <p data-i18n="tipText">This is your planning space. Be honest with your answers, use estimates when exact numbers are not available, and revisit your decisions whenever you learn something new. The goal is to help you make more informed choices, not to have everything figured out in one day.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="glossary">
+      <div>
+        <h2 data-i18n="glossaryTitle">Business Glossary</h2>
+        <p data-i18n="glossaryText">Not sure what a business term means? Visit the glossary for clear explanations of the most common concepts, with practical examples to help you understand and apply them.</p>
+      </div>
+      <a href="business-glossary.html" class="secondary-btn" data-i18n="glossaryButton">Explore the glossary →</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © <span id="year"></span> Starting Toolkit · <span data-i18n="footer">A practical space to plan your next business step.</span>
+</footer>
+
+<script>
+const translations = {
+en:{
+ eyebrow:"YOUR NEXT CHAPTER STARTS HERE",
+ heroTitle:"Welcome to Starting Toolkit!",
+ heroText:"Congratulations on taking this step towards building your own business. Starting a business is an important decision, and we are happy to help you organize your ideas, evaluate your opportunities and prepare for what comes next.",
+ heroText2:"You don't need to have all the answers right now. This toolkit will guide you through the questions and decisions that deserve your attention before you start.",
+ startButton:"Start planning →",
+ modulesTitle:"Your business planning journey",
+ modulesSubtitle:"Nine practical modules to help you move from an initial idea to a structured business plan.",
+ howTitle:"How to use your toolkit",
+ howSubtitle:"A few simple guidelines to make the most of your experience.",
+ tipTitle:"A reminder before you begin",
+ tipText:"This is your planning space. Be honest with your answers, use estimates when exact numbers are not available, and revisit your decisions whenever you learn something new. The goal is to help you make more informed choices, not to have everything figured out in one day.",
+ glossaryTitle:"Business Glossary",
+ glossaryText:"Not sure what a business term means? Visit the glossary for clear explanations of the most common concepts, with practical examples to help you understand and apply them.",
+ glossaryButton:"Explore the glossary →",
+ footer:"A practical space to plan your next business step.",
+ modules:[
+  ["My Idea","Define what you want to offer, who your customers are and what you want to achieve.","Explore this module →"],
+  ["My Model","Understand the differences between starting your own brand and investing in a franchise.","Explore this module →"],
+  ["My Market","Explore your market, competitors, customer needs and opportunities.","Explore this module →"],
+  ["My SWOT","Identify strengths, weaknesses, opportunities and threats, then turn them into strategic priorities.","Explore this module →"],
+  ["My Numbers","Estimate investment, costs, revenue, break-even point and payback period.","Explore this module →"],
+  ["My Marketing","Define how you will position your business, attract customers and communicate your offer.","Explore this module →"],
+  ["My Launch","Organize the practical steps to prepare and launch your business.","Explore this module →"],
+  ["My First 90 Days","Plan your first three months, monitor results and make adjustments.","Explore this module →"],
+  ["Your Final Plan","Bring your work together in one place and review your business plan.","Explore this module →"]
+ ],
+ steps:[
+  ["1","Follow the modules in order","Each module builds on the decisions and information from the previous ones."],
+  ["2","Work at your own pace","You don't need to complete everything in one sitting. Take the time you need."],
+  ["3","Review and adjust","Your answers can change as you learn more. Revisit previous modules whenever necessary."]
+ ]
+},
+pt:{
+ eyebrow:"SEU PRÓXIMO CAPÍTULO COMEÇA AQUI",
+ heroTitle:"Boas-vindas ao Starting Toolkit!",
+ heroText:"Parabéns por dar este passo em direção ao seu próprio negócio. Começar uma empresa é uma decisão importante, e estamos felizes em contribuir para que você organize suas ideias, avalie suas oportunidades e se prepare para o que vem pela frente.",
+ heroText2:"Você não precisa ter todas as respostas agora. Esta ferramenta vai orientar você pelas perguntas e decisões que merecem atenção antes de começar.",
+ startButton:"Começar meu planejamento →",
+ modulesTitle:"Sua jornada de planejamento",
+ modulesSubtitle:"Nove módulos práticos para ajudar você a sair de uma ideia inicial e chegar a um plano de negócios estruturado.",
+ howTitle:"Como usar seu toolkit",
+ howSubtitle:"Algumas orientações simples para aproveitar melhor sua experiência.",
+ tipTitle:"Uma orientação antes de começar",
+ tipText:"Este é o seu espaço de planejamento. Seja sincero nas respostas, use estimativas quando ainda não tiver números exatos e revise suas decisões sempre que aprender algo novo. O objetivo é ajudar você a fazer escolhas mais conscientes, não resolver tudo em um único dia.",
+ glossaryTitle:"Glossário de Negócios",
+ glossaryText:"Encontrou um termo de negócios que não conhece? Consulte o glossário para encontrar explicações claras dos conceitos mais utilizados, com exemplos práticos para ajudar você a compreender e aplicar cada um deles.",
+ glossaryButton:"Consultar o glossário →",
+ footer:"Um espaço prático para planejar seus próximos passos nos negócios.",
+ modules:[
+  ["Minha Ideia","Defina o que pretende oferecer, quem são seus clientes e o que deseja alcançar.","Conhecer o módulo →"],
+  ["Meu Modelo","Entenda as diferenças entre criar sua própria marca e investir em uma franquia.","Conhecer o módulo →"],
+  ["Meu Mercado","Explore seu mercado, concorrentes, necessidades dos clientes e oportunidades.","Conhecer o módulo →"],
+  ["Minha SWOT","Identifique forças, fraquezas, oportunidades e ameaças e transforme a análise em prioridades estratégicas.","Conhecer o módulo →"],
+  ["Meus Números","Estime investimento, custos, faturamento, ponto de equilíbrio e prazo de retorno.","Conhecer o módulo →"],
+  ["Meu Marketing","Defina como posicionar seu negócio, atrair clientes e comunicar sua oferta.","Conhecer o módulo →"],
+  ["Meu Lançamento","Organize as etapas práticas para preparar e lançar seu negócio.","Conhecer o módulo →"],
+  ["Meus Primeiros 90 Dias","Planeje os três primeiros meses, acompanhe os resultados e faça ajustes.","Conhecer o módulo →"],
+  ["Seu Plano Final","Reúna o trabalho realizado em um só lugar e revise seu plano de negócios.","Conhecer o módulo →"]
+ ],
+ steps:[
+  ["1","Siga os módulos em ordem","Cada módulo aproveita decisões e informações desenvolvidas no anterior."],
+  ["2","Avance no seu ritmo","Você não precisa concluir tudo de uma vez. Dedique o tempo necessário a cada etapa."],
+  ["3","Revise e ajuste","Suas respostas podem mudar à medida que você aprende. Volte aos módulos anteriores sempre que precisar."]
+ ]
+},
+es:{
+ eyebrow:"TU PRÓXIMO CAPÍTULO COMIENZA AQUÍ",
+ heroTitle:"¡Bienvenido a Starting Toolkit!",
+ heroText:"¡Felicitaciones por dar este paso hacia tu propio negocio! Emprender es una decisión importante y nos alegra poder ayudarte a organizar tus ideas, evaluar tus oportunidades y prepararte para lo que viene.",
+ heroText2:"No necesitas tener todas las respuestas ahora. Esta herramienta te guiará a través de las preguntas y decisiones que merecen tu atención antes de comenzar.",
+ startButton:"Comenzar mi planificación →",
+ modulesTitle:"Tu proceso de planificación",
+ modulesSubtitle:"Nueve módulos prácticos para pasar de una idea inicial a un plan de negocios estructurado.",
+ howTitle:"Cómo utilizar tu toolkit",
+ howSubtitle:"Algunas recomendaciones sencillas para aprovechar mejor tu experiencia.",
+ tipTitle:"Una recomendación antes de comenzar",
+ tipText:"Este es tu espacio de planificación. Responde con sinceridad, utiliza estimaciones cuando todavía no tengas cifras exactas y revisa tus decisiones cada vez que aprendas algo nuevo. El objetivo es ayudarte a tomar decisiones más informadas, no resolverlo todo en un solo día.",
+ glossaryTitle:"Glosario de Negocios",
+ glossaryText:"¿Encontraste un término de negocios que no conoces? Consulta el glosario para encontrar explicaciones claras de los conceptos más utilizados, con ejemplos prácticos que te ayudarán a comprenderlos y aplicarlos.",
+ glossaryButton:"Consultar el glosario →",
+ footer:"Un espacio práctico para planificar tus próximos pasos en los negocios.",
+ modules:[
+  ["Mi Idea","Define qué quieres ofrecer, quiénes serán tus clientes y qué deseas lograr.","Ver este módulo →"],
+  ["Mi Modelo","Comprende las diferencias entre crear tu propia marca e invertir en una franquicia.","Ver este módulo →"],
+  ["Mi Mercado","Explora tu mercado, competidores, necesidades de los clientes y oportunidades.","Ver este módulo →"],
+  ["Mi SWOT","Identifica fortalezas, debilidades, oportunidades y amenazas y conviértelas en prioridades estratégicas.","Ver este módulo →"],
+  ["Mis Números","Estima inversión, costos, ingresos, punto de equilibrio y plazo de recuperación.","Ver este módulo →"],
+  ["Mi Marketing","Define cómo posicionar tu negocio, atraer clientes y comunicar tu oferta.","Ver este módulo →"],
+  ["Mi Lanzamiento","Organiza los pasos prácticos para preparar y lanzar tu negocio.","Ver este módulo →"],
+  ["Mis Primeros 90 Días","Planifica los primeros tres meses, supervisa los resultados y realiza ajustes.","Ver este módulo →"],
+  ["Tu Plan Final","Reúne todo el trabajo en un solo lugar y revisa tu plan de negocios.","Ver este módulo →"]
+ ],
+ steps:[
+  ["1","Sigue los módulos en orden","Cada módulo aprovecha las decisiones y la información desarrolladas en el anterior."],
+  ["2","Avanza a tu propio ritmo","No necesitas completar todo en una sola sesión. Dedica el tiempo necesario a cada etapa."],
+  ["3","Revisa y ajusta","Tus respuestas pueden cambiar a medida que aprendes. Vuelve a los módulos anteriores cuando lo necesites."]
+ ]
+}
+};
+
+const moduleLinks = [
+ "my-idea.html",
+ "my-model.html",
+ "my-market.html",
+ "my-swot.html",
+ "my-numbers.html",
+ "my-marketing.html",
+ "my-launch.html",
+ "my-first-90-days.html",
+ "your-final-plan.html"
+];
+
+function renderLanguage(lang){
+ const t=translations[lang] || translations.en;
+ document.documentElement.lang=lang;
+ document.querySelectorAll("[data-i18n]").forEach(el=>{
+   const key=el.dataset.i18n;
+   if(t[key]) el.textContent=t[key];
+ });
+
+ const modulesGrid=document.getElementById("modulesGrid");
+ modulesGrid.innerHTML="";
+ t.modules.forEach((m,i)=>{
+   const card=document.createElement("article");
+   card.className="module";
+   card.innerHTML=`
+     <div class="module-number">${String(i+1).padStart(2,"0")} / 09</div>
+     <h3></h3>
+     <p></p>
+     <a></a>`;
+   card.querySelector("h3").textContent=m[0];
+   card.querySelector("p").textContent=m[1];
+   const link=card.querySelector("a");
+   link.textContent=m[2];
+   link.href=moduleLinks[i];
+   modulesGrid.appendChild(card);
+ });
+
+ const stepsGrid=document.getElementById("stepsGrid");
+ stepsGrid.innerHTML="";
+ t.steps.forEach(s=>{
+   const card=document.createElement("article");
+   card.className="step";
+   card.innerHTML=`<div class="step-icon"></div><h3></h3><p></p>`;
+   card.querySelector(".step-icon").textContent=s[0];
+   card.querySelector("h3").textContent=s[1];
+   card.querySelector("p").textContent=s[2];
+   stepsGrid.appendChild(card);
+ });
+}
+
+const languageSelect=document.getElementById("language");
+const savedLanguage=localStorage.getItem("startingToolkitLanguage");
+const browserLanguage=(navigator.language || "en").slice(0,2);
+const initialLanguage=savedLanguage || (["pt","es"].includes(browserLanguage)?browserLanguage:"en");
+languageSelect.value=initialLanguage;
+renderLanguage(initialLanguage);
+
+languageSelect.addEventListener("change",()=>{
+ const lang=languageSelect.value;
+ localStorage.setItem("startingToolkitLanguage",lang);
+ renderLanguage(lang);
+});
+
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
