@@ -1,6 +1,6 @@
 const COOKIE_NAME = 'stk_session';
 const SESSION_DAYS = 7;
-const PBKDF2_ITERATIONS = 310000;
+const PBKDF2_ITERATIONS = 100000;
 
 function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
@@ -29,18 +29,20 @@ async function sha256(value) {
   return Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function hashPassword(password, saltHex = randomToken(16)) {
+async function hashPassword(password, saltHex = randomToken(16), iterations = PBKDF2_ITERATIONS) {
   const salt = Uint8Array.from(saltHex.match(/.{2}/g), x => parseInt(x, 16));
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
-  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' }, key, 256);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations, hash: 'SHA-256' }, key, 256);
   const hash = Array.from(new Uint8Array(bits), b => b.toString(16).padStart(2, '0')).join('');
-  return `pbkdf2$${PBKDF2_ITERATIONS}$${saltHex}$${hash}`;
+  return `pbkdf2$${iterations}$${saltHex}$${hash}`;
 }
 
 async function verifyPassword(password, stored) {
   const [scheme, iterations, salt, expected] = String(stored || '').split('$');
   if (scheme !== 'pbkdf2' || !iterations || !salt || !expected) return false;
-  const actual = await hashPassword(password, salt);
+  const count = Number(iterations);
+  if (!Number.isInteger(count) || count < 10000 || count > 100000) return false;
+  const actual = await hashPassword(password, salt, count);
   return constantTimeEqual(actual.split('$')[3], expected);
 }
 
