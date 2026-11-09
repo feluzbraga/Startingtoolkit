@@ -764,6 +764,57 @@ function collect() {
   });
 }
 
+let ideaCloudTimer = null;
+let ideaCloudAuthenticated = false;
+let ideaCloudSaveChain = Promise.resolve();
+
+async function queueIdeaCloudSave(data) {
+  if (!ideaCloudAuthenticated) return;
+  clearTimeout(ideaCloudTimer);
+  ideaCloudTimer = setTimeout(() => {
+    ideaCloudSaveChain = ideaCloudSaveChain.then(async () => {
+      try {
+        const response = await fetch("/api/modules/idea", {
+          method:"POST",
+          credentials:"same-origin",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({data})
+        });
+        if (!response.ok) throw new Error("Cloud save failed");
+        const d = D[state.lang];
+        $("saveStatus").textContent = d.saved;
+      } catch (error) {
+        $("saveStatus").textContent = state.lang === "pt"
+          ? "Salvo neste dispositivo. Não foi possível sincronizar com a nuvem."
+          : state.lang === "es"
+            ? "Guardado en este dispositivo. No se pudo sincronizar con la nube."
+            : "Saved on this device. Cloud sync was unavailable.";
+      }
+    });
+  }, 900);
+}
+
+async function prepareIdeaCloudData() {
+  try {
+    const authResponse = await fetch("/api/auth/me", {credentials:"same-origin", cache:"no-store"});
+    if (!authResponse.ok) return;
+    const auth = await authResponse.json();
+    if (!auth.authenticated || !auth.businessPlanId) return;
+    ideaCloudAuthenticated = true;
+    const cloudResponse = await fetch("/api/modules/idea", {credentials:"same-origin", cache:"no-store"});
+    if (!cloudResponse.ok) return;
+    const cloud = await cloudResponse.json();
+    const local = localStorage.getItem(STORAGE_KEY);
+    if (cloud.data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cloud.data));
+    } else if (local) {
+      try { await queueIdeaCloudSave(JSON.parse(local)); } catch (_) {}
+    }
+  } catch (error) {
+    // The module remains usable locally if the cloud is unavailable.
+  }
+}
+
 function save(showMessage=true) {
   collect();
 
@@ -809,6 +860,7 @@ function save(showMessage=true) {
   };
 
   localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+  queueIdeaCloudSave(data);
 
   if (showMessage) {
     $("saveStatus").textContent = d.saved;
@@ -1019,9 +1071,12 @@ state.lang =
 
 $("language").value = state.lang;
 
-load();
-applyText();
-updateProgress();
+(async function initIdeaModule() {
+  await prepareIdeaCloudData();
+  load();
+  applyText();
+  updateProgress();
+})();
 </script>
 <script src="toolkit-navigation.js"></script>
 </body>
