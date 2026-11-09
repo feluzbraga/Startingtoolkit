@@ -428,6 +428,10 @@ choose:"Selecione uma opção",
 save:"Salvar respostas",
 result:"Ver meu resumo da ideia",
 saved:"Respostas salvas neste navegador.",
+ saving:"Salvando na nuvem...",
+ savedCloud:"Salvo na nuvem.",
+ localOnly:"Salvo neste dispositivo. Entre na sua conta para sincronizar.",
+ cloudError:"Salvo neste dispositivo, mas não foi possível sincronizar. Tente novamente.",
 resultTitle:"Resumo da sua ideia",
 resultHelp:"Confira as informações que você definiu. Elas serão utilizadas nas próximas etapas.",
 edit:"Voltar e editar",
@@ -496,6 +500,10 @@ choose:"Select an option",
 save:"Save answers",
 result:"View my idea summary",
 saved:"Answers saved in this browser.",
+ saving:"Saving to the cloud...",
+ savedCloud:"Saved to the cloud.",
+ localOnly:"Saved on this device. Sign in to sync.",
+ cloudError:"Saved on this device, but cloud sync failed. Please try again.",
 resultTitle:"Your Idea Snapshot",
 resultHelp:"Review the information you defined. It will be used in the next steps.",
 edit:"Back and edit",
@@ -564,6 +572,10 @@ choose:"Selecciona una opción",
 save:"Guardar respuestas",
 result:"Ver el resumen de mi idea",
 saved:"Respuestas guardadas en este navegador.",
+ saving:"Guardando en la nube...",
+ savedCloud:"Guardado en la nube.",
+ localOnly:"Guardado en este dispositivo. Inicia sesión para sincronizar.",
+ cloudError:"Guardado en este dispositivo, pero no se pudo sincronizar. Inténtalo de nuevo.",
 resultTitle:"Resumen de tu idea",
 resultHelp:"Revisa la información que definiste. Se utilizará en las próximas etapas.",
 edit:"Volver y editar",
@@ -768,29 +780,41 @@ let ideaCloudTimer = null;
 let ideaCloudAuthenticated = false;
 let ideaCloudSaveChain = Promise.resolve();
 
-async function queueIdeaCloudSave(data) {
-  if (!ideaCloudAuthenticated) return;
-  clearTimeout(ideaCloudTimer);
-  ideaCloudTimer = setTimeout(() => {
-    ideaCloudSaveChain = ideaCloudSaveChain.then(async () => {
-      try {
-        const response = await fetch("/api/modules/idea", {
-          method:"POST",
-          credentials:"same-origin",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({data})
-        });
-        if (!response.ok) throw new Error("Cloud save failed");
-        const d = D[state.lang];
-        $("saveStatus").textContent = d.saved;
-      } catch (error) {
-        $("saveStatus").textContent = state.lang === "pt"
-          ? "Salvo neste dispositivo. Não foi possível sincronizar com a nuvem."
-          : state.lang === "es"
-            ? "Guardado en este dispositivo. No se pudo sincronizar con la nube."
-            : "Saved on this device. Cloud sync was unavailable.";
-      }
+async function sendIdeaCloudSave(data, showStatus=false) {
+  const d = D[state.lang];
+  if (!ideaCloudAuthenticated) {
+    if (showStatus) $("saveStatus").textContent = d.localOnly;
+    return false;
+  }
+  try {
+    const response = await fetch("/api/modules/idea", {
+      method:"POST",
+      credentials:"same-origin",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({data})
     });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.ok !== true || result.saved !== true) {
+      throw new Error(result.error || "Cloud save failed");
+    }
+    $("saveStatus").textContent = D[state.lang].savedCloud;
+    return true;
+  } catch (error) {
+    $("saveStatus").textContent = D[state.lang].cloudError;
+    return false;
+  }
+}
+
+function queueIdeaCloudSave(data, immediate=false) {
+  clearTimeout(ideaCloudTimer);
+  if (immediate) {
+    $("saveStatus").textContent = D[state.lang].saving;
+    ideaCloudSaveChain = ideaCloudSaveChain.then(() => sendIdeaCloudSave(data, true));
+    return ideaCloudSaveChain;
+  }
+  if (!ideaCloudAuthenticated) return;
+  ideaCloudTimer = setTimeout(() => {
+    ideaCloudSaveChain = ideaCloudSaveChain.then(() => sendIdeaCloudSave(data, false));
   }, 900);
 }
 
@@ -860,10 +884,10 @@ function save(showMessage=true) {
   };
 
   localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-  queueIdeaCloudSave(data);
-
   if (showMessage) {
-    $("saveStatus").textContent = d.saved;
+    queueIdeaCloudSave(data, true);
+  } else {
+    queueIdeaCloudSave(data, false);
   }
 }
 
