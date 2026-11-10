@@ -53,6 +53,9 @@ button,select{font:inherit}
  font-size:13px;
 }
 .top-link:hover{color:var(--gold)}
+.logout-button{background:transparent;color:#e3ebee;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer}
+.logout-button:hover{background:rgba(255,255,255,.1);color:var(--gold)}
+.logout-button:disabled{opacity:.6;cursor:wait}
 .logout-button{
  background:transparent;
  color:#e3ebee;
@@ -264,12 +267,12 @@ button,select{font:inherit}
  <div class="brand">STARTING<span>TOOLKIT</span></div>
  <div class="top-actions">
   <a href="welcome.html" class="top-link" id="welcomeTop">Welcome</a>
-  <button type="button" class="logout-button" id="logoutButton">Log out</button>
   <select class="language" id="language" aria-label="Select language">
    <option value="en">English</option>
    <option value="pt">Português</option>
    <option value="es">Español</option>
   </select>
+  <button type="button" class="logout-button" id="logoutButton">Sign out</button>
  </div>
 </header>
 
@@ -461,9 +464,8 @@ const translations = {
   finalCardText:"Bring your decisions and planning work together in one place.",
   finalCardButton:"View my plan →",
   storageNote:"Your progress is based on information saved in this browser. Use the same browser and device to continue your work.",
-  footer:"Think. Plan. Start.",
-  logout:"Log out",
-  logoutError:"Could not log out. Please try again."
+  logout:"Sign out", logoutError:"Could not sign out. Please try again.",
+  footer:"Think. Plan. Start."
  },
  pt:{
   eyebrow:"SEU ESPAÇO DE PLANEJAMENTO",
@@ -489,9 +491,8 @@ const translations = {
   finalCardText:"Reúna suas decisões e todo o planejamento em um só lugar.",
   finalCardButton:"Ver meu plano →",
   storageNote:"Seu progresso é calculado com base nas informações salvas neste navegador. Use o mesmo navegador e dispositivo para continuar seu trabalho.",
-  footer:"Pense. Planeje. Comece.",
-  logout:"Sair da conta",
-  logoutError:"Não foi possível sair da conta. Tente novamente."
+  logout:"Sair da conta", logoutError:"Não foi possível sair. Tente novamente.",
+  footer:"Pense. Planeje. Comece."
  },
  es:{
   eyebrow:"TU ESPACIO DE PLANIFICACIÓN",
@@ -517,9 +518,8 @@ const translations = {
   finalCardText:"Reúne tus decisiones y todo el trabajo de planificación en un solo lugar.",
   finalCardButton:"Ver mi plan →",
   storageNote:"Tu progreso se basa en la información guardada en este navegador. Utiliza el mismo navegador y dispositivo para continuar tu trabajo.",
-  footer:"Piensa. Planifica. Comienza.",
-  logout:"Cerrar sesión",
-  logoutError:"No fue posible cerrar la sesión. Inténtalo de nuevo."
+  logout:"Cerrar sesión", logoutError:"No fue posible cerrar sesión. Inténtalo de nuevo.",
+  footer:"Piensa. Planifica. Comienza."
  }
 };
 
@@ -556,7 +556,7 @@ function renderDashboard(){
 
  const textMap={
   eyebrow:"eyebrow",greeting:"greeting",intro:"intro",
-  welcomeTop:"welcomeTop",logoutButton:"logout",welcomeTitle:"welcomeTitle",
+  welcomeTop:"welcomeTop",welcomeTitle:"welcomeTitle",
   welcomeDesc:"welcomeDesc",glossaryTitle:"glossaryTitle",
   glossaryDesc:"glossaryDesc",finalTitle:"finalTitle",
   finalDesc:"finalDesc",progressTitle:"progressTitle",
@@ -616,9 +616,9 @@ function renderDashboard(){
   started+" "+t.startedCount;
 }
 
-const logoutButton=document.getElementById("logoutButton");
-if(logoutButton) logoutButton.addEventListener("click",async()=>{
- const button=logoutButton;
+document.getElementById("logoutButton").textContent=translations[lang].logout;
+document.getElementById("logoutButton").addEventListener("click",async()=>{
+ const button=document.getElementById("logoutButton");
  button.disabled=true;
  try{
   const response=await fetch("/api/auth/logout",{
