@@ -218,8 +218,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--purple);box-shadow:0 
 
 </div>
 
-<script>window.STK_CLOUD_SYNC={key:"startingToolkitMarketV4",endpoint:"/api/modules/market"};</script>
-<script src="module-cloud-sync.js"></script>
 <script>
 const KEY="startingToolkitMarketV4";
 const LANG="startingToolkitLanguage";
@@ -462,7 +460,7 @@ state[key]=values(key).includes(index)?values(key).filter(x=>x!==index):[...valu
 renderOptions(id,options,key,multiple);
 updateProgress();save(false);
 });
-b.classList.toggle("selected",values(key).map(String).includes(String(index)));
+b.classList.toggle("selected", multiple ? values(key).map(String).includes(String(index)) : String(state[key])===String(index));
 el.appendChild(b);
 });
 }
@@ -666,5 +664,68 @@ state.lang=localStorage.getItem(LANG)||localStorage.getItem("startingToolkitLang
 load();render();
 </script>
 <script src="toolkit-navigation.js"></script>
+<script>
+// Starting Toolkit cloud sync. Local storage remains as an offline backup.
+(() => {
+  const STORAGE_KEY = "startingToolkitMarketV4";
+  const MODULE_KEY = "market";
+  const status = document.getElementById("saveStatus");
+  const messages = {
+    pt: {saving:"Salvando na nuvem...", saved:"Salvo na nuvem.", local:"Salvo neste navegador. Faça login para sincronizar.", error:"Salvo neste dispositivo, mas houve um erro ao sincronizar."},
+    en: {saving:"Saving to the cloud...", saved:"Saved to the cloud.", local:"Saved in this browser. Log in to sync.", error:"Saved on this device, but cloud sync failed."},
+    es: {saving:"Guardando en la nube...", saved:"Guardado en la nube.", local:"Guardado en este navegador. Inicia sesión para sincronizar.", error:"Guardado en este dispositivo, pero no se pudo sincronizar."}
+  };
+  const lang = () => { try { return (localStorage.getItem("startingToolkitLanguage") || localStorage.getItem("startingToolkitLang") || "pt").slice(0,2); } catch (_) { return "pt"; } };
+  const msg = k => (messages[lang()] || messages.pt)[k];
+  let authenticated = false, timer = null, chain = Promise.resolve(), busy = false;
+  async function post(data) {
+    if (!authenticated) { if(status) status.textContent=msg("local"); return false; }
+    if(status) status.textContent=msg("saving");
+    try {
+      const response=await fetch(`/api/modules/${MODULE_KEY}`,{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({data})});
+      const result=await response.json().catch(()=>({}));
+      if(!response.ok || result.ok!==true || result.saved!==true) throw new Error(result.error || "Save failed");
+      if(status) status.textContent=msg("saved");
+      return true;
+    } catch(e) { if(status) status.textContent=msg("error"); return false; }
+  }
+  function queue(data) {
+    if(!authenticated || busy) return;
+    clearTimeout(timer);
+    timer=setTimeout(()=>{ chain=chain.then(()=>post(data)); },700);
+  }
+  async function init() {
+    try {
+      const authRes=await fetch("/api/auth/me",{credentials:"same-origin",cache:"no-store"});
+      if(!authRes.ok) { if(status) status.textContent=msg("local"); return; }
+      const auth=await authRes.json();
+      if(!auth.authenticated || !auth.businessPlanId) { if(status) status.textContent=msg("local"); return; }
+      authenticated=true;
+      const cloudRes=await fetch(`/api/modules/${MODULE_KEY}`,{credentials:"same-origin",cache:"no-store"});
+      if(!cloudRes.ok) throw new Error("Cloud load failed");
+      const cloud=await cloudRes.json();
+      const local=localStorage.getItem(STORAGE_KEY);
+      if(cloud.data) {
+        const cloudText=JSON.stringify(cloud.data);
+        if(local!==cloudText && !sessionStorage.getItem("stk_cloud_hydrated_"+MODULE_KEY)) {
+          busy=true; localStorage.setItem(STORAGE_KEY,cloudText); sessionStorage.setItem("stk_cloud_hydrated_"+MODULE_KEY,"1"); location.reload(); return;
+        }
+        if(status) status.textContent=msg("saved");
+      } else if(local) {
+        let parsed; try { parsed=JSON.parse(local); } catch(_) { parsed=null; }
+        if(parsed && typeof parsed==="object") await post(parsed);
+      } else if(status) status.textContent=msg("saved");
+      const original=Storage.prototype.setItem;
+      Storage.prototype.setItem=function(k,v) {
+        original.call(this,k,v);
+        if(this===localStorage && k===STORAGE_KEY && authenticated && !busy) {
+          try { queue(JSON.parse(v)); } catch(_) {}
+        }
+      };
+    } catch(e) { if(status) status.textContent=msg("error"); }
+  }
+  init();
+})();
+</script>
 </body>
 </html>
