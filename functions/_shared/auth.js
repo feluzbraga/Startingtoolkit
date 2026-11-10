@@ -59,12 +59,14 @@ async function readJson(request) {
   return await request.json();
 }
 
-async function createSession(db, userId) {
+async function createSession(db, userId, businessPlanId) {
   const token = randomToken(32);
   const tokenHash = await sha256(token);
   const expires = new Date(Date.now() + SESSION_DAYS * 86400000).toISOString();
-  await db.prepare('INSERT INTO sessions (id, user_id, token_hash, expires_at, last_used_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)')
-    .bind(crypto.randomUUID(), userId, tokenHash, expires).run();
+  await db.prepare(`
+    INSERT INTO sessions (id, user_id, token_hash, expires_at, last_used_at, active_business_plan_id)
+    VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, ?)
+  `).bind(crypto.randomUUID(), userId, tokenHash, expires, businessPlanId || null).run();
   return token;
 }
 
@@ -73,21 +75,37 @@ async function getSession(request, env) {
   if (!token || !env.DB) return null;
   const tokenHash = await sha256(token);
   const row = await env.DB.prepare(`
-    SELECT u.id, u.email, u.preferred_language,
-           l.id AS license_id, l.status AS license_status, l.valid_until,
-           bp.id AS business_plan_id
+    SELECT s.id AS session_id, s.active_business_plan_id,
+           u.id, u.email, u.preferred_language,
+           l.id AS license_id, l.status AS license_status, l.valid_from, l.valid_until,
+           l.max_businesses, bp.id AS business_plan_id, bp.business_name, bp.language AS business_language
     FROM sessions s
     JOIN users u ON u.id = s.user_id
-    JOIN licenses l ON l.user_id = u.id
-    LEFT JOIN business_plans bp ON bp.license_id = l.id
+    LEFT JOIN business_plans bp ON bp.id = COALESCE(
+      s.active_business_plan_id,
+      (SELECT bp2.id
+       FROM business_plans bp2
+       JOIN licenses l2 ON l2.id = bp2.license_id
+       WHERE l2.user_id = u.id
+         AND l2.status = 'active'
+         AND l2.valid_from <= ?
+         AND l2.valid_until > ?
+       ORDER BY l2.created_at DESC
+       LIMIT 1)
+    )
+    LEFT JOIN licenses l ON l.id = bp.license_id AND l.user_id = u.id
     WHERE s.token_hash = ? AND s.expires_at > ?
-    ORDER BY l.created_at DESC LIMIT 1
-  `).bind(tokenHash, new Date().toISOString()).first();
+    LIMIT 1
+  `).bind(new Date().toISOString(), new Date().toISOString(), tokenHash, new Date().toISOString()).first();
   if (!row) return null;
-  const active = row.license_status === 'active' && row.valid_until && new Date(row.valid_until).getTime() > Date.now();
-  if (!active) return { ...row, active: false };
-  await env.DB.prepare('UPDATE sessions SET last_used_at = CURRENT_TIMESTAMP WHERE token_hash = ?').bind(tokenHash).run();
-  return { ...row, active: true };
+  const active = row.license_status === 'active'
+    && row.valid_from && new Date(row.valid_from).getTime() <= Date.now()
+    && row.valid_until && new Date(row.valid_until).getTime() > Date.now()
+    && !!row.business_plan_id;
+  if (active) {
+    await env.DB.prepare('UPDATE sessions SET last_used_at = CURRENT_TIMESTAMP WHERE id = ?').bind(row.session_id).run();
+  }
+  return { ...row, active };
 }
 
 export { COOKIE_NAME, SESSION_DAYS, json, cookieHeader, cookieValue, randomToken, sha256, hashPassword, verifyPassword, readJson, createSession, getSession };
