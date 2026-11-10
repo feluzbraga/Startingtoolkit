@@ -1,4 +1,4 @@
-import { json, getSession } from '../../../_shared/auth.js';
+import { json, getSession } from '../../_shared/auth.js';
 
 const MODULE_KEY = 'numbers';
 
