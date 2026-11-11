@@ -78,7 +78,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--purple);box-shadow:0 
 .map{height:260px;margin-left:42px;margin-right:18px}
 }
 </style>
-<link rel="stylesheet" href="toolkit-shell.css"></head>
+<link rel="stylesheet" href="toolkit-shell.css"><link rel="stylesheet" href="toolkit-shared-header.css">
+</head>
 <body>
 <div class="app">
 
@@ -663,7 +664,7 @@ $("continueBtn").addEventListener("click",()=>{save(false);window.location.href=
 state.lang=localStorage.getItem(LANG)||localStorage.getItem("startingToolkitLang")||"pt";
 load();render();
 </script>
-<script src="toolkit-navigation.js"></script>
+<script src="toolkit-navigation.js"></script><script src="toolkit-shared-header.js"></script>
 <script>
 // Starting Toolkit cloud sync. Local storage remains as an offline backup.
 (() => {

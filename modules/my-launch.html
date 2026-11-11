@@ -46,7 +46,8 @@ h1{font-size:clamp(28px,5vw,38px);margin:7px 0}
 .small{font-size:12px;color:var(--muted)}
 @media(max-width:650px){.task{grid-template-columns:1fr}.summary{grid-template-columns:1fr}.card{padding:17px}.hero{padding:23px 19px}}
 </style>
-<link rel="stylesheet" href="toolkit-shell.css"></head>
+<link rel="stylesheet" href="toolkit-shell.css"><link rel="stylesheet" href="toolkit-shared-header.css">
+</head>
 <body>
 <div class="wrap">
 <div class="top">
@@ -294,7 +295,7 @@ window.location.href="my-first-90-days.html";
 
 render();
 </script>
-<script src="toolkit-navigation.js"></script>
+<script src="toolkit-navigation.js"></script><script src="toolkit-shared-header.js"></script>
 <script>
 // Starting Toolkit cloud sync. Local storage remains as an offline backup.
 (() => {
