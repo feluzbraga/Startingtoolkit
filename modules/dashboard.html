@@ -326,7 +326,7 @@ button,select{font:inherit}
    <div class="progress-track">
     <div class="progress-fill" id="progressFill"></div>
    </div>
-   <div class="progress-caption" id="progressCaption">0 of 8 modules started</div>
+   <div class="progress-caption" id="progressCaption">0 of 9 modules started</div>
   </div>
  </section>
 
@@ -408,6 +408,16 @@ const moduleData = [
   ]
  },
  {
+  key:"startingToolkitTeamV1",
+  file:"my-team-payroll.html",
+  name:["My Team & Payroll","Minha Equipe & Folha","Mi Equipo y Nómina"],
+  description:[
+   "Plan your team, hiring needs and people costs.",
+   "Planeje sua equipe, contratações e custos de pessoal.",
+   "Planifica tu equipo, contrataciones y costos de personal."
+  ]
+ },
+ {
   key:"startingToolkitMarketingV1",
   file:"my-marketing.html",
   name:["My Marketing","Meu Marketing","Mi Marketing"],
@@ -459,7 +469,7 @@ const translations = {
   started:"In progress",
   notStarted:"Not started",
   open:"Open module →",
-  startedCount:"of 8 modules started",
+  startedCount:"of 9 modules started",
   finalCardTitle:"Your Final Plan",
   finalCardText:"Bring your decisions and planning work together in one place.",
   finalCardButton:"View my plan →",
@@ -486,7 +496,7 @@ const translations = {
   started:"Em andamento",
   notStarted:"Não iniciado",
   open:"Abrir módulo →",
-  startedCount:"de 8 módulos iniciados",
+  startedCount:"de 9 módulos iniciados",
   finalCardTitle:"Seu Plano Final",
   finalCardText:"Reúna suas decisões e todo o planejamento em um só lugar.",
   finalCardButton:"Ver meu plano →",
@@ -513,7 +523,7 @@ const translations = {
   started:"En curso",
   notStarted:"Sin comenzar",
   open:"Abrir módulo →",
-  startedCount:"de 8 módulos iniciados",
+  startedCount:"de 9 módulos iniciados",
   finalCardTitle:"Tu Plan Final",
   finalCardText:"Reúne tus decisiones y todo el trabajo de planificación en un solo lugar.",
   finalCardButton:"Ver mi plan →",
@@ -587,7 +597,7 @@ function renderDashboard(){
 
   const number=document.createElement("span");
   number.className="module-number";
-  number.textContent=String(index+1).padStart(2,"0")+" / 08";
+  number.textContent=String(index+1).padStart(2,"0")+" / 09";
 
   const status=document.createElement("span");
   status.className="status"+(isStarted?" started":"");
@@ -609,7 +619,7 @@ function renderDashboard(){
   grid.appendChild(card);
  });
 
- const percent=Math.round((started/8)*100);
+ const percent=Math.round((started/9)*100);
  document.getElementById("progressNumber").textContent=percent+"%";
  document.getElementById("progressFill").style.width=percent+"%";
  document.getElementById("progressCaption").textContent=
