@@ -14,3 +14,46 @@ main,.wrap,.container{max-width:1120px}
 button,.primary-btn,.final-button{border-radius:8px}
 input,select,textarea{border-radius:8px}
 @media(max-width:600px){body>.top,body>.topbar,body>header.top,body>header:not(.modal-header){padding:10px 14px!important;min-height:56px}body>.top select,body>.topbar select,body>header select{min-width:120px;max-width:48vw}}
+
+/* v1.3: one shared header treatment across every module */
+body .top, body .topbar, body > header {
+  width: 100% !important;
+  min-height: 64px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  padding: 12px clamp(18px, 5vw, 64px) !important;
+  margin: 0 !important;
+  background: #18313e !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body .top .brand, body .topbar .brand, body .top .logo,
+body .topbar .logo, body .top strong, body .topbar strong,
+body > header strong {
+  color: #fff !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.2px !important;
+  text-decoration: none !important;
+}
+body .top a, body .topbar a, body > header a {
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+body .top select, body .topbar select, body > header select {
+  width: auto !important;
+  min-width: 145px !important;
+  max-width: 230px !important;
+  margin: 0 !important;
+  background: #fff !important;
+  color: #18313e !important;
+}
+@media(max-width:600px){
+  body .top, body .topbar, body > header { min-height:56px !important; padding:10px 14px !important; gap:8px !important; }
+  body .top select, body .topbar select, body > header select { min-width:110px !important; max-width:45vw !important; }
+}
