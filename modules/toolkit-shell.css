@@ -1,0 +1,16 @@
+/* Shared Starting Toolkit visual shell */
+:root{--stk-navy:#18313e;--stk-teal:#4d918d;--stk-ink:#17313d;--stk-muted:#657780;--stk-line:#dce5e6;--stk-bg:#f4f7f7}
+html{scroll-behavior:smooth}
+body{padding-bottom:92px!important}
+/* Normalize existing page headers while preserving each page's language control. */
+body>.top,body>.topbar,body>header.top,body>header:not(.modal-header){min-height:62px;box-sizing:border-box}
+body>.top,body>.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px clamp(18px,5vw,64px)!important;background:#fff!important;border-bottom:1px solid var(--stk-line)!important;color:var(--stk-navy)!important}
+body>header.top,body>header:not(.modal-header){display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px clamp(18px,5vw,64px)!important;background:#fff!important;color:var(--stk-navy)!important;border-bottom:1px solid var(--stk-line)!important}
+body>.top .brand,body>.topbar .brand,body>header .brand,body>header strong,body>.top .logo{font-weight:800;letter-spacing:1.4px;color:var(--stk-navy)!important;text-decoration:none}
+body>.top select,body>.topbar select,body>header select{max-width:220px;min-width:145px}
+body>.top a,body>.topbar a,body>header a{color:var(--stk-navy)}
+main,.wrap,.container{max-width:1120px}
+/* Common controls */
+button,.primary-btn,.final-button{border-radius:8px}
+input,select,textarea{border-radius:8px}
+@media(max-width:600px){body>.top,body>.topbar,body>header.top,body>header:not(.modal-header){padding:10px 14px!important;min-height:56px}body>.top select,body>.topbar select,body>header select{min-width:120px;max-width:48vw}}
