@@ -1,308 +1,146 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Starting Toolkit | Pense. Planeje. Comece.</title>
-<meta name="description" content="Ferramentas práticas para avaliar sua ideia, planejar e começar seu negócio.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f6f7fb">
+<title>Starting Toolkit | Seu próximo passo começa aqui</title>
+<meta name="description" content="Acesse sua área Starting Toolkit e continue o planejamento do seu negócio.">
 <style>
-:root {
-  --bg:#f6f7fb;--white:#fff;--ink:#19202c;
-  --muted:#667085;--purple:#6c63ff;
-  --purple-dark:#5148d9;--soft:#f0efff;--line:#e4e7ec;
-}
+:root{--bg:#f6f7fb;--paper:#fff;--ink:#191d35;--muted:#65708a;--purple:#685cf6;--purple-dark:#5146d7;--soft:#f0efff;--line:#e4e6f0;--orange:#ff9f32;--navy:#202440;--success:#267c61}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+html{min-height:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 12% 8%,rgba(104,92,246,.09),transparent 34%),radial-gradient(ellipse at 95% 85%,rgba(255,159,50,.08),transparent 30%),var(--bg);font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.55}
 a{color:inherit;text-decoration:none}
-.container{width:min(1120px,calc(100% - 40px));margin:auto}
-header{padding:20px 0;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:20px;font-weight:800;letter-spacing:2px}
-.language{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:white;color:var(--ink)}
-.hero{padding:76px 0 65px;background:linear-gradient(135deg,#fff,#f0efff);border:1px solid var(--line);border-radius:24px;margin:12px 0 55px}
-.hero-content{max-width:760px;padding:0 50px}
-.eyebrow{display:inline-block;color:var(--purple-dark);background:var(--soft);border-radius:30px;padding:7px 13px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-h1{font-size:clamp(38px,6vw,64px);line-height:1.06;letter-spacing:-2px;margin:22px 0 18px}
-.hero p{color:var(--muted);font-size:19px;max-width:650px;margin:0 0 27px}
-.button{display:inline-block;background:var(--purple);color:white;border-radius:11px;padding:13px 21px;font-weight:700;transition:.2s}
-.button:hover{background:var(--purple-dark)}
-.section{margin:55px 0}
-.section-heading{max-width:700px;margin-bottom:25px}
-.section-heading h2{font-size:30px;letter-spacing:-.7px;margin:0 0 8px}
-.section-heading p{color:var(--muted);margin:0}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.step{background:white;border:1px solid var(--line);border-radius:17px;padding:23px}
-.number{color:var(--purple);font-size:13px;font-weight:800;letter-spacing:1px}
-.step h3{margin:12px 0 6px}
-.step p{color:var(--muted);margin:0;font-size:14px}
-.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.module{background:white;border:1px solid var(--line);border-radius:16px;padding:21px;min-height:165px;display:flex;flex-direction:column}
-.module-number{color:var(--purple);font-size:12px;font-weight:800;letter-spacing:1px}
-.module h3{margin:9px 0 5px;font-size:17px}
-.module p{color:var(--muted);font-size:13px;margin:0}
-.module-status{margin-top:auto;padding-top:16px;color:#9a6a16;font-size:12px;font-weight:700}
-.module.available{cursor:pointer}
-.module.available:hover{border-color:var(--purple)}
-.final-card{background:var(--ink);color:white;border-radius:22px;padding:35px;display:flex;align-items:center;justify-content:space-between;gap:25px}
-.final-card p{color:#d0d5dd;max-width:620px}
-.final-card .button{background:white;color:var(--purple-dark);white-space:nowrap}
-.credibility{background:white;border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;align-items:center;gap:25px}
-.credibility-number{font-size:42px;font-weight:800;color:var(--purple);white-space:nowrap}
-.credibility p{color:var(--muted);margin:0}
-footer{border-top:1px solid var(--line);margin-top:65px;padding:28px 0;color:var(--muted);font-size:13px}
-footer .container{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
-@media(max-width:760px){
-.hero{padding:55px 0}.hero-content{padding:0 25px}
-.steps,.modules{grid-template-columns:1fr 1fr}
-.final-card{flex-direction:column;align-items:flex-start}
-}
-@media(max-width:500px){
-.container{width:calc(100% - 28px)}
-.steps,.modules{grid-template-columns:1fr}
-.hero-content{padding:0 20px}
-.hero p{font-size:16px}
-.section-heading h2{font-size:25px}
-.credibility{align-items:flex-start;flex-direction:column;gap:5px}
-}
+button,input,select{font:inherit}
+.shell{width:min(1160px,calc(100% - 44px));margin:0 auto}
+header{height:88px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:11px;font-size:18px;font-weight:850;letter-spacing:2px;color:var(--navy)}
+.brand-mark{width:35px;height:35px;border-radius:11px;background:linear-gradient(145deg,var(--purple),#8178ff);display:grid;place-items:center;box-shadow:0 6px 16px rgba(104,92,246,.2)}
+.brand-mark svg{width:21px;height:21px}
+.header-right{display:flex;align-items:center;gap:16px}
+.language{border:1px solid var(--line);border-radius:11px;padding:10px 13px;background:#fff;color:var(--ink);min-width:125px}
+.sales-link{font-size:13px;color:var(--muted);font-weight:650}
+main{padding:26px 0 58px}
+.welcome{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:48px;align-items:center;padding:clamp(28px,5vw,66px);border:1px solid rgba(222,224,240,.95);border-radius:28px;background:linear-gradient(120deg,rgba(255,255,255,.98),rgba(245,243,255,.97));box-shadow:0 22px 65px rgba(37,37,75,.055)}
+.welcome:before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;right:31%;top:-250px;background:rgba(104,92,246,.07);pointer-events:none}
+.copy{position:relative;z-index:1;max-width:590px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:30px;background:var(--soft);color:var(--purple-dark);font-size:11px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase}
+.eyebrow-dot{width:7px;height:7px;border-radius:50%;background:var(--orange)}
+h1{font-size:clamp(38px,5.2vw,61px);line-height:1.04;letter-spacing:-2.5px;margin:22px 0 19px;color:var(--navy)}
+.lead{font-size:18px;line-height:1.7;color:#626b84;max-width:560px;margin:0}
+.intro-note{display:flex;gap:12px;align-items:flex-start;margin-top:28px;color:#525d76;font-size:14px;max-width:500px}
+.intro-note svg{width:21px;height:21px;flex:none;color:var(--purple);margin-top:2px}
+.login-card{position:relative;z-index:1;background:rgba(255,255,255,.96);border:1px solid #e6e7f1;border-radius:21px;padding:30px;box-shadow:0 18px 48px rgba(35,39,75,.09)}
+.card-brand{text-align:center;font-size:13px;font-weight:850;letter-spacing:1.7px;color:var(--navy)}
+.card-brand span{color:var(--purple)}
+.login-card h2{text-align:center;font-size:24px;letter-spacing:-.5px;margin:20px 0 4px;color:var(--navy)}
+.login-sub{text-align:center;color:var(--muted);font-size:13px;margin:0 0 23px}
+label{display:block;font-size:12px;font-weight:750;color:#343a52;margin:15px 0 7px}
+input{width:100%;height:48px;border:1px solid #d9ddeb;border-radius:10px;padding:0 13px;background:#fff;color:var(--ink);outline:none;transition:border .2s,box-shadow .2s}
+input:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(104,92,246,.12);outline:none}
+.submit{width:100%;height:49px;border:0;border-radius:10px;background:var(--purple);color:#fff;font-weight:750;margin-top:22px;cursor:pointer;transition:background .2s,transform .2s}
+.submit:hover{background:var(--purple-dark);transform:translateY(-1px)}
+.submit:disabled{opacity:.65;cursor:wait;transform:none}
+#message{min-height:20px;margin-top:12px;text-align:center;font-size:12px;color:#b33b45}
+.login-links{display:flex;justify-content:center;gap:17px;flex-wrap:wrap;margin-top:11px;font-size:12px}
+.login-links a{color:#5962a7}
+.login-links a:hover,.sales-link:hover{color:var(--purple-dark);text-decoration:underline}
+.card-foot{border-top:1px solid #eff0f5;margin-top:22px;padding-top:17px;text-align:center;font-size:12px;color:var(--muted)}
+.card-foot a{color:var(--purple-dark);font-weight:700}
+.below{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0 0}
+.benefit{display:flex;align-items:flex-start;gap:13px;padding:19px 18px;background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:16px}
+.benefit-icon{width:35px;height:35px;display:grid;place-items:center;flex:none;border-radius:11px;background:var(--soft);color:var(--purple)}
+.benefit-icon svg{width:18px;height:18px}
+.benefit strong{display:block;font-size:13px;color:var(--navy);margin:1px 0 3px}
+.benefit p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+/* Future add-on area: render only after complementary products have been configured. */
+#complementaryOffers{display:none;margin:38px 0 0}
+#complementaryOffers.is-visible{display:block}
+.offers-heading{margin:0 0 16px}
+.offers-heading h2{font-size:21px;margin:0 0 4px;color:var(--navy)}
+.offers-heading p{font-size:13px;color:var(--muted);margin:0}
+.offer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.offer-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px}
+.offer-card h3{font-size:15px;margin:0 0 7px}.offer-card p{font-size:13px;color:var(--muted);margin:0 0 13px}.offer-card a{font-size:12px;font-weight:750;color:var(--purple-dark)}
+footer{padding:23px 0 30px;color:#8990a3;font-size:11px}
+.footer-inner{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+@media(max-width:850px){.welcome{grid-template-columns:1fr;gap:30px;padding:34px}.copy{max-width:700px}.login-card{width:min(100%,520px);margin:0 auto}.below{grid-template-columns:1fr}}
+@media(max-width:520px){.shell{width:calc(100% - 26px)}header{height:72px}.brand{font-size:14px;letter-spacing:1.4px}.brand-mark{width:31px;height:31px}.sales-link{display:none}.welcome{padding:27px 19px;border-radius:20px;gap:25px}h1{font-size:39px;letter-spacing:-1.7px;margin:18px 0 14px}.lead{font-size:15px}.intro-note{font-size:12px;margin-top:19px}.login-card{padding:24px 19px}.login-card h2{font-size:21px}.language{min-width:105px;padding:9px 10px}main{padding-top:14px}}
 </style>
 </head>
 <body>
-
-<header class="container">
-<a class="logo" href="index.html">STARTING TOOLKIT</a>
-<select class="language" id="language" aria-label="Selecionar idioma">
-<option value="pt">PT</option>
-<option value="en">EN</option>
-<option value="es">ES</option>
-</select>
+<header class="shell">
+  <a class="brand" href="/" aria-label="Starting Toolkit">
+    <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.1L19 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 2.8 19.5 6v5.1c0 4.6-3.1 8-7.5 10.1-4.4-2.1-7.5-5.5-7.5-10.1V6L12 2.8Z" stroke="white" stroke-width="1.5" stroke-linejoin="round" opacity=".85"/></svg></span>
+    STARTING TOOLKIT
+  </a>
+  <div class="header-right">
+    <a class="sales-link" href="https://startingtoolkit.com" id="salesLink">Conheça o Starting Toolkit</a>
+    <select class="language" id="language" aria-label="Selecionar idioma">
+      <option value="pt">Português</option><option value="en">English</option><option value="es">Español</option>
+    </select>
+  </div>
 </header>
+<main class="shell">
+  <section class="welcome" aria-labelledby="welcomeTitle">
+    <div class="copy">
+      <span class="eyebrow"><span class="eyebrow-dot"></span><span id="eyebrow">SEU PRÓXIMO PASSO COMEÇA AQUI</span></span>
+      <h1 id="welcomeTitle">Parabéns por dar mais atenção ao planejamento do seu negócio.</h1>
+      <p class="lead" id="welcomeText">Uma boa ideia merece ser organizada. No Starting Toolkit, você reúne informações, avalia possibilidades e transforma suas decisões em um plano para seguir com mais clareza.</p>
+      <div class="intro-note">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span id="introNote">Entre na sua conta para continuar de onde parou ou, se acabou de comprar, ative seu acesso pelo e-mail enviado após a confirmação do pagamento.</span>
+      </div>
+    </div>
+    <aside class="login-card" aria-label="Acesso à conta">
+      <div class="card-brand">STARTING<span>TOOLKIT</span></div>
+      <h2 id="loginTitle">Acesse sua conta</h2>
+      <p class="login-sub" id="loginSubtitle">Seu planejamento continua daqui.</p>
+      <form id="loginForm">
+        <label for="email" id="emailLabel">E-mail</label>
+        <input id="email" type="email" autocomplete="username" placeholder="voce@email.com" required>
+        <label for="password" id="passwordLabel">Senha</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <button class="submit" id="submit" type="submit">Entrar</button>
+      </form>
+      <div id="message" role="status" aria-live="polite"></div>
+      <nav class="login-links" aria-label="Ajuda com a conta">
+        <a href="/forgot-password.html" id="forgotLink">Esqueci minha senha</a>
+        <a href="/resend-activation.html" id="resendLink">Reenviar ativação</a>
+      </nav>
+      <div class="card-foot"><span id="newUserText">Ainda não ativou sua conta?</span> <a href="/create-account-info.html" id="activateLink">Ativar meu acesso</a></div>
+    </aside>
+  </section>
 
-<main class="container">
+  <section class="below" aria-label="O que você encontra no Starting Toolkit">
+    <article class="benefit"><span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5h16v13H4zM8 9h8M8 12h8M8 15h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong id="benefit1Title">Organize suas ideias</strong><p id="benefit1Text">Registre decisões e estruture os pontos principais do negócio.</p></div></article>
+    <article class="benefit"><span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong id="benefit2Title">Avalie antes de avançar</strong><p id="benefit2Text">Analise mercado, concorrência, números e estratégias.</p></div></article>
+    <article class="benefit"><span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3.8h7l4 4V20H7zM14 4v4h4M9.5 13h6M9.5 16h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong id="benefit3Title">Construa seu plano</strong><p id="benefit3Text">Reúna suas respostas em uma visão organizada do negócio.</p></div></article>
+  </section>
 
-<section class="hero">
-<div class="hero-content">
-<span class="eyebrow" id="eyebrow"></span>
-<h1 id="heroTitle"></h1>
-<p id="heroText"></p>
-<a class="button" href="#modules" id="heroButton"></a>
-</div>
-</section>
-
-<section class="section">
-<div class="section-heading">
-<h2 id="howTitle"></h2>
-<p id="howText"></p>
-</div>
-<div class="steps">
-<article class="step">
-<span class="number">01</span>
-<h3 id="step1Title"></h3>
-<p id="step1Text"></p>
-</article>
-<article class="step">
-<span class="number">02</span>
-<h3 id="step2Title"></h3>
-<p id="step2Text"></p>
-</article>
-<article class="step">
-<span class="number">03</span>
-<h3 id="step3Title"></h3>
-<p id="step3Text"></p>
-</article>
-</div>
-</section>
-
-<section class="section" id="modules">
-<div class="section-heading">
-<h2 id="modulesTitle"></h2>
-<p id="modulesText"></p>
-</div>
-<div class="modules" id="moduleGrid"></div>
-</section>
-
-<section class="section">
-<div class="final-card">
-<div>
-<span class="eyebrow" id="finalEyebrow"></span>
-<h2 id="finalTitle"></h2>
-<p id="finalText"></p>
-</div>
-<a class="button" href="modules/your-final-plan.html" id="finalButton"></a>
-</div>
-</section>
-
-<section class="section">
-<div class="credibility">
-<div class="credibility-number">25+</div>
-<p id="credibilityText"></p>
-</div>
-</section>
-
+  <!-- Área preparada para futuros produtos complementares e ofertas adicionais. Ela só aparece quando houver ofertas configuradas. -->
+  <section id="complementaryOffers" aria-live="polite">
+    <div class="offers-heading"><h2 id="offersTitle">Recursos para complementar seu planejamento</h2><p id="offersSubtitle">Conheça materiais e ferramentas adicionais para apoiar seu negócio.</p></div>
+    <div class="offer-grid" id="offerGrid"></div>
+  </section>
 </main>
-
-<footer>
-<div class="container">
-<strong>STARTING TOOLKIT</strong>
-<span id="footerText"></span>
-<span>© <span id="year"></span> Starting Toolkit</span>
-</div>
-</footer>
-
+<footer class="shell"><div class="footer-inner"><span>© <span id="year"></span> Starting Toolkit</span><span><a href="mailto:support@startingtoolkit.com">support@startingtoolkit.com</a></span></div></footer>
 <script>
-const translations = {
-pt:{
-eyebrow:"SEU NEGÓCIO COMEÇA AQUI",
-heroTitle:"Pense. Planeje. Comece.",
-heroText:"Uma forma mais clara e prática de avaliar sua ideia, planejar seu negócio e decidir os próximos passos antes de investir.",
-heroButton:"Conheça as ferramentas",
-howTitle:"Como funciona",
-howText:"Você avança por etapas, responde perguntas orientadas e constrói seu próprio plano de negócio.",
-step1Title:"Entenda sua ideia",
-step1Text:"Organize sua proposta, seu público e o tipo de negócio que deseja criar.",
-step2Title:"Planeje com informações",
-step2Text:"Analise mercado, concorrência, números, marketing e preparação para o lançamento.",
-step3Title:"Defina seus próximos passos",
-step3Text:"Reúna suas decisões em um plano e organize os primeiros 90 dias.",
-modulesTitle:"Suas ferramentas",
-modulesText:"Oito módulos guiados para estruturar seu negócio, mais um plano final que reúne suas respostas.",
-moduleLabel:"MÓDULO",
-status:"Em preparação",
-finalEyebrow:"VISÃO GERAL DO NEGÓCIO",
-finalTitle:"Seu plano final",
-finalText:"Reúna suas decisões, análises e projeções em uma visão geral do negócio e identifique o que precisa acontecer antes de avançar.",
-finalButton:"Ver meu plano final",
-credibilityText:"Anos de experiência em gestão, marketing e empreendedorismo aplicados à criação de ferramentas práticas para quem quer começar um negócio.",
-footerText:"Pense. Planeje. Comece.",
-modules:[
-["Minha ideia","Organize sua ideia, seu público e sua proposta de negócio."],
-["Meu modelo de negócio","Compare franquia e marca própria e entenda as decisões envolvidas."],
-["Meu mercado","Analise mercado, concorrentes, demanda e posicionamento."],
-["Minha análise SWOT","Identifique forças, fraquezas, oportunidades e ameaças."],
-["Meus números","Estime investimento, custos, receitas, margem e prazo de retorno."],
-["Meu marketing","Defina objetivos, canais, orçamento e ações de marketing."],
-["Meu lançamento","Organize a preparação e as ações de lançamento."],
-["Meus primeiros 90 dias","Planeje os primeiros 30, 60 e 90 dias do negócio."]
-]},
-en:{
-eyebrow:"YOUR BUSINESS STARTS HERE",
-heroTitle:"Think. Plan. Start.",
-heroText:"A clearer, more practical way to evaluate your idea, plan your business and decide what to do next before investing.",
-heroButton:"Explore the tools",
-howTitle:"How it works",
-howText:"Move through guided steps, answer practical questions and build your own business plan.",
-step1Title:"Understand your idea",
-step1Text:"Organize your concept, target customer and the type of business you want to build.",
-step2Title:"Plan with information",
-step2Text:"Assess the market, competitors, numbers, marketing and launch preparation.",
-step3Title:"Define your next steps",
-step3Text:"Bring your decisions together and organize your first 90 days.",
-modulesTitle:"Your tools",
-modulesText:"Eight guided modules to structure your business, plus a final plan that brings your answers together.",
-moduleLabel:"MODULE",
-status:"Coming soon",
-finalEyebrow:"THE BIG PICTURE",
-finalTitle:"Your Final Plan",
-finalText:"Bring your decisions, analysis and projections together to understand your business and identify what needs to happen next.",
-finalButton:"View my final plan",
-credibilityText:"Years of experience in management, marketing and entrepreneurship applied to practical tools for people planning to start a business.",
-footerText:"Think. Plan. Start.",
-modules:[
-["My Idea","Organize your idea, target customer and business proposition."],
-["My Business Model","Compare franchising and an independent brand."],
-["My Market","Assess the market, competitors, demand and positioning."],
-["My SWOT Analysis","Identify strengths, weaknesses, opportunities and threats."],
-["My Numbers","Estimate investment, costs, revenue, margin and payback."],
-["My Marketing","Define objectives, channels, budget and marketing actions."],
-["My Launch","Organize launch preparation and activities."],
-["My First 90 Days","Plan the first 30, 60 and 90 days of your business."]
-]},
-es:{
-eyebrow:"TU NEGOCIO EMPIEZA AQUÍ",
-heroTitle:"Piensa. Planifica. Empieza.",
-heroText:"Una forma más clara y práctica de evaluar tu idea, planificar tu negocio y decidir los próximos pasos antes de invertir.",
-heroButton:"Conoce las herramientas",
-howTitle:"Cómo funciona",
-howText:"Avanza por etapas, responde preguntas guiadas y construye tu propio plan de negocio.",
-step1Title:"Comprende tu idea",
-step1Text:"Organiza tu propuesta, tu público y el tipo de negocio que quieres crear.",
-step2Title:"Planifica con información",
-step2Text:"Analiza el mercado, la competencia, los números, el marketing y la preparación del lanzamiento.",
-step3Title:"Define tus próximos pasos",
-step3Text:"Reúne tus decisiones en un plan y organiza los primeros 90 días.",
-modulesTitle:"Tus herramientas",
-modulesText:"Ocho módulos guiados para estructurar tu negocio, más un plan final que reúne tus respuestas.",
-moduleLabel:"MÓDULO",
-status:"En preparación",
-finalEyebrow:"VISIÓN GENERAL DEL NEGOCIO",
-finalTitle:"Tu plan final",
-finalText:"Reúne tus decisiones, análisis y proyecciones para tener una visión general del negocio e identificar los próximos pasos.",
-finalButton:"Ver mi plan final",
-credibilityText:"Años de experiencia en gestión, marketing y emprendimiento aplicados a herramientas prácticas para quienes quieren iniciar un negocio.",
-footerText:"Piensa. Planifica. Empieza.",
-modules:[
-["Mi idea","Organiza tu idea, tu público y tu propuesta de negocio."],
-["Mi modelo de negocio","Compara una franquicia y una marca propia."],
-["Mi mercado","Analiza el mercado, la competencia, la demanda y el posicionamiento."],
-["Mi análisis SWOT","Identifica fortalezas, debilidades, oportunidades y amenazas."],
-["Mis números","Estima inversión, costes, ingresos, margen y plazo de recuperación."],
-["Mi marketing","Define objetivos, canales, presupuesto y acciones de marketing."],
-["Mi lanzamiento","Organiza la preparación y las acciones de lanzamiento."],
-["Mis primeros 90 días","Planifica los primeros 30, 60 y 90 días del negocio."]
-]}
+const copy={
+pt:{eyebrow:'SEU PRÓXIMO PASSO COMEÇA AQUI',welcomeTitle:'Parabéns por dar mais atenção ao planejamento do seu negócio.',welcomeText:'Uma boa ideia merece ser organizada. No Starting Toolkit, você reúne informações, avalia possibilidades e transforma suas decisões em um plano para seguir com mais clareza.',introNote:'Entre na sua conta para continuar de onde parou ou, se acabou de comprar, ative seu acesso pelo e-mail enviado após a confirmação do pagamento.',loginTitle:'Acesse sua conta',loginSubtitle:'Seu planejamento continua daqui.',emailLabel:'E-mail',passwordLabel:'Senha',submit:'Entrar',loading:'Verificando seu acesso...',loginError:'E-mail ou senha incorretos, ou licença inativa.',genericError:'Não foi possível entrar. Tente novamente.',forgot:'Esqueci minha senha',resend:'Reenviar ativação',newUser:'Ainda não ativou sua conta?',activate:'Ativar meu acesso',sales:'Conheça o Starting Toolkit',b1t:'Organize suas ideias',b1p:'Registre decisões e estruture os pontos principais do negócio.',b2t:'Avalie antes de avançar',b2p:'Analise mercado, concorrência, números e estratégias.',b3t:'Construa seu plano',b3p:'Reúna suas respostas em uma visão organizada do negócio.',offersTitle:'Recursos para complementar seu planejamento',offersSubtitle:'Conheça materiais e ferramentas adicionais para apoiar seu negócio.'},
+en:{eyebrow:'YOUR NEXT STEP STARTS HERE',welcomeTitle:'Congratulations on taking a closer look at your business plan.',welcomeText:'A good idea deserves a clear structure. With Starting Toolkit, you can bring information together, assess your options and turn decisions into a plan for moving forward with clarity.',introNote:'Sign in to pick up where you left off. If you have just purchased, activate your access using the email sent after your payment was confirmed.',loginTitle:'Sign in to your account',loginSubtitle:'Your planning continues here.',emailLabel:'Email',passwordLabel:'Password',submit:'Sign in',loading:'Checking your access...',loginError:'Incorrect email or password, or inactive license.',genericError:'We could not sign you in. Please try again.',forgot:'Forgot password?',resend:'Resend activation',newUser:'Haven’t activated your account?',activate:'Activate my access',sales:'Explore Starting Toolkit',b1t:'Organize your ideas',b1p:'Record decisions and structure the key parts of your business.',b2t:'Assess before moving forward',b2p:'Review your market, competitors, numbers and strategy.',b3t:'Build your plan',b3p:'Bring your answers together in an organized business overview.',offersTitle:'More resources for your business plan',offersSubtitle:'Explore additional materials and tools to support your business.'},
+es:{eyebrow:'TU PRÓXIMO PASO EMPIEZA AQUÍ',welcomeTitle:'Felicitaciones por dedicar más atención a la planificación de tu negocio.',welcomeText:'Una buena idea merece organización. Con Starting Toolkit, reúnes información, evalúas posibilidades y conviertes tus decisiones en un plan para avanzar con mayor claridad.',introNote:'Accede a tu cuenta para continuar donde lo dejaste. Si acabas de comprar, activa tu acceso desde el correo enviado después de confirmar el pago.',loginTitle:'Accede a tu cuenta',loginSubtitle:'Tu planificación continúa aquí.',emailLabel:'Correo electrónico',passwordLabel:'Contraseña',submit:'Entrar',loading:'Verificando tu acceso...',loginError:'Correo o contraseña incorrectos, o licencia inactiva.',genericError:'No fue posible iniciar sesión. Inténtalo de nuevo.',forgot:'Olvidé mi contraseña',resend:'Reenviar activación',newUser:'¿Aún no activaste tu cuenta?',activate:'Activar mi acceso',sales:'Conoce Starting Toolkit',b1t:'Organiza tus ideas',b1p:'Registra decisiones y estructura los puntos principales del negocio.',b2t:'Evalúa antes de avanzar',b2p:'Analiza el mercado, la competencia, los números y las estrategias.',b3t:'Construye tu plan',b3p:'Reúne tus respuestas en una visión organizada del negocio.',offersTitle:'Recursos para complementar tu planificación',offersSubtitle:'Conoce materiales y herramientas adicionales para apoyar tu negocio.'}
 };
-
-const moduleFiles=[
-"modules/my-idea.html",
-"modules/my-model.html",
-"modules/my-market.html",
-"modules/my-swot.html",
-"modules/my-numbers.html",
-"modules/my-marketing.html",
-"modules/my-launch.html",
-"modules/my-first-90-days.html"
-];
-
-function changeLanguage(lang){
-const t=translations[lang]||translations.pt;
-document.documentElement.lang=lang==="pt"?"pt-BR":lang;
-
-Object.keys(t).forEach(key=>{
-if(key==="modules"||key==="moduleLabel"||key==="status")return;
-const element=document.getElementById(key);
-if(element)element.textContent=t[key];
-});
-
-const grid=document.getElementById("moduleGrid");
-grid.innerHTML="";
-
-t.modules.forEach((module,index)=>{
-const card=document.createElement("article");
-card.className="module";
-card.innerHTML=`
-<span class="module-number"></span>
-<h3></h3>
-<p></p>
-<span class="module-status"></span>
-`;
-card.querySelector(".module-number").textContent=
-t.moduleLabel+" "+String(index+1).padStart(2,"0");
-card.querySelector("h3").textContent=module[0];
-card.querySelector("p").textContent=module[1];
-card.querySelector(".module-status").textContent=t.status;
-grid.appendChild(card);
-});
-
-document.getElementById("year").textContent=new Date().getFullYear();
-localStorage.setItem("startingToolkitLanguage",lang);
-}
-
-const selector=document.getElementById("language");
-const savedLanguage=localStorage.getItem("startingToolkitLanguage")||"pt";
-selector.value=savedLanguage;
-selector.addEventListener("change",()=>changeLanguage(selector.value));
-changeLanguage(savedLanguage);
+const $=id=>document.getElementById(id);
+function setLanguage(lang){const t=copy[lang]||copy.pt;document.documentElement.lang=lang==='pt'?'pt-BR':lang;Object.entries(t).forEach(([key,value])=>{const el=$(key);if(el)el.textContent=value});$('language').value=lang;localStorage.setItem('startingToolkitLanguage',lang)}
+const initialLang=localStorage.getItem('startingToolkitLanguage')||'pt';setLanguage(initialLang);$('language').addEventListener('change',e=>setLanguage(e.target.value));$('year').textContent=new Date().getFullYear();
+function safeNext(){const raw=new URLSearchParams(location.search).get('next');if(!raw)return '/modules/dashboard.html';try{const u=new URL(raw,location.origin);if(u.origin===location.origin&&u.pathname.startsWith('/modules/'))return u.pathname+u.search+u.hash}catch(e){}return '/modules/dashboard.html'}
+(async()=>{try{const r=await fetch('/api/auth/me',{credentials:'same-origin',cache:'no-store'});if(r.ok){const d=await r.json();if(d.authenticated&&d.license?.status==='active')location.replace(safeNext())}}catch(e){}})();
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();const lang=$('language').value,t=copy[lang]||copy.pt;$('message').textContent=t.loading;$('submit').disabled=true;try{const r=await fetch('/api/auth/login',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:$('email').value.trim(),password:$('password').value})});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(r.status===401||r.status===403?t.loginError:t.genericError);location.replace(safeNext())}catch(err){$('message').textContent=err.message||t.genericError;$('submit').disabled=false}});
+// Future add-ons can be listed here after their offer pages and purchase links are ready. Keep empty until then.
+const complementaryOffers=[];
+if(complementaryOffers.length){$('complementaryOffers').classList.add('is-visible');complementaryOffers.forEach(offer=>{const card=document.createElement('article');card.className='offer-card';const title=document.createElement('h3');title.textContent=offer.title;const desc=document.createElement('p');desc.textContent=offer.description;const link=document.createElement('a');link.textContent=offer.linkLabel||'Saiba mais';link.href=offer.url;link.rel='noopener';card.append(title,desc,link);$('offerGrid').appendChild(card)})}
 </script>
-
 </body>
 </html>
