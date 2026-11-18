@@ -23,7 +23,8 @@ export async function onRequestGet({ env }) {
       "business_plans",
       "module_data",
       "sessions",
-      "webhook_events"
+      "hotmart_webhook_events",
+"purchase_access_tokens"
     ];
 
     return new Response(JSON.stringify({
