@@ -29,7 +29,7 @@ Não coloque tokens/chaves no código, GitHub ou variáveis públicas. Não alte
 
 - `POST /api/webhooks/hotmart`: recebe e valida eventos usando o `hottok` enviado no corpo JSON pela Hotmart 2.0 (e aceita também o cabeçalho `X-HOTMART-HOTTOK` para compatibilidade). Os postbacks de teste com nome de produto contendo `test postback` são reconhecidos e apenas confirmados, sem criar contas ou enviar e-mails.
 - `GET /api/auth/activation-info?token=...`: valida link de ativação.
-- `POST /api/auth/activate`: cria/atualiza a conta e cria licença de 365 dias com limite de um negócio após uso de token de compra aprovado.
+- `POST /api/auth/activate`: cria/atualiza a conta e cria licença de 365 dias com limite de um negócio, contando a partir do registro da compra aprovada pelo webhook da Hotmart (campo `purchase_access_tokens.created_at`), e não da criação da senha/primeiro login.
 - `POST /api/auth/password-reset-request`: envia link de redefinição.
 - `POST /api/auth/password-reset`: redefine a senha e encerra sessões existentes.
 - `POST /api/auth/resend-activation`: reenvia link de ativação de compra aprovada pendente.
@@ -67,7 +67,7 @@ O código exige o ID do produto e compara com `HOTMART_PRODUCT_ID`. Os códigos 
 ## Limitações e cuidados
 
 - O fluxo de compra e entrega precisa ser testado com payloads reais/simulados da Hotmart antes da abertura das vendas.
-- A licença criada na ativação dura 365 dias e permite um negócio.
+- A licença criada na ativação dura 365 dias a partir do recebimento/registro do evento de compra aprovada pela Hotmart no banco (não do primeiro login) e permite um negócio. O timestamp é preservado mesmo se o link de ativação for reenviado.
 - A página antiga de cadastro administrativo continua exigindo convite; compradores usam o link individual enviado após pagamento aprovado.
 - O tratamento de abandono é apenas registro analítico. Não faz recuperação automática nem autoriza marketing. Uma campanha de recuperação deve ser configurada separadamente, respeitando consentimento e regras aplicáveis.
 - A integração não foi publicada no Cloudflare nem validada com uma compra real por este pacote. Não considerar vendas liberadas até concluir os testes.

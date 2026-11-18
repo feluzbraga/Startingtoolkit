@@ -1,5 +1,18 @@
 import { json, readJson, sha256, hashPassword, createSession, cookieHeader } from '../../_shared/auth.js';
 
+// purchase_access_tokens.created_at is populated by D1 when the approved
+// Hotmart webhook is received. Keep the license clock anchored to that time,
+// not to the later moment when the buyer creates their password. D1 stores
+// CURRENT_TIMESTAMP as UTC in 'YYYY-MM-DD HH:MM:SS' format.
+function purchaseDateUtc(value) {
+  if (!value) throw new Error('Purchase timestamp is missing.');
+  const text = String(value);
+  const normalized = text.includes('T') ? text : `${text.replace(' ', 'T')}Z`;
+  const date = new Date(normalized);
+  if (!Number.isFinite(date.getTime())) throw new Error('Purchase timestamp is invalid.');
+  return date;
+}
+
 export async function onRequestPost({ request, env }) {
   let claimedPurchaseId = null;
   try {
@@ -28,7 +41,7 @@ export async function onRequestPost({ request, env }) {
 
     const licenseId = crypto.randomUUID();
     const planId = crypto.randomUUID();
-    const start = new Date();
+    const start = purchaseDateUtc(purchase.created_at);
     const end = new Date(start.getTime() + 365 * 86400000);
     await env.DB.batch([
       env.DB.prepare(`INSERT INTO licenses (id, user_id, status, valid_from, valid_until, max_businesses) VALUES (?, ?, 'active', ?, ?, 1)`).bind(licenseId, user.id, start.toISOString(), end.toISOString()),
