@@ -8,6 +8,9 @@ export async function onRequestGet({ request, env }) {
     return json({
       ok: true,
       authenticated: true,
+      // Keep the explicit top-level alias expected by the module cloud-sync scripts.
+      // The nested business object remains for existing account/dashboard consumers.
+      businessPlanId: session.business_plan_id,
       user: { id: session.id, email: session.email, language: session.preferred_language },
       license: { id: session.license_id, status: session.license_status, validFrom: session.valid_from, validUntil: session.valid_until, maxBusinesses: session.max_businesses },
       business: { id: session.business_plan_id, name: session.business_name || '', language: session.business_language || session.preferred_language }
